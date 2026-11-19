@@ -1,6 +1,6 @@
-# Historia del Arte · PAU 2027 (2.º de Bachillerato)
+# Historia del Arte · PAU (2.º de Bachillerato)
 
-Práctica interactiva para la PAU de Historia del Arte (Comunidad de Madrid, modelo 2027): semblanzas de artistas, glosario de términos y pruebas con imágenes, todo enlazado.
+Práctica interactiva para la PAU de Historia del Arte (Comunidad de Madrid, modelo vigente): semblanzas de artistas, glosario de términos y pruebas con imágenes, todo enlazado.
 
 **Web:** https://imolina-1.github.io/arte/
 

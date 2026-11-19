@@ -173,13 +173,15 @@ function parse() {
   view = ALIAS[view] || view; if (VIEWS.indexOf(view) < 0) view = "inicio";
   return { view: view, p: p };
 }
+/* Año de la PAU: de septiembre a diciembre, el del año siguiente; de enero a agosto, el del año en curso. */
+A.pauYear = function () { var d = new Date(); return d.getFullYear() + (d.getMonth() >= 8 ? 1 : 0); };
 A.route = function () {
   var r = parse(); A.params = r.p;
   if (A.route.last !== r.view) { A.route.last = r.view; A.track("vista/" + r.view, "Vista: " + r.view); }
   VIEWS.forEach(function (v) { A.$("v-" + v).classList.toggle("hidden", v !== r.view); });
   document.querySelectorAll("nav a").forEach(function (a) { if (a.dataset.view === r.view) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
   if (A.hooks[r.view]) A.hooks[r.view](r.p);
-  document.title = (r.view === "inicio" ? "" : (r.view === "acerca" ? "Créditos y derechos" : (document.querySelector('nav a[data-view="' + r.view + '"]') || {}).textContent) + " · ") + "Historia del Arte · PAU 2027";
+  document.title = (r.view === "inicio" ? "" : (r.view === "acerca" ? "Créditos y derechos" : (document.querySelector('nav a[data-view="' + r.view + '"]') || {}).textContent) + " · ") + "Historia del Arte · PAU " + A.pauYear();
   if (!A.noScroll) window.scrollTo(0, 0);
 };
 window.addEventListener("hashchange", function () { A.route(); });
@@ -240,6 +242,7 @@ A.heroInit = function () {
   });
 };
 A.start = function () {
+  document.querySelectorAll(".pauy").forEach(function (e) { e.textContent = A.pauYear(); });
   if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(function () {});
   ["init"].forEach(function () { (A.inits || []).forEach(function (f) { f(); }); });
   A.heroInit();
