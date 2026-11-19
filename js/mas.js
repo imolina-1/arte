@@ -160,12 +160,14 @@ function homeExtra() {
   var cd = n > 0 ? '<div class="hx-card hx-cd"><b>' + n + '</b><span>días para la PAU<small>' + (A.PAU_DATE.estimada ? "Fecha estimada (" + fecha + "); se ajustará cuando se publique el calendario oficial de Madrid." : fecha) + "</small></span></div>" : "";
   var d = new Date(), seed = d.getFullYear() * 400 + d.getMonth() * 31 + d.getDate(), e = FACES[(seed * 7919) % FACES.length];
   var ad = e ? '<a class="hx-card hx-ad" href="#a-' + e.id + '"><img src="' + esc(e.rth) + '" alt="" loading="lazy" decoding="async"><span><small>Artista del día</small><b>' + esc(e.nombre) + "</b><em>" + esc(e.yl) + " · " + esc(A.temaLabel(e.tema).split(". ")[0]) + "</em></span></a>" : "";
-  box.innerHTML = cd + ad;
+  var bx = A.boxAll(), ks = Object.keys(bx), dom = ks.filter(function (k) { return bx[k] >= 3; }).length;
+  var pg = '<a class="hx-card hx-pg" href="#progreso"><span class="hx-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><span><small>Mi progreso</small><b>' + (ks.length ? dom + " dominadas" : "Empieza a practicar") + "</b><em>" + (ks.length ? ks.length + " elementos practicados" : "Tests, fichas y tarjetas") + "</em></span></a>";
+  box.innerHTML = cd + ad + pg;
 }
 var mosTimer = null;
 function homeMosaic() {
   var box = $("mosaic"); if (!box || !FACES.length) return;
-  var N = 8, cur = A.shuffle(FACES.slice()).slice(0, N), next = FACES.filter(function (e) { return cur.indexOf(e) < 0; });
+  var N = 6, cur = A.shuffle(FACES.slice()).slice(0, N), next = FACES.filter(function (e) { return cur.indexOf(e) < 0; });
   function tile(e) { return '<a class="mos-t" href="#a-' + e.id + '" aria-label="' + esc(e.nombre) + '"><img src="' + esc(e.rth) + '" alt="" loading="lazy" decoding="async"><span>' + esc(e.nombre) + "</span></a>"; }
   box.innerHTML = cur.map(tile).join("");
   if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -181,5 +183,27 @@ function homeMosaic() {
 var oldInicio = A.hooks.inicio;
 A.hooks.inicio = function (p) { if (oldInicio) oldInicio(p); homeExtra(); };
 
-A.inits.push(initCmp, initEsq, initMap, homeMosaic);
+/* ---------- Menú de la cabecera ---------- */
+function initNav() {
+  var nav = $("siteNav"), tg = $("navToggle"); if (!nav || !tg) return;
+  var dds = [].slice.call(nav.querySelectorAll(".dd"));
+  function hover() { return window.matchMedia && matchMedia("(hover:hover) and (min-width:900px)").matches; }
+  function set(d, o) { d.classList.toggle("open", o); d.querySelector(".dd-b").setAttribute("aria-expanded", o ? "true" : "false"); }
+  function closeAll(except) { dds.forEach(function (d) { if (d !== except) set(d, false); }); }
+  dds.forEach(function (d) {
+    var b = d.querySelector(".dd-b"), t;
+    b.addEventListener("click", function () { var o = !d.classList.contains("open"); closeAll(d); set(d, o); });
+    d.addEventListener("mouseenter", function () { if (!hover()) return; clearTimeout(t); closeAll(d); set(d, true); });
+    d.addEventListener("mouseleave", function () { if (!hover()) return; t = setTimeout(function () { set(d, false); }, 180); });
+    d.addEventListener("focusout", function (ev) { if (ev.relatedTarget && !d.contains(ev.relatedTarget)) set(d, false); });
+    d.addEventListener("keydown", function (ev) { if (ev.key === "Escape") { set(d, false); b.focus(); } });
+  });
+  document.addEventListener("click", function (ev) { if (!nav.contains(ev.target)) closeAll(); });
+  function shut() { document.body.classList.remove("nav-open"); tg.setAttribute("aria-expanded", "false"); tg.setAttribute("aria-label", "Abrir el menú"); }
+  tg.addEventListener("click", function () { var o = !document.body.classList.contains("nav-open"); document.body.classList.toggle("nav-open", o); tg.setAttribute("aria-expanded", o ? "true" : "false"); tg.setAttribute("aria-label", o ? "Cerrar el menú" : "Abrir el menú"); });
+  nav.addEventListener("click", function (ev) { if (ev.target.closest("a")) { closeAll(); shut(); } });
+  document.addEventListener("keydown", function (ev) { if (ev.key === "Escape") shut(); });
+}
+
+A.inits.push(initNav, initCmp, initEsq, initMap, homeMosaic);
 })();

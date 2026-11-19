@@ -181,9 +181,10 @@ A.route = function () {
   if (A.route.last !== r.view) { A.route.last = r.view; A.track("vista/" + r.view, "Vista: " + r.view); }
   VIEWS.forEach(function (v) { A.$("v-" + v).classList.toggle("hidden", v !== r.view); });
   document.querySelectorAll("nav a").forEach(function (a) { if (a.dataset.view === r.view) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+  document.querySelectorAll(".dd").forEach(function (d) { d.classList.toggle("has-cur", !!d.querySelector('a[aria-current="page"]')); });
   document.body.classList.toggle("vf", r.view === "ficha"); document.body.classList.toggle("ve", r.view === "esquema");
   if (A.hooks[r.view]) A.hooks[r.view](r.p);
-  document.title = (r.view === "inicio" ? "" : (r.view === "acerca" ? "Créditos y derechos" : (document.querySelector('nav a[data-view="' + r.view + '"]') || {}).textContent) + " · ") + "Historia del Arte · PAU " + A.pauYear();
+  document.title = (r.view === "inicio" ? "" : (r.view === "acerca" ? "Créditos y derechos" : (function (a) { return a ? (a.querySelector("b") || a).textContent : ""; })(document.querySelector('nav a[data-view="' + r.view + '"]'))) + " · ") + "Historia del Arte · PAU " + A.pauYear();
   if (!A.noScroll) window.scrollTo(0, 0);
 };
 window.addEventListener("hashchange", function () { A.route(); });

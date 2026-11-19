@@ -321,7 +321,7 @@ A.hooks.inicio = function () {
   var h3 = store("pau3hist") || [], h1 = store("p1hist") || [];
   if (h3.length) { any = true; h += "<li>Último simulacro de semblanzas: " + num(h3[0].s) + " / 3</li>"; }
   if (h1.length) { any = true; h += "<li>Último simulacro de términos: " + num(h1[0].s) + " / 2</li>"; }
-  $("progress").innerHTML = any ? "<strong>Tu progreso en este navegador</strong><ul>" + h + "</ul>" : "";
+  if ($("progress")) $("progress").innerHTML = any ? "<strong>Tu progreso en este navegador</strong><ul>" + h + "</ul>" : "";
 };
 
 function initPrint() {
