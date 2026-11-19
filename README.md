@@ -14,6 +14,9 @@ Práctica interactiva para la PAU de Historia del Arte (Comunidad de Madrid, mod
 | Simulacro | 3 (3 puntos) | Cinco artistas al azar, eliges tres y escribes con cronómetro de 27 minutos; corrección orientativa con la semblanza modelo |
 | Fichas de obras | 3 (práctica) | Identificar al autor desde la imagen, con repaso espaciado |
 | Semblanzas | 3 (estudio) | Las 139 semblanzas (T1-T17), con buscador, enlaces directos y términos del glosario relacionados |
+| Línea del tiempo | 3 (estudio) | Vidas de los artistas sobre un eje cronológico, filtrable por tema; cada barra abre la ficha |
+| Repaso | 3 (estudio) | Tarjetas retrato → nombre y época (o nombre → época y obras) con repetición espaciada; progreso solo en tu navegador |
+| Ficha de artista (`#a-<id>`) | 3 (estudio) | Retrato, fechas, posición en la línea del tiempo, semblanza, obras, términos, contemporáneos y anterior/siguiente del tema |
 | Una semblanza, una nota | 3 (1 punto) | Escribes la semblanza de un artista y obtienes la nota sobre 1 punto con el reparto época 0,30 · características 0,35 · obras 0,35 |
 
 Incluye una página de créditos, autoría y derechos (`#acerca`), enlazada desde el pie.
@@ -25,7 +28,7 @@ Funciona sin conexión y se puede instalar en el móvil (aplicación web progres
 | Archivo | Para qué sirve |
 |---|---|
 | `index.html` | La página |
-| `css/style.css`, `js/*.js` | Diseño y programación (`core.js`: utilidades y rutas; `semblanzas.js`: pregunta 3; `glosario.js`: pregunta 1) |
+| `css/style.css`, `js/*.js` | Diseño y programación (`core.js`: utilidades y rutas; `semblanzas.js`: pregunta 3; `glosario.js`: pregunta 1; `extra.js`: línea del tiempo, repaso y ficha de artista) |
 | `data/semblanzas.js` | Las semblanzas, con los términos del glosario enlazados a cada una |
 | `data/glosario.js` | Los términos, con sus obras, semblanzas e imágenes enlazadas |
 | `img/ret/` | Retratos de 122 artistas, tomados de tus presentaciones (se ven en «Semblanzas» y en la corrección del simulacro; los tests siguen usando la obra) |

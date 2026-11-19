@@ -99,7 +99,7 @@ A.termChips = function (ids, max) {
 };
 A.semLink = function (id) {
   var e = A.sById[id]; if (!e || e.obra) return "";
-  return '<a class="semchip" href="#semblanzas?id=' + e.id + '">' + A.esc(e.nombre) + "</a>";
+  return '<a class="semchip" href="#a-' + e.id + '">' + A.esc(e.nombre) + "</a>";
 };
 // términos del glosario aplicables a una imagen concreta (obra mostrada)
 A.termsOfImg = {};
@@ -162,14 +162,14 @@ A.stat = function (key, ok) {
 A.getStat = function (key) { var s = A.store("arte_stats") || {}; return s[key] || { ok: 0, n: 0 }; };
 
 /* ---------- Rutas ---------- */
-var VIEWS = ["inicio", "simulacro", "artista", "fichas", "semblanzas", "glosario", "terminos", "test", "acerca"];
+var VIEWS = ["inicio", "simulacro", "artista", "fichas", "semblanzas", "cronologia", "repaso", "ficha", "glosario", "terminos", "test", "acerca"];
 var ALIAS = { consulta: "semblanzas" };
 A.hooks = {};
 A.params = {};
 function parse() {
   var h = (location.hash || "#inicio").slice(1), q = h.indexOf("?"), view = q < 0 ? h : h.slice(0, q), p = {};
   if (q >= 0) h.slice(q + 1).split("&").forEach(function (kv) { var a = kv.split("="); if (a[0]) p[a[0]] = decodeURIComponent((a[1] || "").replace(/\+/g, " ")); });
-  if (view.indexOf("a-") === 0) { p.id = view.slice(2); view = "semblanzas"; }   // enlaces directos #a-nombre-del-artista
+  if (view.indexOf("a-") === 0) { p.id = view.slice(2); view = "ficha"; }   // enlaces directos #a-nombre-del-artista
   view = ALIAS[view] || view; if (VIEWS.indexOf(view) < 0) view = "inicio";
   return { view: view, p: p };
 }
