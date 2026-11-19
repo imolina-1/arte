@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arte PAU · Historia del Arte</title>
+<meta name="description" content="Práctica interactiva de Historia del Arte de 2.º de Bachillerato: 139 semblanzas, glosario de 740 términos y pruebas con imágenes para la PAU (Comunidad de Madrid).">
+<meta name="theme-color" content="#2e5e3e">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta property="og:title" content="Arte PAU · Historia del Arte">
+<meta property="og:description" content="Semblanzas, glosario y pruebas con imágenes · 2.º de Bachillerato · PAU">
+<meta property="og:image" content="icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<header>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <h1>Arte PAU</h1>
+        <p class="sub">Historia del Arte · 2.º de Bachillerato · Comunidad de Madrid · Semblanzas y glosario</p>
+      </div>
+    </div>
+    <nav aria-label="Secciones" class="nav-wrap">
+      <div class="nav-group"><small>&nbsp;</small><div><a href="#inicio" data-view="inicio">Inicio</a></div></div>
+      <div class="nav-group"><small>Artistas · pregunta 3</small><div>
+        <a href="#simulacro" data-view="simulacro">Simulacro</a>
+        <a href="#fichas" data-view="fichas">Fichas de obras</a>
+        <a href="#semblanzas" data-view="semblanzas">Semblanzas</a></div></div>
+      <div class="nav-group"><small>Términos · pregunta 1</small><div>
+        <a href="#glosario" data-view="glosario">Glosario</a>
+        <a href="#terminos" data-view="terminos">Simulacro</a>
+        <a href="#test" data-view="test">Test con imágenes</a></div></div>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="main">
+
+  <!-- INICIO -->
+  <section id="v-inicio" aria-labelledby="h-ini">
+    <h2 id="h-ini">Prepara la PAU de Historia del Arte</h2>
+    <p class="lead">Un mismo material para estudiar y practicar: las semblanzas de artistas, el glosario de términos y las imágenes de las presentaciones de clase, enlazados entre sí. Todo funciona en el navegador, sin cuenta ni registro.</p>
+    <div class="counts" id="counts"></div>
+    <div class="hist" id="progress"></div>
+    <div class="cards">
+      <a class="hcard" href="#simulacro"><div class="k">Pregunta 3 · 3 puntos</div><h3>Simulacro de semblanzas</h3><p>Cinco artistas, eliges tres y escribes con cronómetro. Corrección orientativa con la semblanza modelo.</p></a>
+      <a class="hcard" href="#fichas"><div class="k">Pregunta 3 · práctica</div><h3>Fichas de obras</h3><p>Ves una obra y eliges el autor entre cuatro. Después, términos del glosario relacionados.</p></a>
+      <a class="hcard" href="#semblanzas"><div class="k">Pregunta 3 · estudio</div><h3>Semblanzas</h3><p>Las 139 semblanzas del dossier, con buscador y los términos del glosario de cada artista.</p></a>
+      <a class="hcard" href="#glosario"><div class="k">Pregunta 1 · estudio</div><h3>Glosario</h3><p>740 términos de los 18 temas, con buscador, índice alfabético, imágenes y semblanzas relacionadas.</p></a>
+      <a class="hcard" href="#terminos"><div class="k">Pregunta 1 · 2 puntos</div><h3>Simulacro de términos</h3><p>Cuatro imágenes, un término por imagen y su definición, como en el modelo 2027.</p></a>
+      <a class="hcard" href="#test"><div class="k">Pregunta 1 · práctica</div><h3>Test con imágenes</h3><p>Imagen → término, término → imagen y definición → término, por tema o evaluación.</p></a>
+    </div>
+    <p class="disclaimer">Las correcciones automáticas son orientativas: buscan época, términos y obras del currículo, pero no valoran la redacción ni detectan errores. Tus resultados se guardan solo en tu navegador; el profesor no los ve.</p>
+  </section>
+
+  <!-- SIMULACRO DE SEMBLANZAS -->
+  <section id="v-simulacro" class="hidden" aria-labelledby="h-sim">
+    <h2 id="h-sim">Simulacro de la pregunta 3</h2>
+    <p class="lead">Elige los temas que entran, genera cinco artistas como en la PAU y escoge tres. Escribe cada semblanza (época, características y obras; unas diez líneas) y entrégala para ver la semblanza modelo y una estimación orientativa.</p>
+    <div class="panel">
+      <div id="temaChips"></div>
+      <div class="row" style="margin-top:16px">
+        <button class="btn" id="gen" type="button">Generar 5 artistas</button>
+        <button class="btn ghost" id="copyQ" type="button" disabled>Copiar enunciado</button>
+        <span id="copyMsg" class="stats" role="status"></span>
+      </div>
+    </div>
+    <div id="stagePick" class="hidden">
+      <div class="status"><strong id="pickMsg">Selecciona 3 de los 5 artistas</strong>
+        <button class="btn" id="start" type="button" disabled>Empezar a escribir</button></div>
+      <div class="grid5" id="five"></div>
+    </div>
+    <div id="stageWrite" class="hidden">
+      <div class="status">
+        <span>Tiempo orientativo para la pregunta: 27 minutos (3 de 10 puntos en 90 minutos).</span>
+        <span class="timer" id="timer" aria-live="off">27:00</span>
+      </div>
+      <form id="writeForm"></form>
+    </div>
+    <div id="stageResult" class="hidden"></div>
+    <div class="hist" id="hist"></div>
+  </section>
+
+  <!-- FICHAS -->
+  <section id="v-fichas" class="hidden" aria-labelledby="h-fic">
+    <h2 id="h-fic">Fichas de obras</h2>
+    <p class="lead">¿Quién es el autor? Las imágenes son las de las presentaciones de clase. Al responder verás la obra, el estilo, los términos del glosario relacionados y un enlace a la semblanza completa.</p>
+    <div class="row" style="margin-bottom:14px"><label for="ficTema">Temas:</label>
+      <select id="ficTema"></select>
+      <span class="stats" id="ficStats" role="status">0 aciertos de 0</span></div>
+    <div id="ficEmpty"></div>
+    <div class="card">
+      <div class="frame"><img id="ficImg" alt=""></div>
+      <div>
+        <div class="opts" id="ficOpts"></div>
+        <div id="ficInfo" class="hidden">
+          <p id="ficTxt" style="font-family:var(--display);font-size:1.05rem"></p>
+          <p class="rel" id="ficRel"></p>
+          <div class="row"><button class="btn" id="ficNext" type="button">Siguiente</button>
+          <a href="#semblanzas" id="ficLink">Leer la semblanza</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONSULTA DE SEMBLANZAS -->
+  <section id="v-semblanzas" class="hidden" aria-labelledby="h-con">
+    <h2 id="h-con">Semblanzas</h2>
+    <p class="lead">Las 139 semblanzas del dossier (temas 1 a 17). En verde, las obras del currículo; debajo de cada una, los términos del glosario relacionados.</p>
+    <div class="banner hidden" id="conBanner"><span>Mostrando una sola semblanza.</span><button class="btn ghost" id="conAll" type="button">Ver todas</button></div>
+    <div class="filters">
+      <label class="hidden" for="q">Buscar</label>
+      <input id="q" type="search" placeholder="Buscar artista, obra o estilo">
+      <label class="hidden" for="conTema">Tema</label>
+      <select id="conTema"></select>
+    </div>
+    <div id="list"></div>
+  </section>
+
+  <!-- GLOSARIO -->
+  <section id="v-glosario" class="hidden" aria-labelledby="h-glo">
+    <h2 id="h-glo">Glosario de términos artísticos</h2>
+    <p class="lead">740 términos de los 18 temas, definidos como en la pregunta 1 de la PAU. Un mismo término puede aparecer en varios temas con los ejemplos propios de cada arte. Las imágenes y semblanzas enlazadas salen de las obras que cita cada definición.</p>
+    <div class="banner hidden" id="glBanner"><span>Mostrando un solo término.</span><button class="btn ghost" id="glAll" type="button">Ver todo el glosario</button></div>
+    <div id="glFilters">
+      <div class="filters">
+        <label class="hidden" for="gq">Buscar</label>
+        <input id="gq" type="search" placeholder="Buscar un término, una definición o una obra">
+        <label class="hidden" for="gTema">Tema</label>
+        <select id="gTema"></select>
+      </div>
+      <div class="letters" id="glLetters" role="group" aria-label="Índice alfabético"></div>
+      <p class="stats" id="glCount" role="status"></p>
+    </div>
+    <div id="glList"></div>
+    <div class="row"><button class="btn ghost hidden" id="glMore" type="button">Mostrar más</button></div>
+  </section>
+
+  <!-- SIMULACRO DE TÉRMINOS (PREGUNTA 1) -->
+  <section id="v-terminos" class="hidden" aria-labelledby="h-p1">
+    <h2 id="h-p1">Simulacro de la pregunta 1</h2>
+    <p class="lead">«Atendiendo a las imágenes propuestas, identifica cuatro términos artísticos, uno por imagen, aportando una breve definición de los mismos» (2 puntos; 0,5 por término). Escribe el término y su definición para cada obra.</p>
+    <div class="panel">
+      <div id="p1Chips"></div>
+      <div class="row" style="margin-top:16px"><button class="btn" id="p1Gen" type="button">Generar 4 imágenes</button><span class="small" id="p1Hint"></span></div>
+      <p class="small" id="p1Note" hidden style="color:var(--ochre)"></p>
+    </div>
+    <div id="p1Stage" class="hidden">
+      <div class="status"><span>Tiempo orientativo: 18 minutos (2 de 10 puntos en 90 minutos).</span><span class="timer" id="p1Timer" aria-live="off">18:00</span></div>
+      <form id="p1Form"></form>
+    </div>
+    <div id="p1Result" class="hidden"></div>
+    <div class="hist" id="p1Hist"></div>
+  </section>
+
+  <!-- TEST CON IMÁGENES -->
+  <section id="v-test" class="hidden" aria-labelledby="h-tes">
+    <h2 id="h-tes">Test de términos con imágenes</h2>
+    <p class="lead">Elige el tipo de pregunta y los temas que quieres repasar. Imagen → término se corresponde con la pregunta 1 de la PAU.</p>
+    <div class="modes" id="tModes" role="group" aria-label="Tipo de pregunta"></div>
+    <div class="row" style="margin-bottom:14px"><label for="tTema">Temas:</label><select id="tTema"></select><span class="stats" id="tStats" role="status"></span></div>
+    <div id="tArea"></div>
+  </section>
+</main>
+<footer class="wrap foot">
+  <p>Material de clase de Historia del Arte (2.º de Bachillerato). Semblanzas y glosario según el Decreto 64/2022 y el modelo de examen PAU 2027. Una vez abierta, la página funciona sin conexión y puede añadirse a la pantalla de inicio del móvil. Estadísticas anónimas de uso, sin cookies ni datos personales.</p>
+</footer>
+
+<script src="data/semblanzas.js"></script>
+<script src="data/glosario.js"></script>
+<script src="js/core.js"></script>
+<script src="js/semblanzas.js"></script>
+<script src="js/glosario.js"></script>
+<script>ARTE.start();</script>
+</body>
+</html>

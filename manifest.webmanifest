@@ -1,0 +1,25 @@
+{
+  "name": "Arte PAU · Historia del Arte",
+  "short_name": "Arte PAU",
+  "description": "Historia del Arte · 2.º de Bachillerato · Semblanzas, glosario y pruebas con imágenes para la PAU",
+  "lang": "es",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f7f4",
+  "theme_color": "#2e5e3e",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
