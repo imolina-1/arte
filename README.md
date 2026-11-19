@@ -28,7 +28,7 @@ Funciona sin conexión y se puede instalar en el móvil (aplicación web progres
 | `css/style.css`, `js/*.js` | Diseño y programación (`core.js`: utilidades y rutas; `semblanzas.js`: pregunta 3; `glosario.js`: pregunta 1) |
 | `data/semblanzas.js` | Las semblanzas, con los términos del glosario enlazados a cada una |
 | `data/glosario.js` | Los términos, con sus obras, semblanzas e imágenes enlazadas |
-| `data/obras.js` | 431 obras extraídas de tus presentaciones (T1-T16, más cuatro de T17), con los términos que ilustra cada una |
+| `data/obras.js` | 439 obras (T1-T16 de tus presentaciones; T17 con cuatro de ellas y ocho fotografías de Wikimedia Commons), con los términos que ilustra cada una |
 | `img/` | Imagen completa (hasta 1600 px) de cada artista; `img/t/` guarda las miniaturas. `img/obras/` y `img/obras/t/` hacen lo mismo con las obras de las presentaciones |
 | `sw.js`, `manifest.webmanifest`, `icon-*.png` | Uso sin conexión e instalación en el móvil |
 

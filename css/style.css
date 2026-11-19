@@ -302,3 +302,5 @@ main section:not(.hidden){animation:rise .4s cubic-bezier(.2,.7,.2,1) both}
 .foot .orn{margin-top:0}
 noscript .nojs{max-width:60ch;margin:40px auto;padding:20px;border:1px solid var(--line2);border-radius:var(--r);background:var(--surface);text-align:center}
 .mark svg{width:46px;height:46px}
+
+.about .cr{margin:0 0 12px;padding-left:18px;font-size:.85rem;color:var(--ink)}.about .cr li{margin:0 0 3px}

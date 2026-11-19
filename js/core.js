@@ -195,9 +195,11 @@ A.ring = function (score, max, label) {
   var p = Math.max(0, Math.min(1, score / max)), cls = p >= 0.7 ? "" : (p >= 0.4 ? " mid" : " low");
   return '<div class="score"><div class="ring' + cls + '" style="--p:' + Math.round(p * 100) + '" role="img" aria-label="' + A.num(score) + " de " + (label || A.num(max)) + ' puntos"><b>' + A.num(score) + "</b></div><span>de " + (label || A.num(max)) + " punto" + (max === 1 ? "" : "s") + "</span></div>";
 };
+A.CR = {"opera-sidney.jpg":["W. Bulach","CC BY-SA 4.0","00 1375 Sydney Opera House (Australia).jpg"],"guggenheim-bilbao.jpg":["Naotake Murayama","CC BY 2.0","Museo Guggenheim, Bilbao (31273245344).jpg"],"heydar-aliyev.jpg":["Robot8A","CC BY-SA 4.0","Baku 15 06 14 216000.jpeg"],"hsbc.jpg":["WiNG","CC BY 3.0","HK HSBC Main Building 2008.jpg"],"seagram.jpg":["Max Hermus at Dutch Wikipedia","Public domain","Seagrambuilding.JPG"],"guggenheim-nueva-york.jpg":["Jean-Christophe BENOIST","CC BY 3.0","NYC - Guggenheim Museum.jpg"],"casa-kaufmann.jpg":["Carol M. Highsmith","Public domain","Fallingwater 2007.jpg"],"pompidou.jpg":["Guilhem Vellut from Annecy, France","CC BY 2.0","Centre Pompidou @ Beaubourg @ Paris (15448205062).jpg"],"giotto-di-bondone.jpg":["José Luiz","CC BY-SA 4.0","Flight into Egypt - Capella dei Scrovegni - Padua 2016.jpg"]};
 A.zoom = function (src, cap) {
   var d = A.$("lb"); if (!d) return;
-  A.$("lbImg").src = src; A.$("lbImg").alt = cap || ""; A.$("lbCap").innerHTML = A.esc(cap || "") + "<small>Imagen de las presentaciones de clase · uso docente</small>";
+  var c = A.CR[String(src).split("/").pop().split("?")[0]];
+  A.$("lbImg").src = src; A.$("lbImg").alt = cap || ""; A.$("lbCap").innerHTML = A.esc(cap || "") + "<small>" + (c ? "Foto: " + A.esc(c[0]) + " · " + A.esc(c[1]) + " · Wikimedia Commons" : "Imagen de las presentaciones de clase · uso docente") + "</small>";
   if (d.showModal) { if (!d.open) d.showModal(); } else d.setAttribute("open", "");
 };
 document.addEventListener("click", function (ev) {
