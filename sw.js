@@ -1,7 +1,7 @@
 // Funciona sin conexión: guarda la página, los datos y las imágenes.
 // Cambia VERSION cada vez que se actualicen los datos (data/*.js) o la web.
-const VERSION = "arte-pau-v6";
-const CORE = ["./", "index.html", "css/style.css", "js/core.js", "js/semblanzas.js", "js/glosario.js", "data/semblanzas.js", "data/glosario.js", "data/obras.js", "manifest.webmanifest", "icon-192.png", "icon-512.png"];
+const VERSION = "historia-arte-v7";
+const CORE = ["./", "index.html", "css/style.css", "js/core.js", "js/semblanzas.js", "js/glosario.js", "js/start.js", "data/semblanzas.js", "data/glosario.js", "data/obras.js", "fonts/fraunces-latin-wght-normal.woff2", "fonts/fraunces-latin-wght-italic.woff2", "fonts/inter-latin-standard-normal.woff2", "fonts/spectral-latin-400-normal.woff2", "fonts/spectral-latin-600-normal.woff2", "fonts/spectral-latin-400-italic.woff2", "manifest.webmanifest", "icon-192.png", "icon-512.png"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(VERSION).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));
@@ -18,7 +18,7 @@ self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET") return;
   const url = new URL(req.url);
-  if (url.origin !== location.origin) return; // fuentes de Google: sin caché propia
+  if (url.origin !== location.origin) return; // recursos externos (estadísticas): sin caché propia
   const isPage = req.mode === "navigate" || url.pathname.endsWith(".html") || url.pathname.endsWith(".json") || url.pathname.endsWith(".js") || url.pathname.endsWith(".css");
   if (isPage) {
     // Página y datos: primero la red (para recibir actualizaciones), si falla, la copia guardada.

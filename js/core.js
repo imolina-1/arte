@@ -37,10 +37,9 @@ A.fmt = function (ms) {
 A.num = function (x) { return x.toFixed(2).replace(".", ","); };
 
 /* ---------- Temas ---------- */
-// Los nombres de tema salen de las semblanzas («Tema 1. El arte griego»); el T18 solo existe en el glosario
 A.temaName = {};
-A.SEMB.forEach(function (e) { A.temaName[e.tema] = e.temaNombre.replace(/^Tema \d+\.\s*/, ""); });
-A.temaName[18] = "Las artes plásticas en la segunda mitad del siglo XX";
+A.TEMAS = ["El arte griego", "El arte romano", "El arte paleocristiano", "El arte bizantino", "El arte prerrománico español", "El arte islámico e hispanomusulmán", "El arte románico", "El arte gótico", "El Renacimiento italiano", "El Renacimiento español", "El Barroco europeo", "El Barroco español", "El Neoclasicismo, el romanticismo y el realismo", "La Revolución Industrial: arquitectura, urbanismo y escultura", "Impresionismo, neoimpresionismo y postimpresionismo", "Las vanguardias en las artes plásticas", "La arquitectura y el urbanismo en el siglo XX", "Las artes plásticas en la segunda mitad del siglo XX"];
+A.TEMAS.forEach(function (n, i) { A.temaName[i + 1] = n; });
 A.temaLabel = function (n) { return "T" + n + ". " + (A.temaName[n] || ""); };
 A.EVAL = { e1: [1, 5], e2: [6, 12], e3: [13, 18] };
 A.EVAL_LABEL = { e1: "1.ª evaluación (T1-T5)", e2: "2.ª evaluación (T6-T12)", e3: "3.ª evaluación (T13-T18)" };

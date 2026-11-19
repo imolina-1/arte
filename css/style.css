@@ -1,9 +1,16 @@
+/* Tipografías alojadas en la propia web (sin llamadas a Google): Fraunces, Inter y Spectral, licencia SIL OFL */
+@font-face{font-family:"Fraunces";font-style:normal;font-weight:100 900;font-display:swap;src:url(../fonts/fraunces-latin-wght-normal.woff2) format("woff2")}
+@font-face{font-family:"Fraunces";font-style:italic;font-weight:100 900;font-display:swap;src:url(../fonts/fraunces-latin-wght-italic.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;src:url(../fonts/inter-latin-standard-normal.woff2) format("woff2")}
+@font-face{font-family:"Spectral";font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/spectral-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Spectral";font-style:normal;font-weight:600;font-display:swap;src:url(../fonts/spectral-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Spectral";font-style:italic;font-weight:400;font-display:swap;src:url(../fonts/spectral-latin-400-italic.woff2) format("woff2")}
 /* Arte PAU — «sala de museo»: marfil cálido, tinta oscura, oro tenue y el verde de la cartela del currículo.
    Tipografía: Fraunces (títulos) · Spectral (texto de estudio, justificado) · Inter (interfaz). */
 :root{
   --paper:#f3eee4; --paper2:#ebe4d5; --surface:#fffdf8; --ink:#1b1713; --muted:#6a6155; --line:#e0d6c3; --line2:#cfc3aa;
   --green:#1f4f37; --green-ink:#fffdf8; --green-soft:#e2eddf; --gold:#a97f2c; --gold-soft:#f4e8c9; --red:#9c2f2a; --red-soft:#f6dedb;
-  --ochre:#8f6410; --ochre-soft:#f6ebd0; --wall:#1a1511; --shadow:0 1px 2px rgba(40,28,10,.08),0 8px 24px -8px rgba(40,28,10,.18);
+  --gold-ink:#7a5810; --ochre:#8f6410; --ochre-soft:#f6ebd0; --wall:#1a1511; --shadow:0 1px 2px rgba(40,28,10,.08),0 8px 24px -8px rgba(40,28,10,.18);
   --display:"Fraunces", "Iowan Old Style", Georgia, serif; --text:"Spectral", Georgia, "Times New Roman", serif;
   --ui:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif; --body:var(--ui);
   --r:14px; color-scheme:light;
@@ -11,13 +18,13 @@
 :root[data-theme="dark"]{
   --paper:#0f0d0b; --paper2:#15120f; --surface:#1a1612; --ink:#eee7da; --muted:#a29786; --line:#2c261f; --line2:#3d352b;
   --green:#7cc79b; --green-ink:#0f1a13; --green-soft:#1c2c22; --gold:#d6b36a; --gold-soft:#2f2713; --red:#ee8c82; --red-soft:#3b2220;
-  --ochre:#e2b55a; --ochre-soft:#33291a; --wall:#090807; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -8px rgba(0,0,0,.6); color-scheme:dark;
+  --gold-ink:#d6b36a; --ochre:#e2b55a; --ochre-soft:#33291a; --wall:#090807; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -8px rgba(0,0,0,.6); color-scheme:dark;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     --paper:#0f0d0b; --paper2:#15120f; --surface:#1a1612; --ink:#eee7da; --muted:#a29786; --line:#2c261f; --line2:#3d352b;
     --green:#7cc79b; --green-ink:#0f1a13; --green-soft:#1c2c22; --gold:#d6b36a; --gold-soft:#2f2713; --red:#ee8c82; --red-soft:#3b2220;
-    --ochre:#e2b55a; --ochre-soft:#33291a; --wall:#090807; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -8px rgba(0,0,0,.6); color-scheme:dark;
+    --gold-ink:#d6b36a; --ochre:#e2b55a; --ochre-soft:#33291a; --wall:#090807; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -8px rgba(0,0,0,.6); color-scheme:dark;
   }
 }
 *{box-sizing:border-box}
@@ -58,7 +65,7 @@ header.site :focus-visible{outline-color:#d6b36a}
 main.wrap{padding:36px 22px 70px}
 section:not(.hidden){animation:rise .35s ease both}
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.eyebrow{margin:0 0 8px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--gold)}
+.eyebrow{margin:0 0 8px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--gold-ink)}
 h2{font:600 clamp(1.7rem,3.4vw,2.3rem)/1.12 var(--display);letter-spacing:-.015em;margin:0 0 10px;text-wrap:balance}
 h2 em{font-style:italic;font-weight:400;color:var(--gold)}
 h3{font:600 1.2rem/1.25 var(--display);margin:0}
@@ -84,7 +91,7 @@ h3{font:600 1.2rem/1.25 var(--display);margin:0}
 .hc-body{padding:14px 16px 16px}
 .hcard h3{margin:2px 0 6px;font-size:1.12rem}
 .hcard p{margin:0;color:var(--muted);font-size:.9rem}
-.hcard .k{font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.hcard .k{font-size:.66rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-ink)}
 
 /* ---------- Componentes ---------- */
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow)}
@@ -273,7 +280,7 @@ main section:not(.hidden){animation:rise .4s cubic-bezier(.2,.7,.2,1) both}
 .about p{margin:0 0 12px;font-size:.93rem;color:var(--ink);text-align:justify;hyphens:auto}
 .foot .fl{margin-top:10px;font-size:.8rem}
 .foot a{color:#d6b36a;text-underline-offset:3px}
-.foot p{text-align:justify;hyphens:auto}
+.foot p{margin:0}
 #toTop{position:fixed;right:18px;bottom:20px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line2);background:var(--surface);color:var(--ink);box-shadow:var(--shadow);cursor:pointer;display:grid;place-items:center;opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s;z-index:20}
 #toTop.on{opacity:1;pointer-events:auto;transform:none}
 #toTop:hover{border-color:var(--gold)}
@@ -290,3 +297,7 @@ main section:not(.hidden){animation:rise .4s cubic-bezier(.2,.7,.2,1) both}
   body.pg .gl-entry,body.pg #glList>*{break-inside:avoid;box-shadow:none;border-color:#bbb}
   body.pg img{max-height:90px;width:auto}
 }
+
+.foot .wrap{text-align:center}
+.foot .orn{margin-top:0}
+noscript .nojs{max-width:60ch;margin:40px auto;padding:20px;border:1px solid var(--line2);border-radius:var(--r);background:var(--surface);text-align:center}

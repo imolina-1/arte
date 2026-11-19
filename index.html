@@ -12,10 +12,8 @@
 <meta property="og:title" content="Historia del Arte · PAU 2027">
 <meta property="og:description" content="Semblanzas, glosario y pruebas con imágenes · 2.º de Bachillerato · PAU">
 <meta property="og:image" content="icon-512.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<script>try{var t=JSON.parse(localStorage.getItem("arte_theme")||"null");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
 <a class="skip" href="#main">Saltar al contenido</a>
@@ -23,7 +21,7 @@
   <div class="wrap top">
     <a class="brand" href="#inicio" aria-label="Historia del Arte, inicio">
       <span class="mark" aria-hidden="true"><svg viewBox="0 0 40 40" width="40" height="40"><rect x="2" y="2" width="36" height="36" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 33V16l12-8 12 8v17" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M14 33V19m6 14V19m6 14V19" stroke="currentColor" stroke-width="1.6"/></svg></span>
-      <span class="bn"><b>Historia del <i>Arte</i></b><small>PAU 2027 · 2.º de Bachillerato · Comunidad de Madrid</small></span>
+      <span class="bn"><b>Historia del <i>Arte</i></b><small>PAU 2027 · 2.º de Bachillerato</small></span>
     </a>
     <button id="themeBtn" class="theme" type="button" aria-label="Cambiar entre tema claro y oscuro" title="Tema claro / oscuro"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
   </div>
@@ -41,6 +39,7 @@
   </nav>
 </header>
 
+<noscript><p class="nojs">Esta página necesita JavaScript para funcionar. Actívalo en tu navegador y recarga.</p></noscript>
 <main class="wrap" id="main">
 
   <!-- INICIO -->
@@ -49,7 +48,7 @@
       <div class="hero-text">
         <p class="eyebrow">Historia del Arte · modelo PAU 2027</p>
         <h2 id="h-ini">Prepara la PAU <em>mirando</em> las obras</h2>
-        <p class="lead">Semblanzas de artistas, glosario de términos y las imágenes de las presentaciones de clase, enlazados entre sí. Todo funciona en el navegador, sin cuenta ni registro.</p>
+        <p class="lead">Semblanzas, glosario e imágenes de clase, enlazados entre sí. Sin cuenta ni registro.</p>
         <div class="row"><a class="btn" href="#test">Empezar el test con imágenes</a><a class="btn ghost" href="#artista">Probar una semblanza</a></div>
         <div class="counts" id="counts"></div>
       </div>
@@ -74,14 +73,14 @@
       <a class="hcard" href="#semblanzas" data-art="miguel-angel-buonarroti"><div class="hc-img"></div><div class="hc-body"><div class="k">Estudio</div><h3>Semblanzas</h3><p>Las 139 semblanzas del dossier, con buscador y los términos del glosario de cada artista.</p></div></a>
     </div>
     <div class="orn" aria-hidden="true"><svg viewBox="0 0 120 14" width="120" height="14"><path d="M0 7h46M74 7h46" stroke="currentColor" stroke-width="1" fill="none"/><path d="M60 1l5 6-5 6-5-6z" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="52" cy="7" r="1.4" fill="currentColor"/><circle cx="68" cy="7" r="1.4" fill="currentColor"/></svg></div>
-    <p class="disclaimer">Las correcciones automáticas son orientativas: buscan época, términos y obras del currículo, pero no valoran la redacción ni detectan errores. Tus resultados se guardan solo en tu navegador; el profesor no los ve.</p>
+    <p class="disclaimer">Las correcciones son orientativas: buscan época, términos y obras, pero no valoran la redacción. Tu progreso se guarda solo en tu navegador.</p>
   </section>
 
   <!-- UN ARTISTA -->
   <section id="v-artista" class="hidden" aria-labelledby="h-art">
     <p class="eyebrow">Pregunta 3 · práctica</p>
     <h2 id="h-art">Una semblanza, una nota</h2>
-    <p class="lead">Elige un artista, o deja que salga uno al azar, y escribe su semblanza: época, características y obras. Al corregir recibes la nota sobre <strong>1 punto</strong>, que es lo que vale cada respuesta de la pregunta 3, con el desglose por apartados.</p>
+    <p class="lead">Elige un artista (o uno al azar) y escribe su semblanza. Recibes la nota sobre <strong>1 punto</strong>, con el desglose por apartados.</p>
     <div class="panel">
       <div class="row">
         <label for="aTema">Temas</label><select id="aTema"></select>
@@ -109,7 +108,7 @@
   <!-- SIMULACRO DE SEMBLANZAS -->
   <section id="v-simulacro" class="hidden" aria-labelledby="h-sim">
     <h2 id="h-sim">Simulacro de la pregunta 3</h2>
-    <p class="lead">Elige los temas que entran, genera cinco artistas como en la PAU y escoge tres. Escribe cada semblanza (época, características y obras; unas diez líneas) y entrégala para ver la semblanza modelo y una estimación orientativa.</p>
+    <p class="lead">Elige los temas, genera cinco artistas como en la PAU y escoge tres. Escribe cada semblanza y entrégalas para ver la semblanza modelo y una nota orientativa.</p>
     <div class="panel">
       <div id="temaChips"></div>
       <div class="row" style="margin-top:16px">
@@ -137,7 +136,7 @@
   <!-- FICHAS -->
   <section id="v-fichas" class="hidden" aria-labelledby="h-fic">
     <h2 id="h-fic">Fichas de obras</h2>
-    <p class="lead">¿Quién es el autor? Las imágenes son las de las presentaciones de clase. Al responder verás la obra, el estilo, los términos del glosario relacionados y un enlace a la semblanza completa.</p>
+    <p class="lead">¿Quién es el autor? Al responder verás la obra, el estilo y los términos relacionados.</p>
     <div class="row" style="margin-bottom:14px"><label for="ficTema">Temas:</label>
       <select id="ficTema"></select>
       <span class="stats" id="ficStats" role="status">0 aciertos de 0</span></div>
@@ -159,7 +158,7 @@
   <!-- CONSULTA DE SEMBLANZAS -->
   <section id="v-semblanzas" class="hidden" aria-labelledby="h-con">
     <h2 id="h-con">Semblanzas</h2>
-    <p class="lead">Las 139 semblanzas del dossier (temas 1 a 17). En verde, las obras del currículo; debajo de cada una, los términos del glosario relacionados.</p>
+    <p class="lead">Las 139 semblanzas del dossier (T1-T17). En verde, las obras del currículo.</p>
     <div class="banner hidden" id="conBanner"><span>Mostrando una sola semblanza.</span><button class="btn ghost" id="conAll" type="button">Ver todas</button></div>
     <div class="filters">
       <label class="hidden" for="q">Buscar</label>
@@ -173,7 +172,7 @@
   <!-- GLOSARIO -->
   <section id="v-glosario" class="hidden" aria-labelledby="h-glo">
     <h2 id="h-glo">Glosario de términos artísticos</h2>
-    <p class="lead">740 términos de los 18 temas, definidos como en la pregunta 1 de la PAU. Un mismo término puede aparecer en varios temas con los ejemplos propios de cada arte. Las imágenes y semblanzas enlazadas salen de las obras que cita cada definición.</p>
+    <p class="lead">740 términos de los 18 temas, definidos como en la pregunta 1 de la PAU. Un mismo término puede repetirse en varios temas, con los ejemplos de cada arte.</p>
     <div class="banner hidden" id="glBanner"><span>Mostrando un solo término.</span><button class="btn ghost" id="glAll" type="button">Ver todo el glosario</button></div>
     <div id="glFilters">
       <div class="filters">
@@ -210,7 +209,7 @@
   <!-- TEST CON IMÁGENES -->
   <section id="v-test" class="hidden" aria-labelledby="h-tes">
     <h2 id="h-tes">Test de términos con imágenes</h2>
-    <p class="lead">Elige el tipo de pregunta y los temas que quieres repasar. Imagen → término se corresponde con la pregunta 1 de la PAU.</p>
+    <p class="lead">Elige el tipo de pregunta y los temas. «Imagen → término» es el formato de la pregunta 1.</p>
     <div class="modes" id="tModes" role="group" aria-label="Tipo de pregunta"></div>
     <div class="row" style="margin-bottom:14px"><label for="tTema">Temas:</label><select id="tTema"></select><span class="stats" id="tStats" role="status"></span></div>
     <div id="tArea"></div>
@@ -221,28 +220,24 @@
     <h2 id="h-ac">Créditos, autoría y derechos</h2>
     <div class="about">
       <article><h3>Autoría</h3>
-        <p>Material elaborado por <strong>Iván</strong>, profesor de Historia del Arte en el Colegio Tajamar (Madrid), para preparar a su alumnado de 2.º de Bachillerato. Los textos de las semblanzas, las definiciones del glosario y la selección de obras proceden de sus materiales de clase.</p>
-        <p>El diseño y la programación de la web se han desarrollado con la ayuda de Claude, el asistente de Anthropic, bajo la dirección y revisión del profesor.</p></article>
-      <article><h3>Currículo y examen</h3>
-        <p>Contenidos organizados según el Decreto 64/2022 de la Comunidad de Madrid (LOMLOE) y el modelo de examen de la PAU 2027. Pregunta 1: cuatro términos con imagen (2 puntos). Pregunta 3: tres semblanzas de artistas (3 puntos).</p></article>
+        <p><strong>Iván Molina Rincón</strong>, profesor de Historia del Arte en el Colegio Tajamar (Madrid). Textos, definiciones y selección de obras, a partir de sus materiales de clase. Diseño y programación desarrollados con Claude, de Anthropic.</p></article>
+      <article><h3>Currículo</h3>
+        <p>Decreto 64/2022 de la Comunidad de Madrid (LOMLOE) y modelo de examen de la PAU 2027.</p></article>
       <article><h3>Imágenes</h3>
-        <p>Las reproducciones proceden de las presentaciones de clase y se emplean con finalidad exclusivamente docente y sin ánimo de lucro. Las obras de autores fallecidos hace más de setenta años son, por lo general, de dominio público; las obras más recientes y las fotografías de obras, edificios y personas pueden estar protegidas, y los derechos corresponden a sus autores, fotógrafos o herederos.</p>
-        <p>Cada imagen indica su título y autor al ampliarla. Si eres titular de derechos y deseas que una imagen se retire o se acredite de otro modo, comunícaselo al profesor y se atenderá a la mayor brevedad.</p></article>
+        <p>Proceden de las presentaciones de clase y se usan con fines docentes y sin ánimo de lucro. Las obras anteriores al siglo XX suelen ser de dominio público; las posteriores y las fotografías pueden estar protegidas por sus autores. Si eres titular de derechos y quieres que se retire o se acredite una imagen, comunícaselo al profesor.</p></article>
       <article><h3>Derechos de uso</h3>
-        <p>© 2026. Se reservan los derechos sobre los textos, la selección y el diseño de esta web. Puedes usarla para estudiar y para dar clase, pero no copiar, vender ni redistribuir su contenido con fines comerciales sin permiso del autor.</p></article>
+        <p>© 2026 Iván Molina Rincón. Todos los derechos reservados. Puedes usar la web para estudiar y dar clase; no se permite su venta ni su redistribución comercial.</p></article>
       <article><h3>Privacidad</h3>
-        <p>La web no usa cookies ni pide datos personales. Tus resultados y tu progreso se guardan solo en tu navegador y el profesor no los ve. Se recogen estadísticas anónimas de visitas (GoatCounter) para saber qué secciones se usan.</p></article>
-      <article><h3>Tipografías y herramientas</h3>
-        <p>Fraunces, Spectral e Inter (licencia SIL Open Font), servidas por Google Fonts. Programada en HTML, CSS y JavaScript sin dependencias, y alojada en GitHub Pages.</p></article>
+        <p>Sin cookies ni datos personales. Tu progreso se guarda solo en tu navegador. Estadísticas de visitas anónimas (GoatCounter) y tipografías alojadas en esta misma web.</p></article>
     </div>
-    <p class="stats">Versión 6 · noviembre de 2026</p>
+    <p class="stats">Tipografías Fraunces, Inter y Spectral (SIL OFL) · Versión 7 · noviembre de 2026</p>
   </section>
 
 </main>
 <footer class="foot"><div class="wrap">
   <div class="orn light" aria-hidden="true"><svg viewBox="0 0 120 14" width="120" height="14"><path d="M0 7h46M74 7h46" stroke="currentColor" stroke-width="1" fill="none"/><path d="M60 1l5 6-5 6-5-6z" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="52" cy="7" r="1.4" fill="currentColor"/><circle cx="68" cy="7" r="1.4" fill="currentColor"/></svg></div>
-  <p>Material de clase de Historia del Arte (2.º de Bachillerato), elaborado por el profesor para su alumnado · Decreto 64/2022 y modelo PAU 2027. Una vez abierta, la página funciona sin conexión y puede añadirse a la pantalla de inicio del móvil. Estadísticas anónimas, sin cookies ni datos personales.</p>
-  <p class="fl"><a href="#acerca">Créditos, autoría y derechos</a> · © 2026 · Imágenes con fines docentes</p>
+  <p>Historia del Arte · 2.º de Bachillerato · Comunidad de Madrid · Decreto 64/2022 y modelo PAU 2027</p>
+  <p class="fl"><a href="#acerca">Créditos y derechos</a> · © 2026 Iván Molina Rincón</p>
 </div></footer>
 <button id="toTop" type="button" aria-label="Volver arriba" title="Volver arriba"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 14l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 <dialog id="lb" class="lb" aria-label="Imagen ampliada">
@@ -250,12 +245,12 @@
   <button id="lbClose" type="button" class="lb-x" aria-label="Cerrar">×</button>
 </dialog>
 
-<script src="data/semblanzas.js"></script>
-<script src="data/glosario.js"></script>
-<script src="data/obras.js"></script>
-<script src="js/core.js"></script>
-<script src="js/semblanzas.js"></script>
-<script src="js/glosario.js"></script>
-<script>ARTE.start();</script>
+<script defer src="data/semblanzas.js"></script>
+<script defer src="data/glosario.js"></script>
+<script defer src="data/obras.js"></script>
+<script defer src="js/core.js"></script>
+<script defer src="js/semblanzas.js"></script>
+<script defer src="js/glosario.js"></script>
+<script defer src="js/start.js"></script>
 </body>
 </html>
