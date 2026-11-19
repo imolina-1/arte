@@ -255,4 +255,8 @@ summary{cursor:pointer;padding:13px 18px;font-weight:600;color:var(--green);list
   body{background:#fff;color:#000;background-image:none}
   .entry{break-inside:avoid;border-color:#bbb;box-shadow:none}
   .lbl{color:#000}
+  body.pg #v-glosario{display:block!important}
+  body.pg #v-semblanzas,body.pg #glPrint,body.pg #glMore,body.pg #glLetters,body.pg .lead{display:none!important}
+  body.pg .gl-entry,body.pg #glList>*{break-inside:avoid;box-shadow:none;border-color:#bbb}
+  body.pg img{max-height:90px;width:auto}
 }

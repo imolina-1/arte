@@ -219,7 +219,7 @@ function buildModes() {
   });
 }
 function tStat() {
-  var s = A.getStat(tst.mode); $("tStats").textContent = s.ok + " aciertos de " + s.n + " (en este navegador). Lo que fallas vuelve a salir antes.";
+  var s = A.getStat(tst.mode); $("tStats").textContent = s.ok + " aciertos de " + s.n + " (en este navegador). Lo que fallas vuelve a salir antes. Atajos: teclas 1-4 para responder e Intro para continuar.";
 }
 function blank(def, name) {
   var out = def;
@@ -324,5 +324,14 @@ A.hooks.inicio = function () {
   $("progress").innerHTML = any ? "<strong>Tu progreso en este navegador</strong><ul>" + h + "</ul>" : "";
 };
 
-A.inits.push(initGlosario, initP1, initTest, initInicio);
+function initPrint() {
+  var b = $("glPrint"); if (!b) return;
+  b.onclick = function () {
+    var guard = 0; while (!$("glMore").classList.contains("hidden") && guard++ < 40) $("glMore").click();
+    document.body.classList.add("pg");
+    var done = function () { document.body.classList.remove("pg"); window.removeEventListener("afterprint", done); };
+    window.addEventListener("afterprint", done); A.track("glosario/imprimir", "Imprimir glosario"); setTimeout(function () { window.print(); }, 150);
+  };
+}
+A.inits.push(initGlosario, initP1, initTest, initInicio, initPrint);
 })();

@@ -204,6 +204,14 @@ document.addEventListener("click", function (ev) {
   if (im) { ev.preventDefault(); A.zoom(im.dataset.full || im.src, im.dataset.cap || im.alt); return; }
   var d = A.$("lb"); if (d && d.open && ev.target.closest("#lb") && ev.target.id !== "lbImg") { if (d.close) d.close(); else d.removeAttribute("open"); }
 });
+document.addEventListener("keydown", function (ev) {
+  if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+  var tg = ev.target && ev.target.tagName; if (tg === "INPUT" || tg === "TEXTAREA" || tg === "SELECT") return;
+  var area = document.getElementById("qOpts"), view = document.getElementById("v-test");
+  if (!view || view.classList.contains("hidden") || !area) return;
+  if (/^[1-4]$/.test(ev.key) && !area.dataset.done) { var o = area.querySelectorAll(".opt")[+ev.key - 1]; if (o) { o.click(); ev.preventDefault(); } }
+  else if (ev.key === "Enter" && area.dataset.done) { var n = document.getElementById("qNext"); if (n && n.offsetParent) { n.click(); ev.preventDefault(); } }
+});
 document.addEventListener("keydown", function (ev) { if (ev.key === "Escape") { var d = A.$("lb"); if (d && d.open && !d.close) d.removeAttribute("open"); } });
 (function () {
   var saved = A.store("arte_theme"); if (saved) document.documentElement.dataset.theme = saved;

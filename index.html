@@ -29,15 +29,15 @@
   </div>
   <nav class="wrap nav-wrap" aria-label="Secciones">
     <div class="nav-group"><small>&nbsp;</small><div><a href="#inicio" data-view="inicio">Inicio</a></div></div>
+    <div class="nav-group"><small>Términos · pregunta 1</small><div>
+      <a href="#glosario" data-view="glosario">Glosario</a>
+      <a href="#terminos" data-view="terminos">Simulacro</a>
+      <a href="#test" data-view="test">Test con imágenes</a></div></div>
     <div class="nav-group"><small>Artistas · pregunta 3</small><div>
       <a href="#simulacro" data-view="simulacro">Simulacro</a>
       <a href="#artista" data-view="artista">Un artista</a>
       <a href="#fichas" data-view="fichas">Fichas de obras</a>
       <a href="#semblanzas" data-view="semblanzas">Semblanzas</a></div></div>
-    <div class="nav-group"><small>Términos · pregunta 1</small><div>
-      <a href="#glosario" data-view="glosario">Glosario</a>
-      <a href="#terminos" data-view="terminos">Simulacro</a>
-      <a href="#test" data-view="test">Test con imágenes</a></div></div>
   </nav>
 </header>
 
@@ -59,6 +59,12 @@
       </figure>
     </div>
     <div class="hist" id="progress"></div>
+    <h3 class="sect"><span>Pregunta 1</span> Términos</h3>
+    <div class="cards">
+      <a class="hcard" href="#glosario" data-art="o-partenon-fachada"><div class="hc-img"></div><div class="hc-body"><div class="k">Estudio</div><h3>Glosario</h3><p>740 términos de los 18 temas, con buscador, índice alfabético, imágenes y semblanzas relacionadas.</p></div></a>
+      <a class="hcard" href="#terminos" data-art="o-chartres-fachada"><div class="hc-img"></div><div class="hc-body"><div class="k">2 puntos · 18 minutos</div><h3>Simulacro de términos</h3><p>Cuatro imágenes, un término por imagen y su definición, como en el modelo 2027.</p></div></a>
+      <a class="hcard" href="#test" data-art="o-mezquita-interior"><div class="hc-img"></div><div class="hc-body"><div class="k">Práctica</div><h3>Test con imágenes</h3><p>Imagen → término, término → imagen y definición → término, por tema o evaluación.</p></div></a>
+    </div>
     <h3 class="sect"><span>Pregunta 3</span> Artistas</h3>
     <div class="cards">
       <a class="hcard" href="#simulacro" data-art="diego-velazquez"><div class="hc-img"></div><div class="hc-body"><div class="k">3 puntos · cronómetro</div><h3>Simulacro de semblanzas</h3><p>Cinco artistas, eliges tres y escribes con cronómetro. Corrección orientativa con la semblanza modelo.</p></div></a>
@@ -66,14 +72,7 @@
       <a class="hcard" href="#fichas" data-art="rembrandt-van-rijn"><div class="hc-img"></div><div class="hc-body"><div class="k">Práctica</div><h3>Fichas de obras</h3><p>Ves una obra y eliges el autor entre cuatro. Después, términos del glosario relacionados.</p></div></a>
       <a class="hcard" href="#semblanzas" data-art="miguel-angel-buonarroti"><div class="hc-img"></div><div class="hc-body"><div class="k">Estudio</div><h3>Semblanzas</h3><p>Las 139 semblanzas del dossier, con buscador y los términos del glosario de cada artista.</p></div></a>
     </div>
-    <h3 class="sect"><span>Pregunta 1</span> Términos</h3>
-    <div class="cards">
-      <a class="hcard" href="#glosario" data-art="o-partenon-fachada"><div class="hc-img"></div><div class="hc-body"><div class="k">Estudio</div><h3>Glosario</h3><p>740 términos de los 18 temas, con buscador, índice alfabético, imágenes y semblanzas relacionadas.</p></div></a>
-      <a class="hcard" href="#terminos" data-art="o-chartres-fachada"><div class="hc-img"></div><div class="hc-body"><div class="k">2 puntos · 18 minutos</div><h3>Simulacro de términos</h3><p>Cuatro imágenes, un término por imagen y su definición, como en el modelo 2027.</p></div></a>
-      <a class="hcard" href="#test" data-art="o-mezquita-interior"><div class="hc-img"></div><div class="hc-body"><div class="k">Práctica</div><h3>Test con imágenes</h3><p>Imagen → término, término → imagen y definición → término, por tema o evaluación.</p></div></a>
-    </div>
     <p class="disclaimer">Las correcciones automáticas son orientativas: buscan época, términos y obras del currículo, pero no valoran la redacción ni detectan errores. Tus resultados se guardan solo en tu navegador; el profesor no los ve.</p>
-    <div class="hist" id="p1Hist"></div>
   </section>
 
   <!-- UN ARTISTA -->
@@ -183,6 +182,7 @@
       </div>
       <div class="letters" id="glLetters" role="group" aria-label="Índice alfabético"></div>
       <p class="stats" id="glCount" role="status"></p>
+      <button class="btn ghost" id="glPrint" type="button">Imprimir o guardar en PDF lo que ves</button>
     </div>
     <div id="glList"></div>
     <div class="row"><button class="btn ghost hidden" id="glMore" type="button">Mostrar más</button></div>
