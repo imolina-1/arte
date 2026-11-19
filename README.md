@@ -25,7 +25,8 @@ Funciona sin conexión y se puede instalar en el móvil (aplicación web progres
 | `css/style.css`, `js/*.js` | Diseño y programación (`core.js`: utilidades y rutas; `semblanzas.js`: pregunta 3; `glosario.js`: pregunta 1) |
 | `data/semblanzas.js` | Las semblanzas, con los términos del glosario enlazados a cada una |
 | `data/glosario.js` | Los términos, con sus obras, semblanzas e imágenes enlazadas |
-| `img/` | Una imagen por obra o artista |
+| `data/obras.js` | 161 obras extraídas de las presentaciones de T1-T8, con los términos que ilustra cada una |
+| `img/` | Una imagen por obra o artista; `img/obras/` contiene las de las presentaciones |
 | `sw.js`, `manifest.webmanifest`, `icon-*.png` | Uso sin conexión e instalación en el móvil |
 
 ## Cómo actualizar
@@ -33,7 +34,7 @@ Funciona sin conexión y se puede instalar en el móvil (aplicación web progres
 1. Sustituye los archivos de `data/` (y las imágenes de `img/` si hace falta).
 2. En `sw.js`, sube el número de `VERSION` (por ejemplo, `arte-pau-v2`) para que los móviles descarguen la versión nueva.
 
-Los vínculos entre términos, obras e imágenes salen de las «Obras» que cita cada definición del glosario y de los pies de las imágenes.
+Los vínculos entre términos, obras e imágenes salen de las «Obras» que cita cada definición del glosario y de los pies de las imágenes. En las obras de las presentaciones (`obras.js`) cada imagen lleva su propia lista de términos aplicables, para que el test no pregunte por detalles que no se ven en la foto.
 
 La nota de los simulacros es orientativa: comprueba la presencia de contenidos, no la calidad de la redacción.
 

@@ -37,7 +37,7 @@ function defRatio(c, text) {
   return { r: Math.min(1, hits.length / need), hits: hits, kw: kw };
 }
 function cartelas(list) { return list.map(function (o) { return '<span class="cartela">' + esc(o) + "</span>"; }).join(""); }
-function semOf(id) { var e = sById[id]; return e ? '<a href="#semblanzas?id=' + e.id + '">' + esc(e.nombre) + "</a>" : ""; }
+function semOf(id) { var e = sById[id]; if (e && e.obra) return ""; return e ? '<a href="#semblanzas?id=' + e.id + '">' + esc(e.nombre) + "</a>" : ""; }
 
 /* ---------- Glosario: consulta ---------- */
 var gl = { n: 60, letter: "", one: null, list: [] };
@@ -58,6 +58,7 @@ function glBase() {
 function glEntry(t) {
   var thumbs = t.img.slice(0, 3).map(function (id) {
     var e = sById[id];
+    if (e.obra) return '<span class="thumb" title="' + esc(e.pie) + '"><img src="' + e.img + '" alt="' + esc(e.pie) + '" loading="lazy"></span>';
     return '<a href="#semblanzas?id=' + id + '" title="' + esc(e.pie + " — " + e.nombre) + '"><img src="' + e.img + '" alt="' + esc(e.pie) + '" loading="lazy"></a>';
   }).join("");
   var same = (byName[norm(t.t)] || []).filter(function (i) { return i !== t.id; });
@@ -168,7 +169,7 @@ function p1result(ev) {
     if (g.found && g.dr) defMsg = (g.dr.hits.length ? "Palabras clave de la definición modelo que has usado: " + g.dr.hits.map(function (w) { return '<span class="tag ok">' + esc(w) + "</span>"; }).join("") : '<span class="tag miss">tu definición no recoge ideas clave del modelo</span>') + (g.words < 8 ? ' <span class="small">(definición muy breve)</span>' : "");
     else if (g.dr && g.dr.maybe) defMsg = '<span class="tag miss">tu definición se parece a la de «' + esc(g.dr.maybe.t) + "», pero no escribes ese término</span>";
     var model = g.found || g.cands[0];
-    h += '<article class="res"><div class="res-h"><img src="' + e.img + '" alt="' + esc(e.pie) + '"><div><h3>' + LET[i] + ") " + esc(e.pie) + '</h3><div class="stats">' + semOf(e.id) + " · " + esc(A.temaLabel(e.tema)) + '</div><div class="stats">Tu término: ' + (esc(r.tv) || "<em>(en blanco)</em>") + "</div></div>" +
+    h += '<article class="res"><div class="res-h"><img src="' + e.img + '" alt="' + esc(e.pie) + '"><div><h3>' + LET[i] + ") " + esc(e.pie) + '</h3><div class="stats">' + (e.obra ? esc(e.cab) : semOf(e.id)) + " · " + esc(A.temaLabel(e.tema)) + '</div><div class="stats">Tu término: ' + (esc(r.tv) || "<em>(en blanco)</em>") + "</div></div>" +
       '<div class="score"><b>' + num(g.tot) + "</b><span>de 0,5 puntos</span></div></div>" +
       '<div class="notes"><p><strong>Término:</strong> ' + termMsg + "</p>" + (defMsg ? "<p><strong>Definición:</strong> " + defMsg + "</p>" : "") + "</div>" +
       '<details><summary>Definición modelo de «' + esc(model.t) + '»</summary><div class="model"><p class="justify">' + esc(model.def) + "</p>" + (model.obras.length ? "<div>" + cartelas(model.obras) + "</div>" : "") + "</div></details>" +
@@ -229,7 +230,7 @@ function blank(def, name) {
   });
   return out;
 }
-function caption(e) { return esc(e.pie) + " · " + esc(e.nombre); }
+function caption(e) { return esc(e.pie) + (e.nombre ? " · " + esc(e.nombre) : ""); }
 function nextQ() {
   var v = $("tTema").value, box = $("tArea"); tst.cur = null;
   if (tst.mode === "img2term") {
@@ -248,7 +249,7 @@ function nextQ() {
         if (oc.dataset.done) return; oc.dataset.done = "1"; var good = ok.indexOf(t.id) >= 0; tdone("m1:" + e.id, e.id, good);
         oc.querySelectorAll(".opt").forEach(function (x) { if (x.textContent === corr.t) x.classList.add("right"); else if (x === b) x.classList.add("wrong"); });
         var others = ok.filter(function (i) { return i !== corr.id; });
-        $("qFb").innerHTML = '<div class="fb' + (good ? "" : " bad") + '"><p><strong>' + esc(corr.t) + "</strong> (" + esc(A.temaLabel(corr.tema)) + "). " + esc(corr.def) + '</p><p class="small">' + caption(e) + ' · <a href="#semblanzas?id=' + e.id + '">ver semblanza</a></p>' +
+        $("qFb").innerHTML = '<div class="fb' + (good ? "" : " bad") + '"><p><strong>' + esc(corr.t) + "</strong> (" + esc(A.temaLabel(corr.tema)) + "). " + esc(corr.def) + '</p><p class="small">' + caption(e) + (e.obra ? " · " + esc(e.cab) : ' · <a href="#semblanzas?id=' + e.id + '">ver semblanza</a>') + "</p>" +
           (others.length ? '<p class="rel"><strong>Otros términos de esta obra:</strong> ' + A.termChips(others, 12) + "</p>" : "") + '</div><button class="btn" type="button" id="qNext">Siguiente</button>';
         $("qNext").onclick = nextQ; $("qNext").focus();
       };
@@ -260,10 +261,10 @@ function nextQ() {
     var t = A.weightedPick(terms, function (x) { return "m2:" + x.id; }, tst.last); tst.last = t;
     var good = sById[pick(t.img)];
     var bad = shuffle(A.imgs.filter(function (e) { return t.img.indexOf(e.id) < 0 && e.id !== good.id && Math.abs(e.tema - t.tema) <= 1; }));
-    var seenAuthor = {}; seenAuthor[good.nombre] = 1;
+    var seenAuthor = {}; seenAuthor[good.nombre || good.id] = 1;
     var dis = [];
-    bad.forEach(function (e) { if (dis.length < 3 && !seenAuthor[e.nombre]) { seenAuthor[e.nombre] = 1; dis.push(e); } });
-    if (dis.length < 3) shuffle(A.imgs.filter(function (e) { return t.img.indexOf(e.id) < 0 && dis.indexOf(e) < 0; })).forEach(function (e) { if (dis.length < 3 && !seenAuthor[e.nombre]) { seenAuthor[e.nombre] = 1; dis.push(e); } });
+    bad.forEach(function (e) { var k = e.nombre || e.id; if (dis.length < 3 && !seenAuthor[k]) { seenAuthor[k] = 1; dis.push(e); } });
+    if (dis.length < 3) shuffle(A.imgs.filter(function (e) { return t.img.indexOf(e.id) < 0 && dis.indexOf(e) < 0; })).forEach(function (e) { var k = e.nombre || e.id; if (dis.length < 3 && !seenAuthor[k]) { seenAuthor[k] = 1; dis.push(e); } });
     var opts = shuffle(dis.concat([good]));
     box.innerHTML = '<p class="lead" style="margin-bottom:0">¿En cuál de estas obras se aplica este término?</p><div class="q-term">' + esc(t.t) + ' <span class="small">' + esc(A.temaLabel(t.tema)) + '</span></div><details open><summary style="padding:4px 0">Definición</summary><p class="q-def">' + esc(t.def) + '</p></details><div class="imgopts" id="qOpts"></div><div id="qFb"></div>';
     var oc = $("qOpts");
@@ -295,7 +296,7 @@ function nextQ() {
         if (oc.dataset.done) return; oc.dataset.done = "1"; var ok = t.id === c.id; tdone("m3:" + c.id, c.id, ok);
         oc.querySelectorAll(".opt").forEach(function (x) { if (x.textContent === c.t) x.classList.add("right"); else if (x === b) x.classList.add("wrong"); });
         $("qFb").innerHTML = '<div class="fb' + (ok ? "" : " bad") + '"><p><strong>' + esc(c.t) + ".</strong> " + esc(c.def) + "</p>" + (c.obras.length ? "<div>" + cartelas(c.obras) + "</div>" : "") +
-          (c.img.length ? '<p class="small">Mira cómo se ve: ' + c.img.map(semOf).join(", ") + ".</p>" : "") + '</div><button class="btn" type="button" id="qNext">Siguiente</button>';
+          (c.img.length ? '<p class="small">Mira cómo se ve: ' + c.img.map(function (i) { var o = sById[i]; return o.obra ? esc(o.pie) : semOf(i); }).filter(Boolean).slice(0, 6).join(", ") + ".</p>" : "") + '</div><button class="btn" type="button" id="qNext">Siguiente</button>';
         $("qNext").onclick = nextQ; $("qNext").focus();
       };
       oc.appendChild(b);

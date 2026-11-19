@@ -140,7 +140,7 @@ summary{cursor:pointer;padding:12px 16px;font-weight:600;color:var(--green)}
 .gl .tl:hover{color:var(--green)}
 .gl p{margin:2px 0 0;font-family:var(--display);max-width:74ch}
 .gl .thumbs{display:flex;flex-direction:column;gap:6px}
-.gl .thumbs a{display:block}
+.gl .thumbs a,.gl .thumbs .thumb{display:block}
 .gl .thumbs img{width:112px;height:84px;object-fit:cover;border-radius:5px;display:block}
 .banner{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;background:var(--green-soft);border-radius:8px;padding:10px 14px;margin-bottom:14px}
 .modes{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}

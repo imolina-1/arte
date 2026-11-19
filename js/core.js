@@ -6,6 +6,8 @@ A.SEMB = window.ARTE_SEMB || [];
 A.GLOS = window.ARTE_GLOS || [];
 A.sById = {};
 A.SEMB.forEach(function (e) { A.sById[e.id] = e; });
+A.OBRAS = window.ARTE_OBRAS || [];          // obras de las presentaciones (sin semblanza propia)
+A.OBRAS.forEach(function (e) { A.sById[e.id] = e; });
 
 /* ---------- Utilidades ---------- */
 A.norm = function (s) {
@@ -97,13 +99,13 @@ A.termChips = function (ids, max) {
   return s;
 };
 A.semLink = function (id) {
-  var e = A.sById[id]; if (!e) return "";
+  var e = A.sById[id]; if (!e || e.obra) return "";
   return '<a class="semchip" href="#semblanzas?id=' + e.id + '">' + A.esc(e.nombre) + "</a>";
 };
 // términos del glosario aplicables a una imagen concreta (obra mostrada)
 A.termsOfImg = {};
 A.GLOS.forEach(function (t) { t.img.forEach(function (sid) { (A.termsOfImg[sid] = A.termsOfImg[sid] || []).push(t.id); }); });
-A.imgs = A.SEMB.filter(function (e) { return e.ok; });          // imagen con términos del glosario enlazados
+A.imgs = A.SEMB.concat(A.OBRAS).filter(function (e) { return e.ok; });          // imagen con términos del glosario enlazados
 A.imgsAll = A.SEMB.filter(function (e) { return e.u; });          // toda imagen de obra utilizable (fichas)
 A.temasImg = []; A.imgs.forEach(function (e) { if (A.temasImg.indexOf(e.tema) < 0) A.temasImg.push(e.tema); });
 A.temasImg.sort(function (a, b) { return a - b; });
@@ -112,7 +114,7 @@ A.temasImgText = (function () {
   while (i < a.length) { var j = i; while (j + 1 < a.length && a[j + 1] === a[j] + 1) j++; out.push(j > i ? "T" + a[i] + "-T" + a[j] : "T" + a[i]); i = j + 1; }
   return out.join(", ");
 })();
-A.noImgMsg = '<p class="lead">No hay imágenes para ese filtro: por ahora solo hay imágenes de las obras de los artistas del dossier (' + A.temasImgText + '). Elige otro tema.</p>';
+A.noImgMsg = '<p class="lead">No hay imágenes para ese filtro: por ahora hay imágenes de las obras de los artistas del dossier y de las presentaciones (' + A.temasImgText + '). Elige otro tema.</p>';
 
 /* ---------- Secciones de una semblanza (Época / Características / Obras) ---------- */
 A.sections = function (t) {

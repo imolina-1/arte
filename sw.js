@@ -1,7 +1,7 @@
 // Funciona sin conexión: guarda la página, los datos y las imágenes.
 // Cambia VERSION cada vez que se actualicen los datos (data/*.js) o la web.
-const VERSION = "arte-pau-v1";
-const CORE = ["./", "index.html", "css/style.css", "js/core.js", "js/semblanzas.js", "js/glosario.js", "data/semblanzas.js", "data/glosario.js", "manifest.webmanifest", "icon-192.png", "icon-512.png"];
+const VERSION = "arte-pau-v2";
+const CORE = ["./", "index.html", "css/style.css", "js/core.js", "js/semblanzas.js", "js/glosario.js", "data/semblanzas.js", "data/glosario.js", "data/obras.js", "manifest.webmanifest", "icon-192.png", "icon-512.png"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(VERSION).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));
