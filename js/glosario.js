@@ -58,8 +58,8 @@ function glBase() {
 function glEntry(t) {
   var thumbs = t.img.slice(0, 3).map(function (id) {
     var e = sById[id];
-    if (e.obra) return '<span class="thumb" title="' + esc(e.pie) + '"><img src="' + e.img + '" alt="' + esc(e.pie) + '" loading="lazy"></span>';
-    return '<a href="#semblanzas?id=' + id + '" title="' + esc(e.pie + " — " + e.nombre) + '"><img src="' + e.img + '" alt="' + esc(e.pie) + '" loading="lazy"></a>';
+    if (e.obra) return '<span class="thumb" title="' + esc(e.pie) + '">' + A.img(e, true) + "</span>";
+    return '<a href="#semblanzas?id=' + id + '" title="' + esc(e.pie + " — " + e.nombre) + '"><img src="' + (e.th || e.img) + '" alt="' + esc(e.pie) + '" loading="lazy" decoding="async"></a>';
   }).join("");
   var same = (byName[norm(t.t)] || []).filter(function (i) { return i !== t.id; });
   var sems = t.semb.slice(0, 6).map(semOf).filter(Boolean).map(function (s) { return '<span class="semchip">' + s.replace("<a ", '<a style="text-decoration:none;color:inherit" ') + "</span>"; }).join("");
@@ -126,7 +126,7 @@ function p1gen() {
   var grid = f.firstChild;
   out.forEach(function (e, i) {
     var d = document.createElement("div"); d.className = "p1card";
-    d.innerHTML = '<img src="' + e.img + '" alt="Imagen ' + LET[i] + ') para identificar un término"><label for="p1t' + i + '"><span class="letter">' + LET[i] + ')</span>Término artístico</label><input type="text" id="p1t' + i + '" autocomplete="off" spellcheck="false" placeholder="Nombre del término">' +
+    d.innerHTML = '<img src="' + e.img + '" data-zoom data-full="' + e.img + '" data-cap="" alt="Imagen ' + LET[i] + ') para identificar un término"><label for="p1t' + i + '"><span class="letter">' + LET[i] + ')</span>Término artístico</label><input type="text" id="p1t' + i + '" autocomplete="off" spellcheck="false" placeholder="Nombre del término">' +
       '<label for="p1d' + i + '">Breve definición (máximo cinco líneas)</label><textarea id="p1d' + i + '" spellcheck="true"></textarea>';
     grid.appendChild(d);
   });
@@ -169,8 +169,8 @@ function p1result(ev) {
     if (g.found && g.dr) defMsg = (g.dr.hits.length ? "Palabras clave de la definición modelo que has usado: " + g.dr.hits.map(function (w) { return '<span class="tag ok">' + esc(w) + "</span>"; }).join("") : '<span class="tag miss">tu definición no recoge ideas clave del modelo</span>') + (g.words < 8 ? ' <span class="small">(definición muy breve)</span>' : "");
     else if (g.dr && g.dr.maybe) defMsg = '<span class="tag miss">tu definición se parece a la de «' + esc(g.dr.maybe.t) + "», pero no escribes ese término</span>";
     var model = g.found || g.cands[0];
-    h += '<article class="res"><div class="res-h"><img src="' + e.img + '" alt="' + esc(e.pie) + '"><div><h3>' + LET[i] + ") " + esc(e.pie) + '</h3><div class="stats">' + (e.obra ? esc(e.cab) : semOf(e.id)) + " · " + esc(A.temaLabel(e.tema)) + '</div><div class="stats">Tu término: ' + (esc(r.tv) || "<em>(en blanco)</em>") + "</div></div>" +
-      '<div class="score"><b>' + num(g.tot) + "</b><span>de 0,5 puntos</span></div></div>" +
+    h += '<article class="res"><div class="res-h">' + A.img(e, true) + '<div><h3>' + LET[i] + ") " + esc(e.pie) + '</h3><div class="stats">' + (e.obra ? esc(e.cab) : semOf(e.id)) + " · " + esc(A.temaLabel(e.tema)) + '</div><div class="stats">Tu término: ' + (esc(r.tv) || "<em>(en blanco)</em>") + "</div></div>" +
+      A.ring(g.tot, 0.5, "0,5") + "</div>" +
       '<div class="notes"><p><strong>Término:</strong> ' + termMsg + "</p>" + (defMsg ? "<p><strong>Definición:</strong> " + defMsg + "</p>" : "") + "</div>" +
       '<details><summary>Definición modelo de «' + esc(model.t) + '»</summary><div class="model"><p class="justify">' + esc(model.def) + "</p>" + (model.obras.length ? "<div>" + cartelas(model.obras) + "</div>" : "") + "</div></details>" +
       '<details><summary>Otros términos que se podían identificar en esta imagen (' + g.cands.length + ')</summary><div class="model"><p>' + A.termChips(g.cands.map(function (c) { return c.id; }), 40) + '</p><p class="small">Salen de las «Obras» que indica el glosario para cada término.</p></div></details>' +
@@ -241,7 +241,7 @@ function nextQ() {
     var avoid = ok.map(function (i) { return GLOS[i].t; });
     var dis = nearTerms(e.tema, function (t) { return t.img.length >= 1 && t.img.length <= 4 && ok.indexOf(t.id) < 0; }, 3, avoid);
     var opts = shuffle(dis.concat([corr]));
-    box.innerHTML = '<div class="card"><div class="frame"><img id="qImg" src="' + e.img + '" alt="Obra: elige el término que se aplica"></div><div><p class="lead" style="margin-bottom:8px">¿Qué término de la lista se aplica a esta obra?</p><div class="opts" id="qOpts"></div><div id="qFb"></div></div></div>';
+    box.innerHTML = '<div class="card"><div class="frame"><img id="qImg" src="' + e.img + '" data-zoom data-full="' + e.img + '" data-cap="" alt="Obra: elige el término que se aplica"></div><div><p class="lead" style="margin-bottom:8px">¿Qué término de la lista se aplica a esta obra?</p><div class="opts" id="qOpts"></div><div id="qFb"></div></div></div>';
     var oc = $("qOpts");
     opts.forEach(function (t) {
       var b = document.createElement("button"); b.type = "button"; b.className = "opt"; b.textContent = t.t;

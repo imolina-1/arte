@@ -11,6 +11,7 @@ Práctica interactiva para la PAU de Historia del Arte (Comunidad de Madrid, mod
 | Simulacro | 3 (3 puntos) | Cinco artistas al azar, eliges tres y escribes con cronómetro de 27 minutos; corrección orientativa con la semblanza modelo |
 | Fichas de obras | 3 (práctica) | Identificar al autor desde la imagen, con repaso espaciado |
 | Semblanzas | 3 (estudio) | Las 139 semblanzas (T1-T17), con buscador, enlaces directos y términos del glosario relacionados |
+| Una semblanza, una nota | 3 (1 punto) | Escribes la semblanza de un artista y obtienes la nota sobre 1 punto con el reparto época 0,30 · características 0,35 · obras 0,35 |
 | Glosario | 1 (estudio) | 740 términos de T1-T18, con buscador, índice alfabético, imágenes y semblanzas relacionadas |
 | Simulacro de términos | 1 (2 puntos) | Cuatro imágenes, un término y su definición por imagen, con cronómetro de 18 minutos |
 | Test con imágenes | 1 (práctica) | Imagen → término, término → imagen y definición → término |
@@ -26,7 +27,7 @@ Funciona sin conexión y se puede instalar en el móvil (aplicación web progres
 | `data/semblanzas.js` | Las semblanzas, con los términos del glosario enlazados a cada una |
 | `data/glosario.js` | Los términos, con sus obras, semblanzas e imágenes enlazadas |
 | `data/obras.js` | 161 obras extraídas de las presentaciones de T1-T8, con los términos que ilustra cada una |
-| `img/` | Una imagen por obra o artista; `img/obras/` contiene las de las presentaciones |
+| `img/` | Imagen completa (hasta 1600 px) de cada artista; `img/t/` guarda las miniaturas. `img/obras/` y `img/obras/t/` hacen lo mismo con las obras de las presentaciones |
 | `sw.js`, `manifest.webmanifest`, `icon-*.png` | Uso sin conexión e instalación en el móvil |
 
 ## Cómo actualizar

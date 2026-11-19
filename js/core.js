@@ -163,7 +163,7 @@ A.stat = function (key, ok) {
 A.getStat = function (key) { var s = A.store("arte_stats") || {}; return s[key] || { ok: 0, n: 0 }; };
 
 /* ---------- Rutas ---------- */
-var VIEWS = ["inicio", "simulacro", "fichas", "semblanzas", "glosario", "terminos", "test"];
+var VIEWS = ["inicio", "simulacro", "artista", "fichas", "semblanzas", "glosario", "terminos", "test"];
 var ALIAS = { consulta: "semblanzas" };
 A.hooks = {};
 A.params = {};
@@ -185,10 +185,58 @@ A.route = function () {
 };
 window.addEventListener("hashchange", function () { A.route(); });
 
+/* ---------- Imágenes: etiqueta con ampliación, anillo de nota, tema, portada ---------- */
+A.capOf = function (e) { return (e.pie || "") + (e.nombre ? " · " + e.nombre : "") + (e.cab ? " · " + e.cab.split(" · ").slice(-2).join(" · ") : ""); };
+A.img = function (e, thumb, extra) {
+  return '<img src="' + A.esc(thumb && e.th ? e.th : e.img) + '" data-zoom data-full="' + A.esc(e.img) + '" data-cap="' + A.esc(A.capOf(e)) + '" alt="' + A.esc(e.pie || "Obra") + '" loading="lazy" decoding="async"' + (extra || "") + ">";
+};
+A.ring = function (score, max, label) {
+  var p = Math.max(0, Math.min(1, score / max)), cls = p >= 0.7 ? "" : (p >= 0.4 ? " mid" : " low");
+  return '<div class="score"><div class="ring' + cls + '" style="--p:' + Math.round(p * 100) + '" role="img" aria-label="' + A.num(score) + " de " + (label || A.num(max)) + ' puntos"><b>' + A.num(score) + "</b></div><span>de " + (label || A.num(max)) + " punto" + (max === 1 ? "" : "s") + "</span></div>";
+};
+A.zoom = function (src, cap) {
+  var d = A.$("lb"); if (!d) return;
+  A.$("lbImg").src = src; A.$("lbImg").alt = cap || ""; A.$("lbCap").textContent = cap || "";
+  if (d.showModal) { if (!d.open) d.showModal(); } else d.setAttribute("open", "");
+};
+document.addEventListener("click", function (ev) {
+  var im = ev.target.closest && ev.target.closest("img[data-zoom]");
+  if (im) { ev.preventDefault(); A.zoom(im.dataset.full || im.src, im.dataset.cap || im.alt); return; }
+  var d = A.$("lb"); if (d && d.open && ev.target.closest("#lb") && ev.target.id !== "lbImg") { if (d.close) d.close(); else d.removeAttribute("open"); }
+});
+document.addEventListener("keydown", function (ev) { if (ev.key === "Escape") { var d = A.$("lb"); if (d && d.open && !d.close) d.removeAttribute("open"); } });
+(function () {
+  var saved = A.store("arte_theme"); if (saved) document.documentElement.dataset.theme = saved;
+  A.inits = A.inits || [];
+  A.inits.push(function () {
+    var b = A.$("themeBtn"); if (!b) return;
+    b.onclick = function () {
+      var cur = document.documentElement.dataset.theme || (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      var nxt = cur === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = nxt; A.store("arte_theme", nxt);
+      var m = document.querySelector('meta[name="theme-color"]'); if (m) m.content = "#17120f";
+    };
+  });
+})();
+A.heroInit = function () {
+  var pool = A.SEMB.concat(A.OBRAS).filter(function (e) { return e.u !== false && e.img; });
+  var last = null;
+  function show() {
+    var e = A.pick(pool); if (e === last && pool.length > 1) e = A.pick(pool); last = e;
+    var im = A.$("heroImg"); im.src = e.img; im.alt = e.pie || "Obra"; im.dataset.full = e.img; im.dataset.cap = A.capOf(e); im.dataset.zoom = "";
+    A.$("heroCap").textContent = (e.pie || "") + (e.nombre ? " · " + e.nombre : "") + (e.cab ? " · " + e.cab.split(" · ").slice(-2).join(" · ") : "");
+  }
+  if (!A.$("heroImg")) return;
+  A.$("heroNext").onclick = show; show();
+  A.$("heroFrame").addEventListener("click", function (ev) { if (ev.target.id !== "heroImg") A.zoom(A.$("heroImg").src, A.$("heroImg").dataset.cap); });
+  document.querySelectorAll(".hcard[data-art]").forEach(function (c) {
+    var e = A.sById[c.dataset.art]; if (e && e.img) c.querySelector(".hc-img").style.backgroundImage = "url(" + (e.th || e.img) + ")";
+  });
+};
 A.start = function () {
   if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(function () {});
   ["init"].forEach(function () { (A.inits || []).forEach(function (f) { f(); }); });
+  A.heroInit();
   A.route();
 };
-A.inits = [];
+A.inits = A.inits || [];
 })();

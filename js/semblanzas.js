@@ -96,14 +96,14 @@ function resultCard(r) {
   var tMiss = g.terms.filter(function (t) { return g.tHit.indexOf(t) < 0; }).slice(0, 6);
   var epTxt = (g.centHit ? '<span class="tag ok">siglo o fecha</span>' : '<span class="tag miss">falta el siglo o una fecha</span>') +
     (g.styleHit.length ? '<span class="tag ok">estilo: ' + esc(g.styleHit.join(", ")) + "</span>" : '<span class="tag miss">nombra el estilo: ' + esc(g.ep.styleLabel) + "</span>");
-  return '<article class="res"><div class="res-h">' + (e.img ? '<img src="' + e.img + '" alt="' + esc(e.pie || "") + '">' : "") +
+  return '<article class="res"><div class="res-h">' + (e.img ? A.img(e, true) : "") +
     "<div><h3>" + esc(e.nombre) + '</h3><div class="stats">' + esc(e.cab) + '</div><div class="stats">' + g.words + " palabras · ≈ " + Math.round(g.words / 11) + " líneas" + (g.pen < 1 ? ' · <span style="color:var(--ochre)">respuesta breve</span>' : "") + "</div></div>" +
-    '<div class="score"><b>' + num(g.total) + "</b><span>de 1 punto</span></div></div>" +
+    A.ring(g.total, 1, "1") + "</div>" +
     '<div class="crit">' +
-    "<span>Época</span><div class=\"bar " + barCls(g.sEp) + '"><i style="width:' + Math.round(g.sEp * 100) + '%"></i></div><span class="stats">' + Math.round(g.sEp * 100) + "%</span>" +
-    "<span>Características</span><div class=\"bar " + barCls(g.sCar) + '"><i style="width:' + Math.round(g.sCar * 100) + '%"></i></div><span class="stats">' + Math.round(g.sCar * 100) + "%</span>" +
-    "<span>Obras</span><div class=\"bar " + barCls(g.sOb) + '"><i style="width:' + Math.round(g.sOb * 100) + '%"></i></div><span class="stats">' + Math.round(g.sOb * 100) + "%</span>" +
-    '</div><div class="notes">' +
+    "<span>Época</span><div class=\"bar " + barCls(g.sEp) + '"><i style="width:' + Math.round(g.sEp * 100) + '%"></i></div><span class="stats">' + num(0.3 * g.sEp * g.pen) + " / 0,30</span>" +
+    "<span>Características</span><div class=\"bar " + barCls(g.sCar) + '"><i style="width:' + Math.round(g.sCar * 100) + '%"></i></div><span class="stats">' + num(0.35 * g.sCar * g.pen) + " / 0,35</span>" +
+    "<span>Obras</span><div class=\"bar " + barCls(g.sOb) + '"><i style="width:' + Math.round(g.sOb * 100) + '%"></i></div><span class="stats">' + num(0.35 * g.sOb * g.pen) + " / 0,35</span>" +
+    '</div><p class="small" style="padding:0 18px">Reparto orientativo del punto: época 0,30 · características 0,35 · obras 0,35' + (g.pen < 1 ? " · descuento por respuesta breve (" + Math.round((1 - g.pen) * 100) + " %)" : "") + ". La nota se redondea a 0,05.</p>" + '<div class="notes">' +
     "<p><strong>Época:</strong> " + epTxt + "</p>" +
     "<p><strong>Rasgos que has usado:</strong> " + (g.tHit.length ? g.tHit.map(function (t) { return '<span class="tag ok">' + esc(t) + "</span>"; }).join("") : '<span class="stats">ninguno del modelo</span>') + (tMiss.length ? "<br><strong>Podrías añadir:</strong> " + tMiss.map(function (t) { return '<span class="tag miss">' + esc(t) + "</span>"; }).join("") : "") + "</p>" +
     "<p><strong>Obras citadas:</strong> " + (g.wHit.length ? g.wHit.map(function (t) { return '<span class="tag ok">' + esc(t) + "</span>"; }).join("") : '<span class="stats">ninguna reconocida</span>') + (miss.length ? "<br><strong>Te faltan:</strong> " + miss.map(function (t) { return '<span class="tag miss">' + esc(t) + "</span>"; }).join("") : "") + "</p>" +
@@ -189,7 +189,7 @@ function nextFic() {
   var near = DATA.filter(function (x) { return x !== e && !x.compl && Math.abs(x.tema - e.tema) <= 1; });
   if (near.length < 3) near = DATA.filter(function (x) { return x !== e; });
   var opts = shuffle(shuffle(near).slice(0, 3).concat([e]));
-  var img = $("ficImg"); img.src = e.img; img.alt = "Obra para identificar";
+  var img = $("ficImg"); img.src = e.img; img.alt = "Obra para identificar"; img.dataset.zoom = ""; img.dataset.full = e.img; img.dataset.cap = "";
   var box = $("ficOpts"); box.innerHTML = "";
   opts.forEach(function (o) {
     var b = document.createElement("button"); b.type = "button"; b.className = "opt"; b.textContent = o.nombre;
@@ -199,7 +199,7 @@ function nextFic() {
       box.querySelectorAll(".opt").forEach(function (x) { if (x.textContent === e.nombre) x.classList.add("right"); else if (x === b) x.classList.add("wrong"); });
       $("ficTxt").innerHTML = "<strong>" + esc(e.pie) + "</strong>, de " + esc(e.nombre) + ". " + esc(e.cab.split(" · ").pop());
       $("ficRel").innerHTML = e.terms && e.terms.length ? "<strong>Términos del glosario de esta obra y de su autor:</strong> " + A.termChips(e.terms, 10) : "";
-      $("ficLink").href = "#a-" + e.id;
+      $("ficLink").href = "#a-" + e.id; img.dataset.cap = A.capOf(e);
       $("ficInfo").classList.remove("hidden"); $("ficNext").focus();
     };
     box.appendChild(b);
@@ -220,10 +220,10 @@ function drawList() {
   var items = one ? [one] : DATA.filter(function (e) { return A.inFilter(e.tema, t) && (!q || norm(e.nombre + " " + e.cab + " " + e.obras + " " + e.texto).indexOf(q) >= 0); });
   $("conBanner").classList.toggle("hidden", !one);
   $("list").innerHTML = items.length ? items.map(function (e) {
-    return '<article class="entry" id="s-' + e.id + '">' + (e.img ? '<img src="' + e.img + '" alt="' + esc(e.pie || "") + '" loading="lazy">' : '<div class="noimg" aria-hidden="true"></div>') +
+    return '<article class="entry" id="s-' + e.id + '">' + (e.img ? A.img(e, true) : '<div class="noimg" aria-hidden="true"></div>') +
       '<div><div class="t">' + esc(A.temaLabel(e.tema)) + (e.compl ? " · complementaria" : "") + "</div><h3>" + esc(e.nombre) + '</h3><div class="stats">' + esc(e.cab) + "</div>" +
       '<details style="border:0"' + (one ? " open" : "") + '><summary style="padding:8px 0">Leer la semblanza</summary><div class="body">' + A.sections(e.texto) + "</div></details>" + cartelas(e) + relTerms(e, 16) +
-      '<div style="margin-top:8px"><button type="button" class="linkbtn" data-link="' + e.id + '">Copiar enlace a esta semblanza</button> <span class="stats" role="status"></span></div></div></article>';
+      '<div style="margin-top:8px"><button type="button" class="linkbtn" data-link="' + e.id + '">Copiar enlace a esta semblanza</button> <span class="stats" role="status"></span> · <a class="linkbtn" href="#artista?id=' + e.id + '">Practicar esta semblanza (nota sobre 1)</a></div></div></article>';
   }).join("") : '<p class="lead">No hay semblanzas con esa búsqueda. Prueba con otro nombre u obra.</p>';
 }
 function initConsulta() {
@@ -244,5 +244,50 @@ function initConsulta() {
 }
 A.hooks.semblanzas = function (p) { if (!p.id && p.q) $("q").value = p.q; drawList(); };
 
-A.inits.push(initSim, initFichas, initConsulta);
+
+/* ---------- Una semblanza, una nota (pregunta 3: 1 punto) ---------- */
+var art = { cur: null };
+function artFill(sel) {
+  var v = $("aTema").value, list = DATA.filter(function (e) { return A.inFilter(e.tema, v); });
+  list.sort(function (a, b) { return a.tema - b.tema || (norm(a.nombre) < norm(b.nombre) ? -1 : 1); });
+  $("aSel").innerHTML = '<option value="">Elige un artista…</option>' + list.map(function (e) { return '<option value="' + e.id + '">' + esc(e.nombre) + " · T" + e.tema + (e.compl ? " (compl.)" : "") + "</option>"; }).join("");
+  if (sel) $("aSel").value = sel;
+}
+function artShow(e) {
+  art.cur = e; $("aSel").value = e.id; $("aWork").classList.remove("hidden"); $("aResult").innerHTML = "";
+  $("aName").textContent = e.nombre; $("aAns").value = ""; $("aMeter").textContent = "0 palabras · ≈ 0 líneas manuscritas";
+  $("aHint").textContent = A.temaLabel(e.tema) + (e.compl ? " · complementaria (no entra en el examen)" : "") + ". Escribe unas diez líneas: época, características y obras más significativas.";
+  A.track("artista/elegido/" + e.id, "Un artista: " + e.nombre);
+}
+function artHist() {
+  var h = store("pau1hist") || [], el = $("aHist");
+  el.innerHTML = h.length ? "<strong>Tus últimos intentos en este navegador</strong><ul>" + h.map(function (x) { return "<li>" + esc(x.d) + " · " + esc(x.a) + " · " + num(x.s) + " / 1</li>"; }).join("") + "</ul>" : "";
+}
+function initArtista() {
+  $("aTema").innerHTML = A.temaOptions(17); artFill();
+  $("aTema").onchange = function () { artFill(); };
+  $("aSel").onchange = function () { var e = A.sById[$("aSel").value]; if (e) artShow(e); };
+  $("aRand").onclick = function () {
+    var v = $("aTema").value, p = DATA.filter(function (e) { return !e.compl && A.inFilter(e.tema, v); });
+    if (p.length) artShow(A.pick(p.length > 1 ? p.filter(function (e) { return e !== art.cur; }) : p));
+  };
+  $("aAns").addEventListener("input", function (ev) {
+    var n = norm(ev.target.value) ? norm(ev.target.value).split(" ").length : 0;
+    $("aMeter").textContent = n + " palabras · ≈ " + Math.round(n / 11) + " líneas manuscritas";
+  });
+  $("aScaf").onclick = function () { var ta = $("aAns"); if (!ta.value.trim()) ta.value = "Época: \n\nCaracterísticas: \n\nObras: "; ta.focus(); ta.setSelectionRange(8, 8); };
+  $("aForm").addEventListener("submit", function (ev) {
+    ev.preventDefault(); var e = art.cur; if (!e) return;
+    var ans = $("aAns").value, g = grade(e, ans);
+    $("aResult").innerHTML = resultCard({ e: e, g: g, ans: ans }) + '<div class="row"><button type="button" class="btn" id="aAgain">Otro artista al azar</button><button type="button" class="btn ghost" id="aRetry">Reescribir este</button></div>';
+    var h = store("pau1hist") || []; h.unshift({ d: new Date().toLocaleDateString("es-ES"), a: e.nombre, s: g.total }); store("pau1hist", h.slice(0, 10)); artHist();
+    A.track("artista/nota/" + e.id + "/" + A.bucket(g.total), "Un artista · nota " + A.bucket(g.total) + ": " + e.nombre);
+    $("aAgain").onclick = function () { $("aRand").click(); $("aAns").focus(); };
+    $("aRetry").onclick = function () { $("aResult").innerHTML = ""; $("aAns").focus(); };
+    $("aResult").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  artHist();
+}
+A.hooks.artista = function (p) { if (p.id && A.sById[p.id] && !A.sById[p.id].obra) { $("aTema").value = "all"; artFill(p.id); artShow(A.sById[p.id]); } };
+A.inits.push(initSim, initFichas, initConsulta, initArtista);
 })();
