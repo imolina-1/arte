@@ -191,6 +191,11 @@ A.capOf = function (e) { return (e.pie || "") + (e.nombre ? " · " + e.nombre : 
 A.img = function (e, thumb, extra) {
   return '<img src="' + A.esc(thumb && e.th ? e.th : e.img) + '" data-zoom data-full="' + A.esc(e.img) + '" data-cap="' + A.esc(A.capOf(e)) + '" alt="' + A.esc(e.pie || "Obra") + '" loading="lazy" decoding="async"' + (extra || "") + ">";
 };
+A.face = function (e, thumb) {
+  if (!e.ret) return e.img ? A.img(e, thumb) : "";
+  var cap = (e.nombre || "") + (e.cab ? " · " + e.cab.split(" · ")[0] : "");
+  return '<img class="face" src="' + A.esc(thumb && e.rth ? e.rth : e.ret) + '" data-zoom data-full="' + A.esc(e.ret) + '" data-cap="' + A.esc(cap) + '" alt="Retrato de ' + A.esc(e.nombre || "") + '" loading="lazy" decoding="async">';
+};
 A.ring = function (score, max, label) {
   var p = Math.max(0, Math.min(1, score / max)), cls = p >= 0.7 ? "" : (p >= 0.4 ? " mid" : " low");
   return '<div class="score"><div class="ring' + cls + '" style="--p:' + Math.round(p * 100) + '" role="img" aria-label="' + A.num(score) + " de " + (label || A.num(max)) + ' puntos"><b>' + A.num(score) + "</b></div><span>de " + (label || A.num(max)) + " punto" + (max === 1 ? "" : "s") + "</span></div>";

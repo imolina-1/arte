@@ -96,7 +96,7 @@ function resultCard(r) {
   var tMiss = g.terms.filter(function (t) { return g.tHit.indexOf(t) < 0; }).slice(0, 6);
   var epTxt = (g.centHit ? '<span class="tag ok">siglo o fecha</span>' : '<span class="tag miss">falta el siglo o una fecha</span>') +
     (g.styleHit.length ? '<span class="tag ok">estilo: ' + esc(g.styleHit.join(", ")) + "</span>" : '<span class="tag miss">nombra el estilo: ' + esc(g.ep.styleLabel) + "</span>");
-  return '<article class="res"><div class="res-h">' + (e.img ? A.img(e, true) : "") +
+  return '<article class="res"><div class="res-h">' + A.face(e, true) +
     "<div><h3>" + esc(e.nombre) + '</h3><div class="stats">' + esc(e.cab) + '</div><div class="stats">' + g.words + " palabras · ≈ " + Math.round(g.words / 11) + " líneas" + (g.pen < 1 ? ' · <span style="color:var(--ochre)">respuesta breve</span>' : "") + "</div></div>" +
     A.ring(g.total, 1, "1") + "</div>" +
     '<div class="crit">' +
@@ -220,7 +220,7 @@ function drawList() {
   var items = one ? [one] : DATA.filter(function (e) { return A.inFilter(e.tema, t) && (!q || norm(e.nombre + " " + e.cab + " " + e.obras + " " + e.texto).indexOf(q) >= 0); });
   $("conBanner").classList.toggle("hidden", !one);
   $("list").innerHTML = items.length ? items.map(function (e) {
-    return '<article class="entry" id="s-' + e.id + '">' + (e.img ? A.img(e, true) : '<div class="noimg" aria-hidden="true"></div>') +
+    return '<article class="entry" id="s-' + e.id + '">' + (e.img || e.ret ? A.face(e, true) : '<div class="noimg" aria-hidden="true"></div>') +
       '<div><div class="t">' + esc(A.temaLabel(e.tema)) + (e.compl ? " · complementaria" : "") + "</div><h3>" + esc(e.nombre) + '</h3><div class="stats">' + esc(e.cab) + "</div>" +
       '<details style="border:0"' + (one ? " open" : "") + '><summary style="padding:8px 0">Leer la semblanza</summary><div class="body">' + A.sections(e.texto) + "</div></details>" + cartelas(e) + relTerms(e, 16) +
       '<div style="margin-top:8px"><button type="button" class="linkbtn" data-link="' + e.id + '">Copiar enlace a esta semblanza</button> <span class="stats" role="status"></span> · <a class="linkbtn" href="#artista?id=' + e.id + '">Practicar esta semblanza (nota sobre 1)</a></div></div></article>';
