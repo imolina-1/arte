@@ -199,7 +199,7 @@ function nextFic() {
       box.querySelectorAll(".opt").forEach(function (x) { if (x.textContent === e.nombre) x.classList.add("right"); else if (x === b) x.classList.add("wrong"); });
       $("ficTxt").innerHTML = "<strong>" + esc(e.pie) + "</strong>, de " + esc(e.nombre) + ". " + esc(e.cab.split(" · ").pop());
       $("ficRel").innerHTML = e.terms && e.terms.length ? "<strong>Términos del glosario de esta obra y de su autor:</strong> " + A.termChips(e.terms, 10) : "";
-      $("ficLink").href = "#a-" + e.id; img.dataset.cap = A.capOf(e);
+      $("ficLink").href = "#a-" + e.id; img.dataset.cap = A.capOf(e); img.dataset.cr = A.crOf(e);
       $("ficInfo").classList.remove("hidden"); $("ficNext").focus();
     };
     box.appendChild(b);

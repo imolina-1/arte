@@ -189,27 +189,28 @@ window.addEventListener("hashchange", function () { A.route(); });
 /* ---------- Imágenes: etiqueta con ampliación, anillo de nota, tema, portada ---------- */
 A.capOf = function (e) { return (e.pie || "") + (e.nombre ? " · " + e.nombre : "") + (e.cab ? " · " + e.cab.split(" · ").slice(-2).join(" · ") : ""); };
 A.img = function (e, thumb, extra) {
-  return '<img src="' + A.esc(thumb && e.th ? e.th : e.img) + '" data-zoom data-full="' + A.esc(e.img) + '" data-cap="' + A.esc(A.capOf(e)) + '" alt="' + A.esc(e.pie || "Obra") + '" loading="lazy" decoding="async"' + (extra || "") + ">";
+  return '<img src="' + A.esc(thumb && e.th ? e.th : e.img) + '" data-zoom data-full="' + A.esc(e.img) + '" data-cap="' + A.esc(A.capOf(e)) + '" data-cr="' + A.esc(A.crOf(e)) + '" alt="' + A.esc(e.pie || "Obra") + '" loading="lazy" decoding="async"' + (extra || "") + ">";
 };
 A.face = function (e, thumb) {
   if (!e.ret) return e.img ? A.img(e, thumb) : "";
   var cap = (e.nombre || "") + (e.cab ? " · " + e.cab.split(" · ")[0] : "");
-  return '<img class="face" src="' + A.esc(thumb && e.rth ? e.rth : e.ret) + '" data-zoom data-full="' + A.esc(e.ret) + '" data-cap="' + A.esc(cap) + '" alt="Retrato de ' + A.esc(e.nombre || "") + '" loading="lazy" decoding="async">';
+  return '<img class="face" src="' + A.esc(thumb && e.rth ? e.rth : e.ret) + '" data-zoom data-full="' + A.esc(e.ret) + '" data-cap="' + A.esc(cap) + '" data-cr="' + A.esc(A.CRR[e.id] || "") + '" alt="Retrato de ' + A.esc(e.nombre || "") + '" loading="lazy" decoding="async">';
 };
 A.ring = function (score, max, label) {
   var p = Math.max(0, Math.min(1, score / max)), cls = p >= 0.7 ? "" : (p >= 0.4 ? " mid" : " low");
   return '<div class="score"><div class="ring' + cls + '" style="--p:' + Math.round(p * 100) + '" role="img" aria-label="' + A.num(score) + " de " + (label || A.num(max)) + ' puntos"><b>' + A.num(score) + "</b></div><span>de " + (label || A.num(max)) + " punto" + (max === 1 ? "" : "s") + "</span></div>";
 };
-A.CR = {"opera-sidney.jpg":["W. Bulach","CC BY-SA 4.0","00 1375 Sydney Opera House (Australia).jpg"],"guggenheim-bilbao.jpg":["Naotake Murayama","CC BY 2.0","Museo Guggenheim, Bilbao (31273245344).jpg"],"heydar-aliyev.jpg":["Robot8A","CC BY-SA 4.0","Baku 15 06 14 216000.jpeg"],"hsbc.jpg":["WiNG","CC BY 3.0","HK HSBC Main Building 2008.jpg"],"seagram.jpg":["Max Hermus at Dutch Wikipedia","Public domain","Seagrambuilding.JPG"],"guggenheim-nueva-york.jpg":["Jean-Christophe BENOIST","CC BY 3.0","NYC - Guggenheim Museum.jpg"],"casa-kaufmann.jpg":["Carol M. Highsmith","Public domain","Fallingwater 2007.jpg"],"pompidou.jpg":["Guilhem Vellut from Annecy, France","CC BY 2.0","Centre Pompidou @ Beaubourg @ Paris (15448205062).jpg"],"giotto-di-bondone.jpg":["José Luiz","CC BY-SA 4.0","Flight into Egypt - Capella dei Scrovegni - Padua 2016.jpg"]};
-A.zoom = function (src, cap) {
+A.CR = {"o-opera-sidney":["W. Bulach","CC BY-SA 4.0"],"o-guggenheim-bilbao":["Naotake Murayama","CC BY 2.0"],"o-heydar-aliyev":["Robot8A","CC BY-SA 4.0"],"o-hsbc":["WiNG","CC BY 3.0"],"o-seagram":["Max Hermus at Dutch Wikipedia","Public domain"],"o-guggenheim-nueva-york":["Jean-Christophe BENOIST","CC BY 3.0"],"o-casa-kaufmann":["Carol M. Highsmith","Public domain"],"o-pompidou":["Guilhem Vellut from Annecy, France","CC BY 2.0"],"giotto-di-bondone":["José Luiz","CC BY-SA 4.0"]};
+A.CRR = {"gil-de-siloe":"Retrato ilustrativo generado con IA: no se conserva ninguno de época","maestro-mateo-complementaria":"Retrato ilustrativo generado con IA: no se conserva ninguno de época"};
+A.crOf = function (e) { var c = A.CR[e.id]; return c ? "Foto: " + c[0] + " · " + c[1] + " · Wikimedia Commons" : ""; };
+A.zoom = function (src, cap, cr) {
   var d = A.$("lb"); if (!d) return;
-  var c = A.CR[String(src).split("/").pop().split("?")[0]];
-  A.$("lbImg").src = src; A.$("lbImg").alt = cap || ""; A.$("lbCap").innerHTML = A.esc(cap || "") + "<small>" + (c ? "Foto: " + A.esc(c[0]) + " · " + A.esc(c[1]) + " · Wikimedia Commons" : "Imagen de las presentaciones de clase · uso docente") + "</small>";
+  A.$("lbImg").src = src; A.$("lbImg").alt = cap || ""; A.$("lbCap").innerHTML = A.esc(cap || "") + "<small>" + A.esc(cr || "Imagen de las presentaciones de clase · uso docente") + "</small>";
   if (d.showModal) { if (!d.open) d.showModal(); } else d.setAttribute("open", "");
 };
 document.addEventListener("click", function (ev) {
   var im = ev.target.closest && ev.target.closest("img[data-zoom]");
-  if (im) { ev.preventDefault(); A.zoom(im.dataset.full || im.src, im.dataset.cap || im.alt); return; }
+  if (im) { ev.preventDefault(); A.zoom(im.dataset.full || im.src, im.dataset.cap || im.alt, im.dataset.cr); return; }
   var d = A.$("lb"); if (d && d.open && ev.target.closest("#lb") && ev.target.id !== "lbImg") { if (d.close) d.close(); else d.removeAttribute("open"); }
 });
 document.addEventListener("keydown", function (ev) {
@@ -238,12 +239,12 @@ A.heroInit = function () {
   var last = null;
   function show() {
     var e = A.pick(pool); if (e === last && pool.length > 1) e = A.pick(pool); last = e;
-    var im = A.$("heroImg"); im.src = e.img; im.alt = e.pie || "Obra"; im.dataset.full = e.img; im.dataset.cap = A.capOf(e); im.dataset.zoom = "";
+    var im = A.$("heroImg"); im.src = e.img; im.alt = e.pie || "Obra"; im.dataset.full = e.img; im.dataset.cap = A.capOf(e); im.dataset.cr = A.crOf(e); im.dataset.zoom = "";
     A.$("heroCap").textContent = (e.pie || "") + (e.nombre ? " · " + e.nombre : "") + (e.cab ? " · " + e.cab.split(" · ").slice(-2).join(" · ") : "");
   }
   if (!A.$("heroImg")) return;
   A.$("heroNext").onclick = show; show();
-  A.$("heroFrame").addEventListener("click", function (ev) { if (ev.target.id !== "heroImg") A.zoom(A.$("heroImg").src, A.$("heroImg").dataset.cap); });
+  A.$("heroFrame").addEventListener("click", function (ev) { if (ev.target.id !== "heroImg") A.zoom(A.$("heroImg").src, A.$("heroImg").dataset.cap, A.$("heroImg").dataset.cr); });
   document.querySelectorAll(".hcard[data-art]").forEach(function (c) {
     var e = A.sById[c.dataset.art]; if (e && e.img) c.querySelector(".hc-img").style.backgroundImage = "url(" + (e.th || e.img) + ")";
   });
