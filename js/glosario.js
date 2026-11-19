@@ -313,7 +313,7 @@ A.hooks.test = function () { if (!tst.cur) { tst.cur = 1; nextQ(); } };
 /* ---------- Inicio ---------- */
 function initInicio() {
   var nT = GLOS.length, nS = A.SEMB.length, nI = A.imgs.length;
-  $("counts").innerHTML = [[nT, "términos del glosario (T1-T18)"], [nS, "semblanzas de artistas (T1-T17)"], [nI, "obras con imagen y términos enlazados"]].map(function (x) { return "<div><b>" + x[0] + "</b><span>" + x[1] + "</span></div>"; }).join("");
+  $("counts").innerHTML = [[nT, "términos del glosario (T1‑T18)"], [nS, "semblanzas de artistas (T1‑T17)"], [nI, "obras con imagen y términos enlazados"]].map(function (x) { return "<div><b>" + x[0] + "</b><span>" + x[1] + "</span></div>"; }).join("");
 }
 A.hooks.inicio = function () {
   var rows = [["fichas", "Fichas de obras (autor)"], ["img2term", "Imagen → término"], ["term2img", "Término → imagen"], ["def2term", "Definición → término"]];
