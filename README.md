@@ -1,4 +1,4 @@
-# Arte PAU · Historia del Arte (2.º de Bachillerato)
+# Historia del Arte · PAU 2027 (2.º de Bachillerato)
 
 Práctica interactiva para la PAU de Historia del Arte (Comunidad de Madrid, modelo 2027): semblanzas de artistas, glosario de términos y pruebas con imágenes, todo enlazado.
 
@@ -15,6 +15,8 @@ Práctica interactiva para la PAU de Historia del Arte (Comunidad de Madrid, mod
 | Fichas de obras | 3 (práctica) | Identificar al autor desde la imagen, con repaso espaciado |
 | Semblanzas | 3 (estudio) | Las 139 semblanzas (T1-T17), con buscador, enlaces directos y términos del glosario relacionados |
 | Una semblanza, una nota | 3 (1 punto) | Escribes la semblanza de un artista y obtienes la nota sobre 1 punto con el reparto época 0,30 · características 0,35 · obras 0,35 |
+
+Incluye una página de créditos, autoría y derechos (`#acerca`), enlazada desde el pie.
 
 Funciona sin conexión y se puede instalar en el móvil (aplicación web progresiva).
 

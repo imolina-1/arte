@@ -1,4 +1,4 @@
-/* Arte PAU — núcleo: utilidades, datos, rutas y estadísticas */
+/* Historia del Arte — núcleo: utilidades, datos, rutas y estadísticas */
 (function () {
 "use strict";
 var A = window.ARTE = {};
@@ -163,7 +163,7 @@ A.stat = function (key, ok) {
 A.getStat = function (key) { var s = A.store("arte_stats") || {}; return s[key] || { ok: 0, n: 0 }; };
 
 /* ---------- Rutas ---------- */
-var VIEWS = ["inicio", "simulacro", "artista", "fichas", "semblanzas", "glosario", "terminos", "test"];
+var VIEWS = ["inicio", "simulacro", "artista", "fichas", "semblanzas", "glosario", "terminos", "test", "acerca"];
 var ALIAS = { consulta: "semblanzas" };
 A.hooks = {};
 A.params = {};
@@ -180,7 +180,7 @@ A.route = function () {
   VIEWS.forEach(function (v) { A.$("v-" + v).classList.toggle("hidden", v !== r.view); });
   document.querySelectorAll("nav a").forEach(function (a) { if (a.dataset.view === r.view) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
   if (A.hooks[r.view]) A.hooks[r.view](r.p);
-  document.title = (r.view === "inicio" ? "" : (document.querySelector('nav a[data-view="' + r.view + '"]') || {}).textContent + " · ") + "Arte PAU · Historia del Arte";
+  document.title = (r.view === "inicio" ? "" : (r.view === "acerca" ? "Créditos y derechos" : (document.querySelector('nav a[data-view="' + r.view + '"]') || {}).textContent) + " · ") + "Historia del Arte · PAU 2027";
   if (!A.noScroll) window.scrollTo(0, 0);
 };
 window.addEventListener("hashchange", function () { A.route(); });
@@ -196,7 +196,7 @@ A.ring = function (score, max, label) {
 };
 A.zoom = function (src, cap) {
   var d = A.$("lb"); if (!d) return;
-  A.$("lbImg").src = src; A.$("lbImg").alt = cap || ""; A.$("lbCap").textContent = cap || "";
+  A.$("lbImg").src = src; A.$("lbImg").alt = cap || ""; A.$("lbCap").innerHTML = A.esc(cap || "") + "<small>Imagen de las presentaciones de clase · uso docente</small>";
   if (d.showModal) { if (!d.open) d.showModal(); } else d.setAttribute("open", "");
 };
 document.addEventListener("click", function (ev) {
@@ -247,4 +247,11 @@ A.start = function () {
   A.route();
 };
 A.inits = A.inits || [];
+})();
+
+/* botón «volver arriba» */
+(function () {
+  var b = document.getElementById("toTop"); if (!b) return;
+  window.addEventListener("scroll", function () { b.classList.toggle("on", window.scrollY > 700); }, { passive: true });
+  b.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
 })();

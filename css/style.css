@@ -249,8 +249,38 @@ summary{cursor:pointer;padding:13px 18px;font-weight:600;color:var(--green);list
   .nav-group small{padding:0 8px 2px} nav a{padding:9px 9px 11px;font-size:.88rem}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+/* ---------- v5: separadores, créditos y detalles ---------- */
+::selection{background:var(--gold-soft);color:var(--ink)}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--line2) transparent}
+.nav-group{position:relative}
+.nav-group+.nav-group{padding-left:22px}
+.nav-group+.nav-group::before{content:"";position:absolute;left:0;top:10px;bottom:8px;width:1px;background:linear-gradient(180deg,transparent,rgba(214,179,106,.55) 30%,rgba(214,179,106,.55) 70%,transparent)}
+.nav-group+.nav-group::after{content:"";position:absolute;left:-2px;top:calc(50% + 2px);width:5px;height:5px;background:#d6b36a;opacity:.7;transform:rotate(45deg)}
+.orn{display:flex;justify-content:center;color:var(--line2);margin:38px 0 4px}
+.orn.light{color:#4a4032;margin:0 0 18px}
+.sect::after{content:"";flex:1;height:1px;align-self:center;background:linear-gradient(90deg,var(--line2),transparent)}
+.eyebrow::before{content:"";display:inline-block;width:22px;height:1px;background:currentColor;vertical-align:middle;margin-right:10px;opacity:.7}
+.hcard{position:relative}
+.hcard::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .25s;z-index:2}
+.hcard:hover::before{opacity:1}
+.hcard:hover{box-shadow:0 2px 4px rgba(40,28,10,.1),0 18px 36px -12px rgba(40,28,10,.3)}
+main section:not(.hidden){animation:rise .4s cubic-bezier(.2,.7,.2,1) both}
+@media (prefers-reduced-motion:reduce){main section:not(.hidden){animation:none}html{scroll-behavior:auto}.hcard{transition:none}}
+.about{align-items:start;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin:22px 0 14px}
+.about article{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 22px 6px;box-shadow:var(--shadow);position:relative}
+.about article::before{content:"";position:absolute;left:22px;top:0;width:34px;height:2px;background:var(--gold)}
+.about h3{font-size:1.1rem;margin:4px 0 8px}
+.about p{margin:0 0 12px;font-size:.93rem;color:var(--ink);text-align:justify;hyphens:auto}
+.foot .fl{margin-top:10px;font-size:.8rem}
+.foot a{color:#d6b36a;text-underline-offset:3px}
+.foot p{text-align:justify;hyphens:auto}
+#toTop{position:fixed;right:18px;bottom:20px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line2);background:var(--surface);color:var(--ink);box-shadow:var(--shadow);cursor:pointer;display:grid;place-items:center;opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .2s,transform .2s;z-index:20}
+#toTop.on{opacity:1;pointer-events:auto;transform:none}
+#toTop:hover{border-color:var(--gold)}
+.lb figcaption small{display:block;margin-top:4px;font:500 .72rem var(--ui);letter-spacing:.08em;text-transform:uppercase;color:#a89d88}
+
 @media print{
-  header.site,.filters,.banner,#v-inicio,#v-simulacro,#v-artista,#v-fichas,#v-glosario,#v-terminos,#v-test,.foot,.linkbtn,summary{display:none!important}
+  header.site,.filters,.banner,#v-inicio,#v-simulacro,#v-artista,#v-fichas,#v-glosario,#v-terminos,#v-test,#v-acerca,#toTop,.foot,.orn,.linkbtn,summary{display:none!important}
   #v-semblanzas{display:block!important}
   body{background:#fff;color:#000;background-image:none}
   .entry{break-inside:avoid;border-color:#bbb;box-shadow:none}

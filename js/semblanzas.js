@@ -1,4 +1,4 @@
-/* Arte PAU — semblanzas: simulacro de la pregunta 3, fichas de obras y consulta */
+/* Historia del Arte — semblanzas: simulacro de la pregunta 3, fichas de obras y consulta */
 (function () {
 "use strict";
 var A = window.ARTE, norm = A.norm, esc = A.esc, md = A.md, shuffle = A.shuffle, store = A.store, $ = A.$, fmt = A.fmt, num = A.num;

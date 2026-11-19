@@ -1,4 +1,4 @@
-/* Arte PAU — glosario: consulta, simulacro de la pregunta 1 y tests de términos */
+/* Historia del Arte — glosario: consulta, simulacro de la pregunta 1 y tests de términos */
 (function () {
 "use strict";
 var A = window.ARTE, norm = A.norm, esc = A.esc, shuffle = A.shuffle, pick = A.pick, $ = A.$, fmt = A.fmt, num = A.num, store = A.store;
