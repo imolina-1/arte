@@ -16,6 +16,10 @@ Práctica interactiva para la PAU de Historia del Arte (Comunidad de Madrid, mod
 | Semblanzas | 3 (estudio) | Las 139 semblanzas (T1-T17), con buscador, enlaces directos y términos del glosario relacionados |
 | Línea del tiempo | 3 (estudio) | Vidas de los artistas sobre un eje cronológico, filtrable por tema; cada barra abre la ficha |
 | Repaso | 3 (estudio) | Tarjetas retrato → nombre y época (o nombre → época y obras) con repetición espaciada; progreso solo en tu navegador |
+| Mapa | 3 (estudio) | Lugares de trabajo de los artistas (Europa y mundo), filtrables por tema; cada círculo lista sus artistas |
+| Comparador | 3 (estudio) | Dos artistas frente a frente, con comparaciones clásicas predefinidas |
+| Esquemas | todo el temario | Chuleta imprimible por tema: artistas, características, obras y términos |
+| Mi progreso | todo el temario | Resumen por tema de tests, fichas, simulacros y tarjetas, con acceso directo al repaso |
 | Ficha de artista (`#a-<id>`) | 3 (estudio) | Retrato, fechas, posición en la línea del tiempo, semblanza, obras, términos, contemporáneos y anterior/siguiente del tema |
 | Una semblanza, una nota | 3 (1 punto) | Escribes la semblanza de un artista y obtienes la nota sobre 1 punto con el reparto época 0,30 · características 0,35 · obras 0,35 |
 
@@ -28,8 +32,9 @@ Funciona sin conexión y se puede instalar en el móvil (aplicación web progres
 | Archivo | Para qué sirve |
 |---|---|
 | `index.html` | La página |
-| `css/style.css`, `js/*.js` | Diseño y programación (`core.js`: utilidades y rutas; `semblanzas.js`: pregunta 3; `glosario.js`: pregunta 1; `extra.js`: línea del tiempo, repaso y ficha de artista) |
+| `css/style.css`, `js/*.js` | Diseño y programación (`core.js`: utilidades y rutas; `semblanzas.js`: pregunta 3; `glosario.js`: pregunta 1; `extra.js`: línea del tiempo, repaso y ficha de artista; `mas.js`: progreso, comparador, esquemas, mapa y portada) |
 | `data/semblanzas.js` | Las semblanzas, con los términos del glosario enlazados a cada una |
+| `data/mapa.js` | Fondo cartográfico (Natural Earth, dominio público) y coordenadas de los lugares; se regenera con `geo/run.sh` |
 | `data/glosario.js` | Los términos, con sus obras, semblanzas e imágenes enlazadas |
 | `img/ret/` | Retratos de 122 artistas, tomados de tus presentaciones (se ven en «Semblanzas» y en la corrección del simulacro; los tests siguen usando la obra) |
 | `data/obras.js` | 439 obras (T1-T16 de tus presentaciones; T17 con cuatro de ellas y ocho fotografías de Wikimedia Commons), con los términos que ilustra cada una |

@@ -60,47 +60,55 @@ function initTl() {
 }
 A.hooks.cronologia = function (p) { if (p.t && $("tlTema").value !== p.t) $("tlTema").value = p.t; drawTl(); };
 
-/* ---------- Modo repaso: tarjetas ---------- */
+/* ---------- Modo repaso: tarjetas de artistas y de términos ---------- */
 var rep = { pool: [], cur: null, shown: false, seen: 0 };
-function rkey(e) { return "r:" + e.id; }
+function isTerm() { var m = $("rpMode").value; return m === "term" || m === "def"; }
+function rkey(e) { var m = $("rpMode").value; return (m === "term" ? "rt:" : m === "def" ? "rd:" : "r:") + e.id; }
 function repPool() {
   var v = $("rpTema").value, mode = $("rpMode").value, compl = $("rpCompl").checked;
+  if (isTerm()) return A.GLOS.filter(function (t) { return A.inFilter(t.tema, v); });
   return A.SEMB.filter(function (e) { return A.inFilter(e.tema, v) && (compl || !e.compl) && (mode !== "face" || e.ret); });
 }
 function repNext() {
-  rep.pool = repPool();
-  if (!rep.pool.length) { $("rpCard").innerHTML = '<p class="lead">No hay tarjetas con ese filtro.</p>'; $("rpRate").classList.add("hidden"); rep.cur = null; repStats(); return; }
+  rep.pool = repPool(); $("rpComplLbl").classList.toggle("hidden", isTerm());
+  if (!rep.pool.length) { $("rpCard").innerHTML = '<p class="lead">No hay tarjetas con ese filtro.</p>'; $("rpRate").classList.add("hidden"); $("rpFlip").classList.add("hidden"); rep.cur = null; repStats(); return; }
   rep.cur = A.weightedPick(rep.pool, rkey, rep.cur); rep.shown = false; repDraw();
 }
+function cartelasOf(txt) { return txt.replace(/\.$/, "").split(/;|, (?=[A-ZÁÉÍÓÚÑ])| y (?=[A-ZÁÉÍÓÚÑ])/).map(function (o) { return '<span class="cartela">' + esc(o.trim()) + "</span>"; }).join(""); }
 function repDraw() {
   var e = rep.cur; if (!e) return;
-  var mode = $("rpMode").value, face = mode === "face";
-  var front = face ? A.face(e, false).replace("data-zoom", "") : '<div class="rp-name">' + esc(e.nombre) + "</div>";
-  var back = '<h3>' + esc(e.nombre) + "</h3><p class=\"stats\">" + esc(e.cab) + "</p><p><strong>" + esc(e.yl) + "</strong> · " + esc(A.temaLabel(e.tema)) + (e.compl ? " · complementaria" : "") + "</p>" +
-    '<div class="rp-works">' + e.obras.replace(/\.$/, "").split(/;|, (?=[A-ZÁÉÍÓÚÑ])| y (?=[A-ZÁÉÍÓÚÑ])/).map(function (o) { return '<span class="cartela">' + esc(o.trim()) + "</span>"; }).join("") + "</div>" +
-    '<p><a href="#a-' + e.id + '">Abrir la ficha completa →</a></p>';
-  $("rpCard").innerHTML = '<div class="rp-front">' + front + (face ? '<p class="rp-q">¿Quién es y de qué época?</p>' : '<p class="rp-q">¿Época, estilo y obras?</p>') + "</div>" +
-    (rep.shown ? '<div class="rp-back" aria-live="polite">' + back + "</div>" : "");
+  var mode = $("rpMode").value, front, back, q;
+  if (mode === "term" || mode === "def") {
+    var obras = e.obras && e.obras.length ? '<div class="rp-works">' + e.obras.slice(0, 6).map(function (o) { return '<span class="cartela">' + esc(o) + "</span>"; }).join("") + "</div>" : "";
+    if (mode === "term") { front = '<div class="rp-name">' + esc(e.t) + "</div>"; q = "¿Cuál es su definición?"; back = '<p class="justify">' + esc(e.def) + "</p>"; }
+    else { front = '<p class="rp-def justify">' + esc(e.def) + "</p>"; q = "¿Qué término es?"; back = '<h3>' + esc(e.t) + "</h3>"; }
+    back += '<p class="stats">' + esc(A.temaLabel(e.tema)) + "</p>" + obras + '<p><a href="#glosario?id=' + e.id + '">Ver en el glosario →</a></p>';
+  } else {
+    var face = mode === "face";
+    front = face ? A.face(e, false).replace("data-zoom", "") : '<div class="rp-name">' + esc(e.nombre) + "</div>";
+    q = face ? "¿Quién es y de qué época?" : "¿Época, estilo y obras?";
+    back = '<h3>' + esc(e.nombre) + '</h3><p class="stats">' + esc(e.cab) + "</p><p><strong>" + esc(e.yl) + "</strong> · " + esc(A.temaLabel(e.tema)) + (e.compl ? " · complementaria" : "") + '</p><div class="rp-works">' + cartelasOf(e.obras) + '</div><p><a href="#a-' + e.id + '">Abrir la ficha completa →</a></p>';
+  }
+  $("rpCard").innerHTML = '<div class="rp-front">' + front + '<p class="rp-q">' + q + "</p></div>" + (rep.shown ? '<div class="rp-back" aria-live="polite">' + back + "</div>" : "");
   $("rpFlip").classList.toggle("hidden", rep.shown); $("rpRate").classList.toggle("hidden", !rep.shown);
   if (rep.shown) $("rpCard").focus(); else if (rep.seen || rep.touched) $("rpFlip").focus();
-  rep.touched = true;
-  repStats();
+  rep.touched = true; repStats();
 }
 function repStats() {
   var p = rep.pool.length ? rep.pool : repPool(), m = A.mastered(p, rkey);
   $("rpStat").textContent = m + " de " + p.length + " dominadas · " + rep.seen + " vistas en esta sesión";
-  var bar = $("rpBar"); bar.style.width = (p.length ? Math.round(100 * m / p.length) : 0) + "%";
-  bar.parentNode.setAttribute("aria-valuenow", p.length ? Math.round(100 * m / p.length) : 0);
+  var pct = p.length ? Math.round(100 * m / p.length) : 0; $("rpBar").style.width = pct + "%"; $("rpBar").parentNode.setAttribute("aria-valuenow", pct);
 }
 function repRate(ok) { if (!rep.cur) return; A.setBox(rkey(rep.cur), ok); rep.seen++; repNext(); }
 function initRep() {
-  $("rpTema").innerHTML = A.temaOptions(17);
+  $("rpTema").innerHTML = A.temaOptions(18);
   ["rpTema", "rpMode", "rpCompl"].forEach(function (id) { $(id).addEventListener("change", function () { rep.cur = null; repNext(); }); });
   $("rpFlip").onclick = function () { if (rep.cur) { rep.shown = true; repDraw(); } };
   $("rpYes").onclick = function () { repRate(true); }; $("rpNo").onclick = function () { repRate(false); };
   $("rpReset").onclick = function () {
-    if (!confirm("¿Borrar tu progreso de repaso de las tarjetas de artistas?")) return;
-    repPool().concat(A.SEMB).forEach(function (e) { A.setBox(rkey(e), false); }); rep.seen = 0; rep.cur = null; repNext();
+    if (!confirm("¿Borrar tu progreso de repaso de tarjetas (artistas y términos)?")) return;
+    ["r:", "rt:", "rd:"].forEach(function (pre) { A.SEMB.concat(A.GLOS).forEach(function (e) { delete A.boxAll()[pre + e.id]; }); });
+    A.store("ficBox", A.boxAll()); rep.seen = 0; rep.cur = null; repNext();
   };
   document.addEventListener("keydown", function (ev) {
     if (location.hash.indexOf("#repaso") !== 0 || /INPUT|SELECT|TEXTAREA/.test((ev.target || {}).tagName || "")) return;
@@ -109,7 +117,12 @@ function initRep() {
     else if (rep.shown && (ev.key === "2" || ev.key === "s")) repRate(true);
   });
 }
-A.hooks.repaso = function () { if (!rep.cur) repNext(); else repDraw(); };
+A.hooks.repaso = function (p) {
+  var changed = false;
+  if (p.m && $("rpMode").value !== p.m) { $("rpMode").value = p.m; changed = true; }
+  if (p.t && $("rpTema").value !== p.t) { $("rpTema").value = p.t; changed = true; }
+  if (changed || !rep.cur) { rep.cur = null; repNext(); } else repDraw();
+};
 
 /* ---------- Ficha de artista ---------- */
 function surname(e) {

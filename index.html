@@ -41,9 +41,14 @@
       <a href="#simulacro" data-view="simulacro">Simulacro</a>
       <a href="#artista" data-view="artista">Un artista</a>
       <a href="#fichas" data-view="fichas">Fichas de obras</a>
-      <a href="#semblanzas" data-view="semblanzas">Semblanzas</a>
-      <a href="#cronologia" data-view="cronologia">Línea del tiempo</a>
-      <a href="#repaso" data-view="repaso">Repaso</a></div></div>
+      <a href="#semblanzas" data-view="semblanzas">Semblanzas</a></div></div>
+    <div class="nav-group"><small>Estudio · todo el temario</small><div>
+      <a href="#cronologia" data-view="cronologia">Cronología</a>
+      <a href="#mapa" data-view="mapa">Mapa</a>
+      <a href="#comparador" data-view="comparador">Comparador</a>
+      <a href="#esquema" data-view="esquema">Esquemas</a>
+      <a href="#repaso" data-view="repaso">Repaso</a>
+      <a href="#progreso" data-view="progreso">Progreso</a></div></div>
   </nav>
 </header>
 
@@ -66,6 +71,8 @@
         <figcaption><span id="heroCap"></span> <button type="button" class="linkbtn" id="heroNext">Otra obra ↻</button></figcaption>
       </figure>
     </div>
+    <div class="hx" id="homeExtra"></div>
+    <div class="mosaic" id="mosaic" aria-label="Retratos de artistas: pulsa uno para abrir su ficha"></div>
     <div class="hist" id="progress"></div>
     <h3 class="sect"><span>Pregunta 1</span> Términos</h3>
     <div class="cards">
@@ -80,8 +87,16 @@
       <a class="hcard" href="#artista" data-art="francisco-de-goya"><div class="hc-img"></div><div class="hc-body"><div class="k">1 punto · un artista</div><h3>Una semblanza, una nota</h3><p>Escribe la semblanza de un artista y recibe la nota sobre 1 punto, con el desglose de época, características y obras.</p></div></a>
       <a class="hcard" href="#fichas" data-art="rembrandt-van-rijn"><div class="hc-img"></div><div class="hc-body"><div class="k">Práctica</div><h3>Fichas de obras</h3><p>Ves una obra y eliges el autor entre cuatro. Después, términos del glosario relacionados.</p></div></a>
       <a class="hcard" href="#semblanzas" data-art="miguel-angel-buonarroti"><div class="hc-img"></div><div class="hc-body"><div class="k">Estudio</div><h3>Semblanzas</h3><p>Las 139 semblanzas del dossier, con buscador y los términos del glosario de cada artista.</p></div></a>
-      <a class="hcard" href="#cronologia" data-art="claude-monet"><div class="hc-img"></div><div class="hc-body"><div class="k">Estudio</div><h3>Línea del tiempo</h3><p>Las vidas de los artistas sobre un eje cronológico, por tema, para ver quién fue contemporáneo de quién.</p></div></a>
-      <a class="hcard" href="#repaso" data-art="berthe-morisot"><div class="hc-img"></div><div class="hc-body"><div class="k">Práctica</div><h3>Repaso con tarjetas</h3><p>Retrato → nombre y época, con repetición espaciada: las que fallas vuelven antes.</p></div></a>
+    </div>
+    <div class="orn" aria-hidden="true"><svg viewBox="0 0 120 14" width="120" height="14"><path d="M0 7h46M74 7h46" stroke="currentColor" stroke-width="1" fill="none"/><path d="M60 1l5 6-5 6-5-6z" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="52" cy="7" r="1.4" fill="currentColor"/><circle cx="68" cy="7" r="1.4" fill="currentColor"/></svg></div>
+    <h3 class="sect"><span>Todo el temario</span> Estudio</h3>
+    <div class="cards">
+      <a class="hcard" href="#cronologia" data-art="claude-monet"><div class="hc-img"></div><div class="hc-body"><div class="k">Estudio</div><h3>Cronología</h3><p>Las vidas de los artistas sobre un eje, por tema, para ver quién fue contemporáneo de quién.</p></div></a>
+      <a class="hcard" href="#mapa" data-art="sandro-botticelli"><div class="hc-img"></div><div class="hc-body"><div class="k">Estudio</div><h3>Mapa</h3><p>Dónde vivieron y trabajaron, en Europa y en el mundo, con sus ciudades clicables.</p></div></a>
+      <a class="hcard" href="#comparador" data-art="diego-velazquez"><div class="hc-img"></div><div class="hc-body"><div class="k">Estudio</div><h3>Comparador</h3><p>Dos artistas frente a frente: época, rasgos, obras y términos en común.</p></div></a>
+      <a class="hcard" href="#esquema" data-art="giotto-di-bondone"><div class="hc-img"></div><div class="hc-body"><div class="k">Imprimible</div><h3>Esquemas por tema</h3><p>Una chuleta por tema con artistas, características, obras y términos.</p></div></a>
+      <a class="hcard" href="#repaso" data-art="berthe-morisot"><div class="hc-img"></div><div class="hc-body"><div class="k">Práctica</div><h3>Repaso con tarjetas</h3><p>Retratos, nombres, términos y definiciones con repetición espaciada.</p></div></a>
+      <a class="hcard" href="#progreso" data-art="rembrandt-van-rijn"><div class="hc-img"></div><div class="hc-body"><div class="k">Tu avance</div><h3>Mi progreso</h3><p>Qué dominas y qué te falta, tema a tema, con botón de repaso.</p></div></a>
     </div>
     <div class="orn" aria-hidden="true"><svg viewBox="0 0 120 14" width="120" height="14"><path d="M0 7h46M74 7h46" stroke="currentColor" stroke-width="1" fill="none"/><path d="M60 1l5 6-5 6-5-6z" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="52" cy="7" r="1.4" fill="currentColor"/><circle cx="68" cy="7" r="1.4" fill="currentColor"/></svg></div>
     <p class="disclaimer">Las correcciones son orientativas: buscan época, términos y obras, pero no valoran la redacción. Tu progreso se guarda solo en tu navegador.</p>
@@ -202,9 +217,9 @@
     <h2 id="h-rp">Repaso con tarjetas</h2>
     <p class="lead">Mira la tarjeta, intenta responder y pulsa «Girar». Marca si la sabías: las que falles volverán antes. Teclado: espacio para girar, 1 = no la sabía, 2 = la sabía.</p>
     <div class="filters">
-      <label for="rpMode" class="sr">Modo</label><select id="rpMode"><option value="face">Retrato → nombre y época</option><option value="name">Nombre → época y obras</option></select>
+      <label for="rpMode" class="sr">Modo</label><select id="rpMode"><option value="face">Retrato → nombre y época</option><option value="name">Nombre → época y obras</option><option value="term">Término → definición</option><option value="def">Definición → término</option></select>
       <label for="rpTema" class="sr">Tema</label><select id="rpTema"></select>
-      <label class="tl-chk"><input type="checkbox" id="rpCompl"> Incluir complementarias</label>
+      <label class="tl-chk" id="rpComplLbl"><input type="checkbox" id="rpCompl"> Incluir complementarias</label>
     </div>
     <div class="rp-prog" role="progressbar" aria-label="Tarjetas dominadas" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="rpBar"></div></div>
     <p class="stats" id="rpStat" role="status"></p>
@@ -218,8 +233,59 @@
 
   <!-- FICHA DE ARTISTA -->
   <section id="v-ficha" class="hidden" aria-label="Ficha de artista">
-    <p><a href="#semblanzas">← Todas las semblanzas</a></p>
+    <p class="no-print"><a href="#semblanzas">← Todas las semblanzas</a> · <button type="button" class="linkbtn" onclick="window.print()">Imprimir esta ficha</button></p>
     <div id="fiBox"></div>
+  </section>
+
+  <!-- PROGRESO -->
+  <section id="v-progreso" class="hidden" aria-labelledby="h-pg">
+    <p class="eyebrow">Estudio</p>
+    <h2 id="h-pg">Mi progreso</h2>
+    <p class="lead">Resumen de lo que llevas, tema a tema. Se guarda solo en este navegador.</p>
+    <div id="pgBox"></div>
+  </section>
+
+  <!-- COMPARADOR -->
+  <section id="v-comparador" class="hidden" aria-labelledby="h-cmp">
+    <p class="eyebrow">Estudio</p>
+    <h2 id="h-cmp">Comparador de artistas</h2>
+    <p class="lead">Pon dos artistas frente a frente para ver sus diferencias de época, estilo y obras, y los términos que comparten.</p>
+    <div class="filters">
+      <label class="sr" for="cmpA">Primer artista</label><select id="cmpA"></select>
+      <button class="btn ghost" id="cmpSwap" type="button" aria-label="Intercambiar artistas">⇄</button>
+      <label class="sr" for="cmpB">Segundo artista</label><select id="cmpB"></select>
+    </div>
+    <div class="row" id="cmpPre" role="group" aria-label="Comparaciones clásicas"></div>
+    <div id="cmpBox"></div>
+  </section>
+
+  <!-- ESQUEMA -->
+  <section id="v-esquema" class="hidden" aria-labelledby="h-esq">
+    <p class="eyebrow">Estudio · imprimible</p>
+    <h2 id="h-esq">Esquema por tema</h2>
+    <p class="lead">Una chuleta de repaso por tema: artistas, características, obras clave y términos. Imprímela o guárdala en PDF.</p>
+    <div class="filters">
+      <label class="sr" for="esqTema">Tema</label><select id="esqTema"></select>
+      <button class="btn ghost" id="esqPrev" type="button" aria-label="Tema anterior">←</button>
+      <button class="btn ghost" id="esqNext" type="button" aria-label="Tema siguiente">→</button>
+      <button class="btn" id="esqPrint" type="button">Imprimir / guardar PDF</button>
+    </div>
+    <div id="esqBox"></div>
+  </section>
+
+  <!-- MAPA -->
+  <section id="v-mapa" class="hidden" aria-labelledby="h-mp">
+    <p class="eyebrow">Estudio</p>
+    <h2 id="h-mp">Mapa de artistas</h2>
+    <p class="lead">Dónde vivieron y trabajaron, según la cabecera de cada semblanza. Pulsa un círculo para ver quiénes son.</p>
+    <div class="filters">
+      <button type="button" class="chip" id="mpEu" aria-pressed="true">Europa</button>
+      <button type="button" class="chip" id="mpMu" aria-pressed="false">Mundo</button>
+      <label class="sr" for="mpTema">Tema</label><select id="mpTema"></select>
+      <label class="tl-chk"><input type="checkbox" id="mpCompl"> Incluir complementarias</label>
+    </div>
+    <p class="stats" id="mpNote" role="status"></p>
+    <div class="mp-wrap"><div id="mpBox"></div><aside id="mpPanel" class="mp-panel" aria-live="polite"></aside></div>
   </section>
 
   <!-- GLOSARIO -->
@@ -288,7 +354,7 @@
       <article><h3>Privacidad</h3>
         <p>Sin cookies ni datos personales. Tu progreso se guarda solo en tu navegador. Estadísticas de visitas anónimas (GoatCounter) y tipografías alojadas en esta misma web.</p></article>
     </div>
-    <p class="stats">Tipografías Fraunces, Inter y Spectral (SIL OFL) · Versión 13 · noviembre de 2026</p>
+    <p class="stats">Tipografías Fraunces, Inter y Spectral (SIL OFL) · Versión 14 · noviembre de 2026</p>
   </section>
 
 </main>
@@ -306,10 +372,12 @@
 <script defer src="data/semblanzas.js"></script>
 <script defer src="data/glosario.js"></script>
 <script defer src="data/obras.js"></script>
+<script defer src="data/mapa.js"></script>
 <script defer src="js/core.js"></script>
 <script defer src="js/semblanzas.js"></script>
 <script defer src="js/glosario.js"></script>
 <script defer src="js/extra.js"></script>
+<script defer src="js/mas.js"></script>
 <script defer src="js/start.js"></script>
 </body>
 </html>

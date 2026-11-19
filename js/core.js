@@ -152,6 +152,7 @@ A.weightedPick = function (items, keyFn, avoid) {
   for (var k = 0; k < cand.length; k++) { r -= W[A.boxOf(keyFn(cand[k]))]; if (r <= 0) { out = cand[k]; break; } }
   return out;
 };
+A.boxAll = function () { return BOX; };
 A.mastered = function (items, keyFn) { return items.filter(function (x) { return A.boxOf(keyFn(x)) >= 3; }).length; };
 
 /* ---------- Estadísticas locales (solo en el navegador del alumno) ---------- */
@@ -162,7 +163,7 @@ A.stat = function (key, ok) {
 A.getStat = function (key) { var s = A.store("arte_stats") || {}; return s[key] || { ok: 0, n: 0 }; };
 
 /* ---------- Rutas ---------- */
-var VIEWS = ["inicio", "simulacro", "artista", "fichas", "semblanzas", "cronologia", "repaso", "ficha", "glosario", "terminos", "test", "acerca"];
+var VIEWS = ["inicio", "simulacro", "artista", "fichas", "semblanzas", "cronologia", "repaso", "ficha", "progreso", "comparador", "esquema", "mapa", "glosario", "terminos", "test", "acerca"];
 var ALIAS = { consulta: "semblanzas" };
 A.hooks = {};
 A.params = {};
@@ -180,6 +181,7 @@ A.route = function () {
   if (A.route.last !== r.view) { A.route.last = r.view; A.track("vista/" + r.view, "Vista: " + r.view); }
   VIEWS.forEach(function (v) { A.$("v-" + v).classList.toggle("hidden", v !== r.view); });
   document.querySelectorAll("nav a").forEach(function (a) { if (a.dataset.view === r.view) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+  document.body.classList.toggle("vf", r.view === "ficha"); document.body.classList.toggle("ve", r.view === "esquema");
   if (A.hooks[r.view]) A.hooks[r.view](r.p);
   document.title = (r.view === "inicio" ? "" : (r.view === "acerca" ? "Créditos y derechos" : (document.querySelector('nav a[data-view="' + r.view + '"]') || {}).textContent) + " · ") + "Historia del Arte · PAU " + A.pauYear();
   if (!A.noScroll) window.scrollTo(0, 0);
