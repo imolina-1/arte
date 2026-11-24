@@ -163,7 +163,7 @@ A.stat = function (key, ok) {
 A.getStat = function (key) { var s = A.store("arte_stats") || {}; return s[key] || { ok: 0, n: 0 }; };
 
 /* ---------- Rutas ---------- */
-var VIEWS = ["inicio", "simulacro", "artista", "fichas", "semblanzas", "cronologia", "repaso", "ficha", "progreso", "comparador", "esquema", "mapa", "glosario", "terminos", "test", "acerca"];
+var VIEWS = ["inicio", "simulacro", "artista", "fichas", "semblanzas", "cronologia", "repaso", "ficha", "progreso", "comparador", "esquema", "mapa", "glosario", "terminos", "test", "acerca", "album", "clasif"];
 var ALIAS = { consulta: "semblanzas" };
 A.hooks = {};
 A.params = {};

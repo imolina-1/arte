@@ -13,6 +13,7 @@
 <meta property="og:description" content="Semblanzas, glosario y pruebas con imágenes · 2.º de Bachillerato · PAU">
 <meta property="og:image" content="icon-512.png">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/juego.css">
 <script>try{var t=JSON.parse(localStorage.getItem("arte_theme")||"null");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
@@ -47,6 +48,14 @@
         <a href="#simulacro" data-view="simulacro"><b>Simulacro de semblanzas</b><span>Eliges tres de cinco y escribes con cronómetro</span></a>
         <a href="#artista" data-view="artista"><b>Una semblanza, una nota</b><span>Un artista, 1 punto y desglose</span></a>
         <a href="#fichas" data-view="fichas"><b>Fichas de obras</b><span>Ves la obra y eliges el autor</span></a>
+      </div>
+    </div>
+    <div class="dd">
+      <button class="nl dd-b" type="button" aria-expanded="false" aria-controls="m-retos">Retos<svg class="chev" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="dd-p" id="m-retos">
+        <p class="dd-h">Estudia jugando</p>
+        <a href="#album" data-view="album"><b>Álbum de artistas</b><span>Cromos y sobres que ganas estudiando</span></a>
+        <a href="#clasif" data-view="clasif"><b>Clasificación</b><span>Compite con tu clase, de forma anónima</span></a>
       </div>
     </div>
     <div class="dd dd-wide dd-r">
@@ -88,6 +97,7 @@
       </figure>
     </div>
     <div class="hx" id="homeExtra"></div>
+    <section class="hsec" id="hoySec" aria-label="Para hoy"></section>
     <section class="hsec" aria-label="Términos">
       <div class="hsec-h"><p class="eyebrow">Pregunta 1</p><h3>Términos</h3></div>
       <div class="cards">
@@ -354,6 +364,10 @@
     <div id="tArea"></div>
   </section>
   <!-- CRÉDITOS Y DERECHOS -->
+  <section id="v-album" class="hidden" aria-labelledby="h-al"></section>
+
+  <section id="v-clasif" class="hidden" aria-labelledby="h-cl"></section>
+
   <section id="v-acerca" class="hidden" aria-labelledby="h-ac">
     <p class="eyebrow">Información</p>
     <h2 id="h-ac">Créditos, autoría y derechos</h2>
@@ -372,9 +386,9 @@
       <article><h3>Derechos de uso</h3>
         <p>© 2026 Iván Molina Rincón. Todos los derechos reservados. Puedes usar la web para estudiar y dar clase; no se permite su venta ni su redistribución comercial.</p></article>
       <article><h3>Privacidad</h3>
-        <p>Sin cookies ni datos personales. Tu progreso se guarda solo en tu navegador. Estadísticas de visitas anónimas (GoatCounter) y tipografías alojadas en esta misma web.</p></article>
+        <p>Sin cookies ni datos personales. Tu progreso, tus puntos, tu racha y tu álbum se guardan solo en tu navegador. La única excepción es la clasificación, que es voluntaria: si entras, se publican solo tus cifras (puntos, racha, cromos) con un identificador aleatorio, sin nombre, alias ni grupo; puedes salir cuando quieras y tu fila se borra. Estadísticas de visitas anónimas (GoatCounter) y tipografías alojadas en esta misma web.</p></article>
     </div>
-    <p class="stats">Tipografías Fraunces, Inter y Spectral (SIL OFL) · Versión 16 · noviembre de 2026</p>
+    <p class="stats">Tipografías Fraunces, Inter y Spectral (SIL OFL) · Versión 17 · noviembre de 2026</p>
   </section>
 
 </main>
@@ -398,6 +412,7 @@
 <script defer src="js/glosario.js"></script>
 <script defer src="js/extra.js"></script>
 <script defer src="js/mas.js"></script>
+<script defer src="js/juego.js"></script>
 <script defer src="js/start.js"></script>
 </body>
 </html>

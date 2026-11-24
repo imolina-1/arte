@@ -22,6 +22,9 @@ Práctica interactiva para la PAU de Historia del Arte (Comunidad de Madrid, mod
 | Mi progreso | todo el temario | Resumen por tema de tests, fichas, simulacros y tarjetas, con acceso directo al repaso |
 | Ficha de artista (`#a-<id>`) | 3 (estudio) | Retrato, fechas, posición en la línea del tiempo, semblanza, obras, términos, contemporáneos y anterior/siguiente del tema |
 | Una semblanza, una nota | 3 (1 punto) | Escribes la semblanza de un artista y obtienes la nota sobre 1 punto con el reparto época 0,30 · características 0,35 · obras 0,35 |
+| Para hoy (portada) | todo el temario | Sesión diaria adaptativa de unos 10 minutos: artista del día, cinco fichas, ocho tarjetas y refuerzo del tema más débil; al completarla, +25 XP y un sobre |
+| Álbum de artistas (`#album`) | motivación | 138 cromos coleccionables; un sobre de tres cada 30 XP y uno de regalo al día; rarezas ★ ★★ ★★★ |
+| Clasificación (`#clasificacion`) | motivación | Ranking anónimo (total, semana, racha, cromos); solo se publican cifras |
 
 Incluye una página de créditos, autoría y derechos (`#acerca`), enlazada desde el pie.
 
@@ -39,6 +42,7 @@ Funciona sin conexión y se puede instalar en el móvil (aplicación web progres
 | `img/ret/` | Retratos de 122 artistas, tomados de tus presentaciones (se ven en «Semblanzas» y en la corrección del simulacro; los tests siguen usando la obra) |
 | `data/obras.js` | 439 obras (T1-T16 de tus presentaciones; T17 con cuatro de ellas y ocho fotografías de Wikimedia Commons), con los términos que ilustra cada una |
 | `img/` | Imagen completa (hasta 1600 px) de cada artista; `img/t/` guarda las miniaturas. `img/obras/` y `img/obras/t/` hacen lo mismo con las obras de las presentaciones |
+| `js/juego.js`, `css/juego.css` | Capa de juego: XP y rangos, racha, Para hoy, álbum de cromos, clasificación y estadísticas de «Mi progreso» (se engancha a los módulos existentes sin modificarlos) |
 | `sw.js`, `manifest.webmanifest`, `icon-*.png` | Uso sin conexión e instalación en el móvil |
 
 ## Cómo actualizar
@@ -62,3 +66,9 @@ La página envía recuentos anónimos a [GoatCounter](https://www.goatcounter.co
 | `p1/…`, `test/…`, `glosario/termino/…` | Simulacros de términos, tests y términos consultados |
 
 Material de uso docente. Las imágenes proceden de las presentaciones de clase; las obras y fotografías conservan los derechos de sus autores.
+
+## Juego y clasificación anónima
+
+La experiencia (XP), la racha y los cromos se guardan solo en el navegador (`localStorage`, claves `arte_g*`). La clasificación es opcional y anónima: al unirse se genera un identificador aleatorio y solo se envían cifras (XP, racha, cromos, minutos); no hay nombre, alias ni grupo.
+
+Comparte servidor con la web de Historia de España: la función `/api/lb?b=arte` de https://historiapau.pages.dev (Cloudflare Pages Function + D1, tabla `lbA`). Si esa función cae, la clasificación de Arte deja de cargar, pero el resto de la web funciona. La URL está en `LB_URL`, en `js/juego.js`. El profesor puede retirar filas desde «Moderación (profesor)» en la clasificación con su clave de administración. Las cifras se calculan en el dispositivo; el servidor limita subidas anormales, así que es orientativo, no a prueba de trampas.
