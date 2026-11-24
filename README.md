@@ -2,7 +2,7 @@
 
 Práctica interactiva para la PAU de Historia del Arte (Comunidad de Madrid, modelo vigente): semblanzas de artistas, glosario de términos y pruebas con imágenes, todo enlazado.
 
-**Web:** https://imolina-1.github.io/arte/
+**Web:** https://artepau.pages.dev/ (también en https://imolina-1.github.io/arte/)
 
 ## Qué incluye
 
