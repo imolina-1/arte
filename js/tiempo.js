@@ -155,7 +155,7 @@ function bind() {
     var t = ev.target; if (t && (t.tagName === "INPUT" || t.tagName === "SELECT" || t.tagName === "TEXTAREA")) return;
     var k = ev.key;
     if (k === "Escape") { closePn(); return; }
-    if (k === "Enter" && (!t || t === document.body)) { openEv(G[Math.round(target)].u[0].ev[0].i); return; }
+    if (k === "Enter" && (!t || t === document.body)) { ev.preventDefault(); openEv(G[Math.round(target)].u[0].ev[0].i); return; }
     if (k === "ArrowRight" || k === "ArrowDown" || k === "PageDown") { ev.preventDefault(); go(target + 1); }
     else if (k === "ArrowLeft" || k === "ArrowUp" || k === "PageUp") { ev.preventDefault(); go(target - 1); }
     else if (k === "Home") go(0); else if (k === "End") go(N - 1);
