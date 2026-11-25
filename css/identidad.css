@@ -221,3 +221,14 @@ body:has(#v-cronologia:not(.hidden)) .foot,body:has(#v-cronologia:not(.hidden)) 
 /* Reserva de espacio para el contenido que se pinta con JS (evita saltos de maquetación al cargar) */
 #heroFrame{min-height:200px}.hx{min-height:84px}.hero-art figcaption{min-height:3.4em}
 @media (max-width:860px){#heroFrame{min-height:240px}.hx{min-height:170px}}
+
+/* Pantallas táctiles: dianas de pulsación cómodas */
+@media(pointer:coarse){
+  .chip{min-height:40px;display:inline-flex;align-items:center}
+  #glLetters button{min-width:40px;min-height:40px}
+  .linkbtn{padding:10px 0}
+  .termchip{padding:8px 12px;margin:3px 4px 3px 0}
+  .pu-off{display:inline-block;padding:12px 0}
+  select,input:not([type=checkbox]):not([type=radio]):not([type=range]){min-height:44px;font-size:max(16px,1em)}
+  .btn{min-height:44px}
+}
