@@ -392,7 +392,7 @@
 
 <dialog id="gs" aria-label="Buscar"><div class="gs-w"><input id="gsq" type="search" placeholder="Busca un artista, una obra o un término" aria-label="Buscar" autocomplete="off"><div id="gsl" role="listbox"></div><div class="gs-h"><kbd>↑</kbd><kbd>↓</kbd> moverte · <kbd>Enter</kbd> abrir · <kbd>Esc</kbd> cerrar</div></div></dialog>
 
-<script>window.PULSO_CFG={b:"arte",api:"https://historiapau.pages.dev/api/lb?b=arte",link:"#clasif",temas:function(){var o=[],t=window.ARTE&&ARTE.temaName||{};for(var n=1;n<=17;n++)if(t[n])o.push({n:n,name:t[n]});return o}}</script><script src="js/pulso.js"></script>
+<script>window.PULSO_CFG={b:"arte",api:"https://historiapau.pages.dev/api/lb?b=arte",link:"#clasif",xp:function(){try{var g=JSON.parse(localStorage.getItem("arte_g")||"null");return g&&g.xp||0}catch(e){return 0}},temas:function(){var o=[],t=window.ARTE&&ARTE.temaName||{};for(var n=1;n<=17;n++)if(t[n])o.push({n:n,name:t[n]});return o}}</script><script src="js/pulso.js"></script>
 <script defer src="data/semblanzas.js"></script>
 <script defer src="data/glosario.js"></script>
 <script defer src="data/obras.js"></script>
