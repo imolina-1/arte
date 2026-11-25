@@ -73,6 +73,10 @@ La experiencia (XP), la racha y los cromos se guardan solo en el navegador (`loc
 
 Comparte servidor con la web de Historia de España: la función `/api/lb?b=arte` de https://historiapau.pages.dev (Cloudflare Pages Function + D1, tabla `lbA`). Si esa función cae, la clasificación de Arte deja de cargar, pero el resto de la web funciona. La URL está en `LB_URL`, en `js/juego.js`. El profesor puede retirar filas desde «Moderación (profesor)» en la clasificación con su clave de administración. Las cifras se calculan en el dispositivo; el servidor limita subidas anormales, así que es orientativo, no a prueba de trampas.
 
-## Identidad visual (v19)
+## Identidad visual (v20)
 
-Titulares en Bricolage Grotesque (variable, ancho 75-100 %, `fonts/bricolage-latin-wdth-normal.woff2`, licencia OFL), texto de estudio en Spectral e interfaz en Inter. Paleta: azul (`--green`, la marca), bermellón (`--gold`), tinta y papel; el verde queda solo para «acierto» (`--ok`). Todo lo visual de esta capa está en `css/identidad.css`, que se carga la última y pisa a `style.css` y `juego.css`. La portada usa un índice numerado en lugar de tarjetas; los textos de las vistas están en `index.html` y `js/juego.js`.
+Titulares en Bricolage Grotesque (variable, ancho 75-100 %, `fonts/bricolage-latin-wdth-normal.woff2`, licencia OFL), texto de estudio en Spectral e interfaz en Inter. Paleta: ciruela (`--green`, la marca), lima (`--hl`, el resaltador), violeta (`--gold`), tinta y papel; el verde queda solo para «acierto» (`--ok`). Se descartó azul + rojo porque, con luminancias casi iguales (razón 1,9), vibran; ciruela y lima tienen una razón de luminancia de ≈11 y no vibran. Todo lo visual de esta capa está en `css/identidad.css`, que se carga la última y pisa a `style.css` y `juego.css`. La portada usa un índice numerado en lugar de tarjetas; los textos de las vistas están en `index.html` y `js/juego.js`.
+
+## Buscador y línea del tiempo (v20)
+
+`js/buscar.js` es el buscador general (botón de la cabecera, Ctrl K): secciones, artistas, obras y términos. `js/tiempo.js` dibuja la línea del tiempo de las obras del dossier a partir de `data/tiempo.js` (`window.ARTE_TL = {"o-id": [año, etiqueta|0]}`): varias obras por año, panel con ficha, «Vivían ese año» y «Más de este tema». Para añadir una obra, apunta su año en ese fichero.
