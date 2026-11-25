@@ -343,8 +343,8 @@ function renderClasif() {
   var val = function (x) { return { xpT: x.xp, wk: x.wxp, streak: x.streak, cards: x.cards }[tab]; };
   var mx = Math.max.apply(null, [1].concat(list.map(val)));
   V.innerHTML = '<h2 id="h-cl">Clasificación</h2><div id="pulso"></div>' +
-    (on ? '<div class="jg-card cl-me"><div><small>Participas de forma anónima</small><h3>' + (me ? "Puesto " + me.rank : "…") + "</h3><p>" + (me ? "De " + d.n + " participantes · " + nf(me.xp) + " XP · +" + nf(me.wxp) + " esta semana" : (LBS.busy ? "Sincronizando…" : "Aún sin sincronizar")) + '</p></div><div class="row"><button class="btn" id="lbup" type="button">Actualizar mis puntos</button><button class="btn ghost" id="lbout" type="button">Salir de la clasificación</button></div></div>'
-      : '<div class="jg-card cl-join"><h3>Entra en la clasificación</h3><p>Sin alias, sin nombre, sin grupo. Se publican solo tus puntos (XP), tu racha y tus cromos, sin ningún dato que te identifique. Puedes salir cuando quieras y tu fila se borra. No hay cookies ni seguimiento.</p><div class="row"><button class="btn" id="lbjoin" type="button">Entrar</button><span class="jg-note" id="lbmsg" role="alert"></span></div></div>') +
+    (on ? '<div class="jg-card cl-me"><div><small>Estás en el ranking</small><h3>' + (me ? "Puesto " + me.rank : "…") + "</h3><p>" + (me ? "De " + d.n + " participantes · " + nf(me.xp) + " XP · +" + nf(me.wxp) + " esta semana" : (LBS.busy ? "Sincronizando…" : "Aún sin sincronizar")) + '</p></div><div class="row"><button class="btn" id="lbup" type="button">Actualizar mis puntos</button><button class="btn ghost" id="lbout" type="button">Salir del ranking</button></div></div>'
+      : '<div class="jg-card cl-join"><h3>Ranking opcional</h3><p>Las cifras de la clase y tu posición se cuentan solas. El ranking con puestos es opcional: si entras, se publican tus puntos (XP), tu racha y tus cromos con un identificador aleatorio, sin nombre ni alias. Puedes salir cuando quieras y tu fila se borra.</p><div class="row"><button class="btn" id="lbjoin" type="button">Entrar en el ranking</button><span class="jg-note" id="lbmsg" role="alert"></span></div></div>') +
     (LBS.err && !d ? '<p class="jg-warn">' + esc(LBS.err) + ' <button class="btn ghost jg-sm" id="lbretry" type="button">Reintentar</button></p>' : "") +
     (d ? '<div class="jg-s4" style="margin-top:16px"><div><b>' + d.n + "</b><span>participantes</span></div><div><b>" + nf(d.xp) + "</b><span>XP entre todos</span></div><div><b>" + Math.round(d.mins / 60) + " h</b><span>de estudio sumadas</span></div><div><b>" + weekLabel(d.week) + "</b><span>inicio de la semana</span></div></div>" : "") +
     '<div class="cl-f"><div class="jg-seg" role="tablist" aria-label="Clasificación">' + tabs.map(function (t) { return '<button type="button" role="tab" data-lt="' + t[0] + '" aria-current="' + (tab === t[0]) + '">' + t[1] + "</button>"; }).join("") + '</div><button class="btn ghost jg-sm" id="lbrf" type="button">' + (LBS.busy ? "Cargando…" : "↻ Refrescar") + "</button></div>" +
@@ -359,12 +359,12 @@ function renderClasif() {
   var up = $("lbup"); if (up) up.onclick = function () { up.disabled = true; lbPush().then(function (j) { toast(j && !j.ok ? (j.error || "No se pudo actualizar.") : "Puntos actualizados"); lbLoad(); }); };
   var out = $("lbout"); if (out) out.onclick = function () {
     if (!out.dataset.sure) { out.dataset.sure = "1"; out.textContent = "¿Seguro? Pulsa otra vez"; return; }
-    lbCall("DELETE", "&id=" + lbId()).then(function (j) { if (j.ok) { G.lb.on = 0; save(); LBS.d = null; toast("Has salido de la clasificación"); lbLoad(); } else toast(j.error || "No se pudo salir."); });
+    lbCall("DELETE", "&id=" + lbId()).then(function (j) { if (j.ok) { G.lb.on = 0; save(); LBS.d = null; toast("Has salido del ranking"); lbLoad(); } else toast(j.error || "No se pudo salir."); });
   };
   var jn = $("lbjoin"); if (jn) jn.onclick = function () {
     jn.disabled = true; $("lbmsg").textContent = "Entrando…"; lbId(); G.lb.on = 1;
     lbCall("POST", "", lbPayload()).then(function (j) {
-      if (j.ok) { save(); LBS.d = j; LBS.t = Date.now(); toast("Ya participas en la clasificación"); lbLoad(); }
+      if (j.ok) { save(); LBS.d = j; LBS.t = Date.now(); toast("Estás en el ranking"); lbLoad(); }
       else { G.lb.on = 0; jn.disabled = false; $("lbmsg").textContent = j.error || "No se pudo entrar."; }
     });
   };

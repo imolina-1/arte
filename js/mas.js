@@ -192,7 +192,7 @@ function initNav() {
   function closeAll(except) { dds.forEach(function (d) { if (d !== except) set(d, false); }); }
   dds.forEach(function (d) {
     var b = d.querySelector(".dd-b"), t;
-    b.addEventListener("click", function () { var o = !d.classList.contains("open"); closeAll(d); set(d, o); });
+    b.addEventListener("click", function () { var o = hover() || !d.classList.contains("open"); closeAll(d); set(d, o); });
     d.addEventListener("mouseenter", function () { if (!hover()) return; clearTimeout(t); closeAll(d); set(d, true); });
     d.addEventListener("mouseleave", function () { if (!hover()) return; t = setTimeout(function () { set(d, false); }, 180); });
     d.addEventListener("focusout", function (ev) { if (ev.relatedTarget && !d.contains(ev.relatedTarget)) set(d, false); });

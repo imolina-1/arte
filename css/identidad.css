@@ -218,3 +218,6 @@ body:has(#v-cronologia:not(.hidden)) .foot,body:has(#v-cronologia:not(.hidden)) 
 @media (max-width:860px){.hero{margin-top:12px}}
 #tlpn .pbtn.alt{background:transparent;color:var(--hl);margin-top:2px}
 #tlpn .pbtn.alt:hover{background:var(--hl);color:#17121f}
+/* Reserva de espacio para el contenido que se pinta con JS (evita saltos de maquetación al cargar) */
+#heroFrame{min-height:200px}.hx{min-height:84px}.hero-art figcaption{min-height:3.4em}
+@media (max-width:860px){#heroFrame{min-height:240px}.hx{min-height:170px}}
