@@ -64,7 +64,7 @@
       <div class="dd-p" id="m-estudio">
         <p class="dd-h">Todo el temario</p>
         <a href="#semblanzas" data-view="semblanzas"><b>Semblanzas</b><span>Las 139 del dossier</span></a>
-        <a href="#cronologia" data-view="cronologia"><b>Cronología</b><span>Quién fue contemporáneo de quién</span></a>
+        <a href="#cronologia" data-view="cronologia"><b>Cronología</b><span>Las obras del dossier, año a año</span></a>
         <a href="#mapa" data-view="mapa"><b>Mapa</b><span>Dónde vivieron y trabajaron</span></a>
         <a href="#comparador" data-view="comparador"><b>Comparador</b><span>Dos artistas frente a frente</span></a>
         <a href="#esquema" data-view="esquema"><b>Esquemas</b><span>Una chuleta imprimible por tema</span></a>
@@ -73,6 +73,7 @@
       </div>
     </div>
     </nav>
+    <button class="srchpill" id="srchb" type="button" aria-label="Buscar (Ctrl+K)" title="Buscar (Ctrl+K)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.9-4.9"/></svg><span>Buscar</span><kbd>Ctrl K</kbd></button>
     <button id="themeBtn" class="theme" type="button" aria-label="Cambiar entre tema claro y oscuro" title="Tema claro / oscuro"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
     <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="Abrir el menú"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
   </div>
@@ -87,8 +88,7 @@
     <div class="hero">
       <div class="hero-text">
         <p class="eyebrow">PAU <span class="pauy">2027</span></p>
-        <h2 id="h-ini">La PAU de Arte se aprueba mirando</h2>
-        <p class="lead">740 términos, 139 artistas y 420 obras de clase, todo enlazado. Sin registro: entras y practicas.</p>
+        <h2 id="h-ini">Historia del Arte</h2>
         <div class="row"><a class="btn" href="#test">Empieza por el test</a><a class="btn ghost" href="#artista">Escribe una semblanza</a></div>
         <div class="counts" id="counts"></div>
       </div>
@@ -119,7 +119,7 @@
       <div class="ix-h"><h3>Estudio</h3><p>Todo el temario</p></div>
       <div class="cards">
         <a class="hcard" href="#semblanzas" data-art="miguel-angel-buonarroti"><div class="hc-img"></div><div class="hc-body"><div class="k">Consulta</div><h3>Semblanzas</h3><p>Las 139 del dossier, con buscador y los términos de cada artista.</p></div></a>
-        <a class="hcard" href="#cronologia" data-art="claude-monet"><div class="hc-img"></div><div class="hc-body"><div class="k">Quién coincidió con quién</div><h3>Cronología</h3><p>Las vidas de los artistas sobre un eje.</p></div></a>
+        <a class="hcard" href="#cronologia" data-art="claude-monet"><div class="hc-img"></div><div class="hc-body"><div class="k">Año a año</div><h3>Cronología</h3><p>Las obras del dossier, de una en una, hacia delante y hacia atrás.</p></div></a>
         <a class="hcard" href="#mapa" data-art="sandro-botticelli"><div class="hc-img"></div><div class="hc-body"><div class="k">Dónde</div><h3>Mapa</h3><p>Dónde vivió y trabajó cada uno.</p></div></a>
         <a class="hcard" href="#comparador" data-art="pedro-pablo-rubens"><div class="hc-img"></div><div class="hc-body"><div class="k">Contrastes</div><h3>Comparador</h3><p>Dos artistas cara a cara: época, rasgos, obras y términos comunes.</p></div></a>
         <a class="hcard" href="#esquema" data-art="giotto-di-bondone"><div class="hc-img"></div><div class="hc-body"><div class="k">Para imprimir</div><h3>Esquemas por tema</h3><p>Una hoja por tema: artistas, características, obras y términos.</p></div></a>
@@ -227,19 +227,9 @@
   </section>
 
   <!-- LÍNEA DEL TIEMPO -->
-  <section id="v-cronologia" class="hidden" aria-labelledby="h-tl">
-    <p class="eyebrow">Pregunta 3 · estudio</p>
-    <h2 id="h-tl">Línea del tiempo de artistas</h2>
-    <p class="lead">Cuándo vivió cada uno y con quién coincidió. Pulsa una barra y vas a su ficha.</p>
-    <div class="filters">
-      <label for="tlTema" class="sr">Tema</label><select id="tlTema"></select>
-      <label for="tlSort" class="sr">Orden</label><select id="tlSort"><option value="y">Ordenar por fecha</option><option value="tema">Ordenar por tema</option></select>
-      <label for="tlQ" class="sr">Buscar</label><input id="tlQ" type="search" placeholder="Buscar artista">
-      <label class="tl-chk"><input type="checkbox" id="tlCompl"> Incluir complementarias</label>
-    </div>
-    <p class="stats" id="tlCount" role="status"></p>
-    <div class="tl-legend" id="tlLegend" aria-hidden="true"></div>
-    <div id="tlBox"></div>
+  <section id="v-cronologia" class="hidden" aria-label="Línea del tiempo de obras">
+    <div id="tl2"></div>
+    <noscript>Necesita JavaScript.</noscript>
   </section>
 
   <!-- REPASO -->
@@ -393,27 +383,28 @@
   </section>
 
 </main>
-<footer class="foot"><div class="wrap">
-  <div class="orn light" aria-hidden="true"><svg viewBox="0 0 120 14" width="120" height="14"><path d="M0 7h46M74 7h46" stroke="currentColor" stroke-width="1" fill="none"/><path d="M60 1l5 6-5 6-5-6z" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="52" cy="7" r="1.4" fill="currentColor"/><circle cx="68" cy="7" r="1.4" fill="currentColor"/></svg></div>
-  <p>Historia del Arte · 2.º de Bachillerato · Comunidad de Madrid · Decreto 64/2022 y modelo PAU</p>
-  <p class="fl"><a href="#acerca">Créditos y derechos</a> · © 2026 Iván Molina Rincón</p>
-</div></footer>
+<footer class="foot"><div class="wrap foot-in"><svg class="foot-mk" viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path d="M12 1.5l2.6 7.9 7.9 2.6-7.9 2.6L12 22.5l-2.6-7.9L1.5 12l7.9-2.6z" fill="currentColor"/></svg><p>Historia del Arte · 2.º Bachillerato · Madrid <i aria-hidden="true">/</i> <a href="#acerca">Créditos y derechos</a> <i aria-hidden="true">/</i> © 2026 Iván Molina Rincón</p></div></footer>
 <button id="toTop" type="button" aria-label="Volver arriba" title="Volver arriba"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 14l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 <dialog id="lb" class="lb" aria-label="Imagen ampliada">
   <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
   <button id="lbClose" type="button" class="lb-x" aria-label="Cerrar">×</button>
 </dialog>
 
+<dialog id="gs" aria-label="Buscar"><div class="gs-w"><input id="gsq" type="search" placeholder="Busca un artista, una obra o un término" aria-label="Buscar" autocomplete="off"><div id="gsl" role="listbox"></div><div class="gs-h"><kbd>↑</kbd><kbd>↓</kbd> moverte · <kbd>Enter</kbd> abrir · <kbd>Esc</kbd> cerrar</div></div></dialog>
+
 <script defer src="data/semblanzas.js"></script>
 <script defer src="data/glosario.js"></script>
 <script defer src="data/obras.js"></script>
 <script defer src="data/mapa.js"></script>
+<script defer src="data/tiempo.js"></script>
 <script defer src="js/core.js"></script>
 <script defer src="js/semblanzas.js"></script>
 <script defer src="js/glosario.js"></script>
 <script defer src="js/extra.js"></script>
+<script defer src="js/tiempo.js"></script>
 <script defer src="js/mas.js"></script>
 <script defer src="js/juego.js"></script>
+<script defer src="js/buscar.js"></script>
 <script defer src="js/start.js"></script>
 </body>
 </html>

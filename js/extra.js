@@ -27,38 +27,6 @@ function ticks(a, b) {
 }
 A.tlScale = mkScale;
 
-/* ---------- Línea del tiempo ---------- */
-function drawTl() {
-  var v = $("tlTema").value, compl = $("tlCompl").checked, q = norm($("tlQ").value);
-  var list = ART.filter(function (e) { return A.inFilter(e.tema, v) && (compl || !e.compl) && (!q || norm(e.nombre).indexOf(q) >= 0); });
-  var by = $("tlSort").value;
-  list.sort(by === "tema" ? function (a, b) { return a.tema - b.tema || a.y0 - b.y0; } : function (a, b) { return a.y0 - b.y0 || y1of(a) - y1of(b); });
-  if (!list.length) { $("tlBox").innerHTML = '<p class="lead">No hay artistas con ese filtro.</p>'; $("tlCount").textContent = ""; return; }
-  var lo = Math.min.apply(null, list.map(function (e) { return e.y0; })), hi = Math.max.apply(null, list.map(y1of));
-  var pad = Math.max(10, Math.round((hi - lo) * .03)); lo -= pad; hi = Math.min(hi + pad, 2030);
-  var sc = mkScale(lo, hi), tk = sc.ticks.filter(function (t) { return t >= lo && t <= hi; });
-  function pc(y) { return Math.max(0, Math.min(100, sc.f(y) * 100)); }
-  var grid = tk.map(function (t) { return '<i style="left:' + pc(t).toFixed(2) + '%"></i>'; }).join("");
-  var axis = tk.map(function (t) { return '<span style="left:' + pc(t).toFixed(2) + '%">' + yfmt(t) + "</span>"; }).join("");
-  var rows = list.map(function (e) {
-    var l = pc(e.y0), w = Math.max(.7, pc(y1of(e)) - l), right = l + w > 78;
-    var thumb = e.rth ? '<img src="' + esc(e.rth) + '" alt="" loading="lazy" decoding="async">' : '<span class="tl-ph" aria-hidden="true"></span>';
-    return '<li><a class="tl-name" href="#a-' + e.id + '">' + thumb + "<span>" + esc(e.nombre) + "</span></a>" +
-      '<div class="tl-track"><a class="tl-bar" style="--h:' + hue(e.tema) + ";left:" + l.toFixed(2) + "%;width:" + w.toFixed(2) + '%" href="#a-' + e.id + '" aria-label="' + esc(e.nombre + ", " + e.yl + ", " + A.temaLabel(e.tema)) + '" title="' + esc(e.nombre + " · " + e.yl) + '"></a>' +
-      '<span class="tl-yr" style="' + (right ? "right:" + (100 - l + .6).toFixed(2) : "left:" + (l + w + .6).toFixed(2)) + '%">' + esc(e.yl) + "</span></div></li>";
-  }).join("");
-  $("tlBox").innerHTML = '<div class="tl"><div class="tl-axis" aria-hidden="true"><div class="tl-ticks">' + axis + '</div></div>' +
-    '<div class="tl-body"><div class="tl-grid" aria-hidden="true">' + grid + '</div><ol class="tl-rows">' + rows + "</ol></div></div>";
-  $("tlCount").textContent = list.length + " artistas · barras = vida o actividad · pulsa una para abrir su ficha";
-}
-function initTl() {
-  $("tlTema").innerHTML = A.temaOptions(17);
-  $("tlTema").value = "all";
-  ["tlTema", "tlSort", "tlCompl"].forEach(function (id) { $(id).addEventListener("change", drawTl); });
-  $("tlQ").addEventListener("input", drawTl);
-  $("tlLegend").innerHTML = A.TEMAS.slice(0, 17).map(function (n, i) { return '<span class="tl-key"><i style="--h:' + hue(i + 1) + '"></i>T' + (i + 1) + "</span>"; }).join("");
-}
-A.hooks.cronologia = function (p) { if (p.t && $("tlTema").value !== p.t) $("tlTema").value = p.t; drawTl(); };
 
 /* ---------- Modo repaso: tarjetas de artistas y de términos ---------- */
 var rep = { pool: [], cur: null, shown: false, seen: 0 };
@@ -169,5 +137,5 @@ function fichaArt(id) {
 }
 A.hooks.ficha = function (p) { fichaArt(p.id); };
 
-A.inits.push(initTl, initRep);
+A.inits.push(initRep);
 })();
