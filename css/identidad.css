@@ -216,3 +216,5 @@ body:has(#v-cronologia:not(.hidden)) .foot,body:has(#v-cronologia:not(.hidden)) 
 .pu-big>div,.pu-c{border-radius:var(--r);box-shadow:var(--hard)}
 .pu-big b{font-weight:800}.pu-tick{box-shadow:var(--hard)}
 @media (max-width:860px){.hero{margin-top:12px}}
+#tlpn .pbtn.alt{background:transparent;color:var(--hl);margin-top:2px}
+#tlpn .pbtn.alt:hover{background:var(--hl);color:#17121f}

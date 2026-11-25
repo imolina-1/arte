@@ -6,6 +6,12 @@ A.SEMB = window.ARTE_SEMB || [];
 A.GLOS = window.ARTE_GLOS || [];
 A.sById = {};
 A.SEMB.forEach(function (e) { A.sById[e.id] = e; });
+var ES_SHARED = { "juan-de-herrera": 1, "el-greco": 1, "diego-velazquez": 1, "bartolome-esteban-murillo": 1, "pablo-picasso": 1 };     // también están en Historia de España
+A.esHref = function (y, id) {                       // enlace a la línea del tiempo de Historia de España
+  var u = "https://historiapau.pages.dev/#linea";
+  if (id && ES_SHARED[id]) return { u: u + "?k=p" + id, t: "Su ficha en Historia de España" };
+  return y == null || y < -218 ? null : { u: u + "?y=" + Math.round(y), t: "La España de su época" };
+};
 A.OBRAS = window.ARTE_OBRAS || [];          // obras de las presentaciones (sin semblanza propia)
 A.OBRAS.forEach(function (e) { A.sById[e.id] = e; });
 

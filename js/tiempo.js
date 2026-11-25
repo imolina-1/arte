@@ -125,6 +125,7 @@ function openEv(i) {
     '<div class="k">' + esc(A.temaLabel(e.tema)) + "</div><h2>" + esc(o.pie) + '</h2><div class="yr">' + esc(when) + (o.nombre ? " · " + esc(o.nombre) : "") + "</div>" +
     (sub ? "<h3>Estilo</h3><p class=\"sub\">" + esc(sub) + "</p>" : "") +
     (art ? '<p class="act"><a class="pbtn" href="#a-' + art.id + '">Ficha de ' + esc(art.nombre) + "</a></p>" : "") +
+    (function () { var h = A.esHref(e.y, art && art.id); if (h && !art) h.t = "La España de entonces"; return h ? '<p class="act"><a class="pbtn alt" href="' + esc(h.u) + '" target="_blank" rel="noopener">' + esc(h.t) + " ↗</a></p>" : ""; })() +
     ((o.terms || []).length ? "<h3>Términos del glosario</h3><div class=\"chs\">" + termChips(o) + "</div>" : "") +
     (co.length ? "<h3>Vivían ese año</h3><div class=\"chs\">" + co.map(function (a) { return '<a class="chp" href="#a-' + a.id + '">' + esc(a.nombre) + "</a>"; }).join("") + "</div>" : "") +
     (same.length ? "<h3>Más de este tema</h3><ul>" + same.map(function (x) { return '<li><button type="button" data-e="' + x.i + '"><b>' + esc(x.lab ? x.lab.replace(/^Siglos? /, "S. ") : fy(x.y)) + "</b><span>" + esc(x.o.pie) + "</span></button></li>"; }).join("") + "</ul>" : "");
