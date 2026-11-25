@@ -141,14 +141,14 @@ function renderHoy() {
     return '<li class="jg-hr' + (d[i] ? " ok" : "") + '"><span class="jg-hk" aria-hidden="true">' + (d[i] ? "✓" : ic) + '</span><div class="jg-ht"><b>' + t + "</b><small>" + sub + '</small></div><a class="btn' + (d[i] ? " ghost" : "") + ' jg-sm" href="' + href + '">' + (d[i] ? "Repetir" : btn) + "</a></li>";
   }
   var f = P.face;
-  el.innerHTML = '<div class="hsec-h"><p class="eyebrow">Unos 10 minutos</p><h3>Para hoy</h3></div>' +
+  el.innerHTML = '<div class="hsec-h"><h3>Para hoy</h3><span class="hsec-n">10 minutos</span></div>' +
     '<div class="jg-card jg-hoy"><div class="jg-hoyh"><svg viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="' + n + ' de 4 tareas hechas"><circle cx="32" cy="32" r="27" class="rb"/><circle cx="32" cy="32" r="27" class="rf" style="stroke-dasharray:' + R.toFixed(1) + ";stroke-dashoffset:" + off.toFixed(1) + '"/><text x="32" y="38" text-anchor="middle">' + n + '/4</text></svg>' +
-    "<div><h4>" + (n === 4 ? "Sesión completa" : "Tu sesión de hoy") + "</h4><p>" + (n === 4 ? "Vuelve mañana: se renueva todo y se mantiene tu racha." : "Cuatro pasos que cambian cada día y se adaptan a tus fallos. Al cerrarlos: +" + HOY_XP + " XP y un sobre.") + "</p></div>" +
+    "<div><h4>" + (n === 4 ? "Hecho por hoy" : "Tu sesión de hoy") + "</h4><p>" + (n === 4 ? "Mañana hay otra, y la racha sigue." : "Cuatro cosas, cambian cada día y se fijan en lo que fallas. Al terminar: +" + HOY_XP + " XP y un sobre.") + "</p></div>" +
     '<div class="jg-me"><b>' + esc(r.name) + "</b><span>" + nf(G.xp) + " XP · racha " + s + (s === 1 ? " día" : " días") + "</span></div></div>" +
     '<ol class="jg-hol">' +
-    row(0, "1", "Conoce al artista del día", f ? esc(f.nombre) + " · " + esc(f.yl) + " · " + esc(A.temaLabel(f.tema).split(". ")[0]) : "", "Abrir", f ? "#a-" + f.id : "#semblanzas") +
-    row(1, "2", "Cinco fichas de obras", Math.min(S.fic, HOY_FIC) + " de " + HOY_FIC + " hechas hoy · ves la obra y eliges el autor", "Empezar", "#fichas") +
-    row(2, "3", "Repasa " + HOY_N + " tarjetas", Math.min(S.rep, HOY_N) + " de " + HOY_N + " hechas hoy · las falladas vuelven antes", "Empezar", "#repaso") +
+    row(0, "1", "El artista del día", f ? esc(f.nombre) + " · " + esc(f.yl) + " · " + esc(A.temaLabel(f.tema).split(". ")[0]) : "", "Abrir", f ? "#a-" + f.id : "#semblanzas") +
+    row(1, "2", "Cinco fichas de obras", Math.min(S.fic, HOY_FIC) + " de " + HOY_FIC + " hechas · ves la obra y eliges autor", "Empezar", "#fichas") +
+    row(2, "3", "Repasa " + HOY_N + " tarjetas", Math.min(S.rep, HOY_N) + " de " + HOY_N + " hechas · las falladas vuelven antes", "Empezar", "#repaso") +
     row(3, "4", "Refuerza el tema " + P.w, esc(A.temaName[P.w] || "") + " · " + esc(P.why) + " (" + Math.min(S.tm, HOY_TEMA) + " de " + HOY_TEMA + ")", "Practicar", "#repaso?t=" + P.w + "&m=term") +
     "</ol></div>";
 }
@@ -285,7 +285,7 @@ function renderAlbum() {
     var all = CARDS.filter(function (e) { return e.tema === tn; }), got = all.filter(function (e) { return own[e.id]; }).length;
     return '<div class="al-t"><h3>' + esc(A.temaLabel(tn)) + '</h3><span class="k' + (got === all.length ? " full" : "") + '">' + got + " / " + all.length + (got === all.length ? " · completo" : "") + '</span></div><div class="al-grid">' + temas[tn].sort(function (x, y) { return ALN[x.id] - ALN[y.id]; }).map(function (e) { return cromo(e, { owned: !!own[e.id] }); }).join("") + "</div>";
   }).join("");
-  V.innerHTML = '<p class="eyebrow">Retos</p><h2 id="h-al">Álbum de artistas</h2><p class="lead">Colecciona a los ' + tot + ' artistas del dossier. Cada sobre trae tres cromos y los ganas estudiando.</p>' +
+  V.innerHTML = '<h2 id="h-al">Álbum de artistas</h2><p class="lead">Los ' + tot + ' artistas del dossier, en cromos. Cada sobre trae tres y se gana estudiando.</p>' +
     '<div class="jg-card al-sum"><div class="al1"><div class="big">' + k + "<small>/ " + tot + ' cromos</small></div><div class="jg-bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + tot + '" aria-valuenow="' + k + '"><i style="width:' + (k / tot * 100).toFixed(1) + '%"></i></div>' +
     '<div class="rars"><span><b>' + c1[0] + "/" + c1[1] + '</b> ★ comunes</span><span><b>' + c2[0] + "/" + c2[1] + '</b> ★★ raras</span><span><b>' + c3[0] + "/" + c3[1] + "</b> ★★★ legendarias</span></div></div>" +
     '<div class="al2"><h4>' + n + (n === 1 ? " sobre" : " sobres") + ' por abrir</h4><p>Uno cada ' + AL_XP + ' XP, más uno de regalo cada día.</p><div class="row"><button class="btn" id="alopen" type="button"' + (n ? "" : " disabled") + '>Abrir un sobre</button>' + (canDaily ? '<button class="btn ghost" id="aldaily" type="button">Sobre del día</button>' : '<span class="jg-note">Hoy ya has cogido el de regalo.</span>') + "</div></div></div>" +
@@ -338,7 +338,7 @@ function renderClasif() {
   var rk = { xpT: me && me.rank, wk: me && me.rankW, streak: me && me.rankS, cards: me && me.rankC }[tab];
   var val = function (x) { return { xpT: x.xp, wk: x.wxp, streak: x.streak, cards: x.cards }[tab]; };
   var mx = Math.max.apply(null, [1].concat(list.map(val)));
-  V.innerHTML = '<p class="eyebrow">Retos</p><h2 id="h-cl">Clasificación de la clase</h2><p class="lead">Compite con tus compañeros, de forma anónima. Solo se publican cifras: nadie ve quién eres.</p>' +
+  V.innerHTML = '<h2 id="h-cl">Clasificación</h2><p class="lead">Compites con la clase, pero nadie sabe quién eres: solo se publican cifras.</p>' +
     (on ? '<div class="jg-card cl-me"><div><small>Participas de forma anónima</small><h3>' + (me ? "Puesto " + me.rank : "…") + "</h3><p>" + (me ? "De " + d.n + " participantes · " + nf(me.xp) + " XP · +" + nf(me.wxp) + " esta semana" : (LBS.busy ? "Sincronizando…" : "Aún sin sincronizar")) + '</p></div><div class="row"><button class="btn" id="lbup" type="button">Actualizar mis puntos</button><button class="btn ghost" id="lbout" type="button">Salir de la clasificación</button></div></div>'
       : '<div class="jg-card cl-join"><h3>Entra en la clasificación</h3><p>Sin alias, sin nombre, sin grupo. Se publican solo tus puntos (XP), tu racha y tus cromos, sin ningún dato que te identifique. Puedes salir cuando quieras y tu fila se borra. No hay cookies ni seguimiento.</p><div class="row"><button class="btn" id="lbjoin" type="button">Entrar</button><span class="jg-note" id="lbmsg" role="alert"></span></div></div>') +
     (LBS.err && !d ? '<p class="jg-warn">' + esc(LBS.err) + ' <button class="btn ghost jg-sm" id="lbretry" type="button">Reintentar</button></p>' : "") +

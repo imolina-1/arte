@@ -238,7 +238,7 @@ document.addEventListener("keydown", function (ev) { if (ev.key === "Escape") { 
   });
 })();
 A.heroInit = function () {
-  var pool = A.SEMB.concat(A.OBRAS).filter(function (e) { return e.u !== false && e.img; });
+  var pool = A.SEMB.concat(A.OBRAS).filter(function (e) { return e.u !== false && e.img && !/origen del mundo/i.test(e.pie || ""); }); // portada apta para todos los públicos
   var last = null;
   function show() {
     var e = A.pick(pool); if (e === last && pool.length > 1) e = A.pick(pool); last = e;

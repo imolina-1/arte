@@ -72,3 +72,7 @@ Material de uso docente. Las imágenes proceden de las presentaciones de clase; 
 La experiencia (XP), la racha y los cromos se guardan solo en el navegador (`localStorage`, claves `arte_g*`). La clasificación es opcional y anónima: al unirse se genera un identificador aleatorio y solo se envían cifras (XP, racha, cromos, minutos); no hay nombre, alias ni grupo.
 
 Comparte servidor con la web de Historia de España: la función `/api/lb?b=arte` de https://historiapau.pages.dev (Cloudflare Pages Function + D1, tabla `lbA`). Si esa función cae, la clasificación de Arte deja de cargar, pero el resto de la web funciona. La URL está en `LB_URL`, en `js/juego.js`. El profesor puede retirar filas desde «Moderación (profesor)» en la clasificación con su clave de administración. Las cifras se calculan en el dispositivo; el servidor limita subidas anormales, así que es orientativo, no a prueba de trampas.
+
+## Identidad visual (v19)
+
+Titulares en Bricolage Grotesque (variable, ancho 75-100 %, `fonts/bricolage-latin-wdth-normal.woff2`, licencia OFL), texto de estudio en Spectral e interfaz en Inter. Paleta: azul (`--green`, la marca), bermellón (`--gold`), tinta y papel; el verde queda solo para «acierto» (`--ok`). Todo lo visual de esta capa está en `css/identidad.css`, que se carga la última y pisa a `style.css` y `juego.css`. La portada usa un índice numerado en lugar de tarjetas; los textos de las vistas están en `index.html` y `js/juego.js`.

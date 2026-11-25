@@ -14,6 +14,7 @@
 <meta property="og:image" content="icon-512.png">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/juego.css">
+<link rel="stylesheet" href="css/identidad.css">
 <script>try{var t=JSON.parse(localStorage.getItem("arte_theme")||"null");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
@@ -28,7 +29,7 @@
 <path d="M13.5 22.6q6.5 3.4 13 0"/>
 <path d="M15 25.5v9.5M18.3 25.5v9.5M21.7 25.5v9.5M25 25.5v9.5" stroke-width="1.2"/>
 <path d="M12.5 35.5h15M10.5 37.6h19" stroke-width="1.8"/></svg></span>
-      <span class="bn"><b>Historia del <i>Arte</i></b><small>PAU <span class="pauy">2027</span> · 2.º de Bachillerato</small></span>
+      <span class="bn"><b>Historia del Arte</b><small>PAU <span class="pauy">2027</span> · 2.º de Bachillerato</small></span>
     </a>
     <nav class="site-nav" id="siteNav" aria-label="Secciones">
     <a class="nl" href="#inicio" data-view="inicio">Inicio</a>
@@ -85,10 +86,10 @@
   <section id="v-inicio" aria-labelledby="h-ini">
     <div class="hero">
       <div class="hero-text">
-        <p class="eyebrow">Historia del Arte · PAU <span class="pauy">2027</span></p>
-        <h2 id="h-ini">Prepara la PAU <em>mirando</em> las obras</h2>
-        <p class="lead">Semblanzas, glosario e imágenes de clase, enlazados entre sí. Sin cuenta ni registro.</p>
-        <div class="row"><a class="btn" href="#test">Empezar el test con imágenes</a><a class="btn ghost" href="#artista">Probar una semblanza</a></div>
+        <p class="eyebrow">PAU <span class="pauy">2027</span></p>
+        <h2 id="h-ini">La PAU de Arte se aprueba mirando</h2>
+        <p class="lead">740 términos, 139 artistas y 420 obras de clase, todo enlazado. Sin registro: entras y practicas.</p>
+        <div class="row"><a class="btn" href="#test">Empieza por el test</a><a class="btn ghost" href="#artista">Escribe una semblanza</a></div>
         <div class="counts" id="counts"></div>
       </div>
       <figure class="hero-art" id="heroArt">
@@ -98,35 +99,35 @@
     </div>
     <div class="hx" id="homeExtra"></div>
     <section class="hsec" id="hoySec" aria-label="Para hoy"></section>
-    <section class="hsec" aria-label="Términos">
-      <div class="hsec-h"><p class="eyebrow">Pregunta 1</p><h3>Términos</h3></div>
+    <section class="ix" aria-label="Términos">
+      <div class="ix-h"><h3>Términos</h3><p>Pregunta 1 · 2 puntos</p></div>
       <div class="cards">
-        <a class="hcard" href="#glosario" data-art="o-partenon-fachada"><div class="hc-img"></div><div class="hc-body"><div class="k">Estudio</div><h3>Glosario</h3><p>740 términos de los 18 temas, con buscador, imágenes y semblanzas relacionadas.</p></div></a>
-        <a class="hcard" href="#terminos" data-art="o-chartres-fachada"><div class="hc-img"></div><div class="hc-body"><div class="k">2 puntos · 18 minutos</div><h3>Simulacro de términos</h3><p>Cuatro imágenes, un término por imagen y su definición, como en el modelo 2027.</p></div></a>
-        <a class="hcard" href="#test" data-art="o-mezquita-interior"><div class="hc-img"></div><div class="hc-body"><div class="k">Práctica</div><h3>Test con imágenes</h3><p>Imagen, término y definición en los dos sentidos, por tema o evaluación.</p></div></a>
+        <a class="hcard" href="#glosario" data-art="o-partenon-fachada"><div class="hc-img"></div><div class="hc-body"><div class="k">Estudio</div><h3>Glosario</h3><p>Los 740 términos, con su imagen. Búscalo aquí antes de que caiga en el examen.</p></div></a>
+        <a class="hcard" href="#terminos" data-art="o-chartres-fachada"><div class="hc-img"></div><div class="hc-body"><div class="k">18 minutos</div><h3>Simulacro de términos</h3><p>Cuatro imágenes, un término y su definición por imagen. Como el día del examen.</p></div></a>
+        <a class="hcard" href="#test" data-art="o-mezquita-interior"><div class="hc-img"></div><div class="hc-body"><div class="k">Práctica</div><h3>Test con imágenes</h3><p>Ves la imagen y dices qué es, o al revés. Por tema o por evaluación.</p></div></a>
       </div>
     </section>
-    <section class="hsec" aria-label="Artistas">
-      <div class="hsec-h"><p class="eyebrow">Pregunta 3</p><h3>Artistas</h3></div>
+    <section class="ix" aria-label="Artistas">
+      <div class="ix-h"><h3>Artistas</h3><p>Pregunta 3 · 3 puntos</p></div>
       <div class="cards">
-        <a class="hcard" href="#simulacro" data-art="diego-velazquez"><div class="hc-img"></div><div class="hc-body"><div class="k">3 puntos · cronómetro</div><h3>Simulacro de semblanzas</h3><p>Cinco artistas, eliges tres y escribes con cronómetro, con corrección orientativa.</p></div></a>
-        <a class="hcard" href="#artista" data-art="francisco-de-goya"><div class="hc-img"></div><div class="hc-body"><div class="k">1 punto · un artista</div><h3>Una semblanza, una nota</h3><p>Escribe la semblanza de un artista y recibe el desglose de época, características y obras.</p></div></a>
-        <a class="hcard" href="#fichas" data-art="rembrandt-van-rijn"><div class="hc-img"></div><div class="hc-body"><div class="k">Práctica</div><h3>Fichas de obras</h3><p>Ves una obra y eliges el autor entre cuatro, con los términos relacionados.</p></div></a>
+        <a class="hcard" href="#simulacro" data-art="diego-velazquez"><div class="hc-img"></div><div class="hc-body"><div class="k">27 minutos</div><h3>Simulacro de semblanzas</h3><p>Cinco artistas, eliges tres y escribes con el reloj en marcha.</p></div></a>
+        <a class="hcard" href="#artista" data-art="francisco-de-goya"><div class="hc-img"></div><div class="hc-body"><div class="k">1 punto</div><h3>Una semblanza, una nota</h3><p>Escribes sobre un artista y te llega el desglose: época, características y obras.</p></div></a>
+        <a class="hcard" href="#fichas" data-art="rembrandt-van-rijn"><div class="hc-img"></div><div class="hc-body"><div class="k">Práctica</div><h3>Fichas de obras</h3><p>Una obra, cuatro autores. Aciertes o no, te explica por qué.</p></div></a>
       </div>
     </section>
-    <section class="hsec" aria-label="Estudio">
-      <div class="hsec-h"><p class="eyebrow">Todo el temario</p><h3>Estudio</h3></div>
+    <section class="ix" aria-label="Estudio">
+      <div class="ix-h"><h3>Estudio</h3><p>Todo el temario</p></div>
       <div class="cards">
         <a class="hcard" href="#semblanzas" data-art="miguel-angel-buonarroti"><div class="hc-img"></div><div class="hc-body"><div class="k">Consulta</div><h3>Semblanzas</h3><p>Las 139 del dossier, con buscador y los términos de cada artista.</p></div></a>
-        <a class="hcard" href="#cronologia" data-art="claude-monet"><div class="hc-img"></div><div class="hc-body"><div class="k">Eje cronológico</div><h3>Cronología</h3><p>Las vidas de los artistas sobre un eje, para ver quién fue contemporáneo de quién.</p></div></a>
-        <a class="hcard" href="#mapa" data-art="sandro-botticelli"><div class="hc-img"></div><div class="hc-body"><div class="k">Geografía</div><h3>Mapa</h3><p>Dónde vivieron y trabajaron, en Europa y en el mundo.</p></div></a>
-        <a class="hcard" href="#comparador" data-art="pedro-pablo-rubens"><div class="hc-img"></div><div class="hc-body"><div class="k">Contrastes</div><h3>Comparador</h3><p>Dos artistas frente a frente: época, rasgos, obras y términos en común.</p></div></a>
-        <a class="hcard" href="#esquema" data-art="giotto-di-bondone"><div class="hc-img"></div><div class="hc-body"><div class="k">Imprimible</div><h3>Esquemas por tema</h3><p>Una chuleta por tema con artistas, características, obras y términos.</p></div></a>
-        <a class="hcard" href="#repaso" data-art="berthe-morisot"><div class="hc-img"></div><div class="hc-body"><div class="k">Práctica</div><h3>Repaso con tarjetas</h3><p>Retratos, nombres, términos y definiciones con repetición espaciada.</p></div></a>
+        <a class="hcard" href="#cronologia" data-art="claude-monet"><div class="hc-img"></div><div class="hc-body"><div class="k">Quién coincidió con quién</div><h3>Cronología</h3><p>Las vidas de los artistas sobre un eje.</p></div></a>
+        <a class="hcard" href="#mapa" data-art="sandro-botticelli"><div class="hc-img"></div><div class="hc-body"><div class="k">Dónde</div><h3>Mapa</h3><p>Dónde vivió y trabajó cada uno.</p></div></a>
+        <a class="hcard" href="#comparador" data-art="pedro-pablo-rubens"><div class="hc-img"></div><div class="hc-body"><div class="k">Contrastes</div><h3>Comparador</h3><p>Dos artistas cara a cara: época, rasgos, obras y términos comunes.</p></div></a>
+        <a class="hcard" href="#esquema" data-art="giotto-di-bondone"><div class="hc-img"></div><div class="hc-body"><div class="k">Para imprimir</div><h3>Esquemas por tema</h3><p>Una hoja por tema: artistas, características, obras y términos.</p></div></a>
+        <a class="hcard" href="#repaso" data-art="berthe-morisot"><div class="hc-img"></div><div class="hc-body"><div class="k">Repetición espaciada</div><h3>Repaso con tarjetas</h3><p>Lo que fallas vuelve antes. Lo que sabes tarda más en volver.</p></div></a>
       </div>
     </section>
     <section class="hsec" aria-label="Los artistas del dossier">
-      <div class="hsec-h"><p class="eyebrow">Caras del temario</p><h3>Los artistas del dossier</h3><a class="hsec-a" href="#cronologia">Ver la cronología →</a></div>
+      <div class="hsec-h"><h3>Las caras del dossier</h3><a class="hsec-a" href="#cronologia">Ver la cronología →</a></div>
       <div class="mosaic" id="mosaic"></div>
     </section>
     <p class="disclaimer">Las correcciones son orientativas: buscan época, términos y obras, pero no valoran la redacción. Tu progreso se guarda solo en tu navegador.</p>
@@ -136,7 +137,7 @@
   <section id="v-artista" class="hidden" aria-labelledby="h-art">
     <p class="eyebrow">Pregunta 3 · práctica</p>
     <h2 id="h-art">Una semblanza, una nota</h2>
-    <p class="lead">Elige un artista (o uno al azar) y escribe su semblanza. Recibes la nota sobre <strong>1 punto</strong>, con el desglose por apartados.</p>
+    <p class="lead">Elige un artista, o deja que salga uno al azar, y escribe su semblanza. Te doy la nota sobre <strong>1 punto</strong> con el desglose.</p>
     <div class="panel">
       <div class="row">
         <label for="aTema">Temas</label><select id="aTema"></select>
@@ -164,7 +165,7 @@
   <!-- SIMULACRO DE SEMBLANZAS -->
   <section id="v-simulacro" class="hidden" aria-labelledby="h-sim">
     <h2 id="h-sim">Simulacro de la pregunta 3</h2>
-    <p class="lead">Elige los temas, genera cinco artistas como en la PAU y escoge tres. Escribe cada semblanza y entrégalas para ver la semblanza modelo y una nota orientativa.</p>
+    <p class="lead">Eliges los temas, salen cinco artistas y te quedas con tres. Escribes las tres y, al entregarlas, ves la semblanza modelo y una nota orientativa.</p>
     <div class="panel">
       <div id="temaChips"></div>
       <div class="row" style="margin-top:16px">
@@ -192,7 +193,7 @@
   <!-- FICHAS -->
   <section id="v-fichas" class="hidden" aria-labelledby="h-fic">
     <h2 id="h-fic">Fichas de obras</h2>
-    <p class="lead">¿Quién es el autor? Al responder verás la obra, el estilo y los términos relacionados.</p>
+    <p class="lead">¿De quién es? Respondas lo que respondas verás la obra, el estilo y los términos que van con ella.</p>
     <div class="row" style="margin-bottom:14px"><label for="ficTema">Temas:</label>
       <select id="ficTema"></select>
       <span class="stats" id="ficStats" role="status">0 aciertos de 0</span></div>
@@ -214,7 +215,7 @@
   <!-- CONSULTA DE SEMBLANZAS -->
   <section id="v-semblanzas" class="hidden" aria-labelledby="h-con">
     <h2 id="h-con">Semblanzas</h2>
-    <p class="lead">Las 139 semblanzas del dossier (T1-T17). En verde, las obras del currículo.</p>
+    <p class="lead">Las 139 semblanzas del dossier (T1-T17). Las obras del currículo, destacadas.</p>
     <div class="banner hidden" id="conBanner"><span>Mostrando una sola semblanza.</span><button class="btn ghost" id="conAll" type="button">Ver todas</button></div>
     <div class="filters">
       <label class="sr" for="q">Buscar</label>
@@ -229,7 +230,7 @@
   <section id="v-cronologia" class="hidden" aria-labelledby="h-tl">
     <p class="eyebrow">Pregunta 3 · estudio</p>
     <h2 id="h-tl">Línea del tiempo de artistas</h2>
-    <p class="lead">Cuándo vivió cada artista y con quién coincidió. Cada barra lleva a su ficha.</p>
+    <p class="lead">Cuándo vivió cada uno y con quién coincidió. Pulsa una barra y vas a su ficha.</p>
     <div class="filters">
       <label for="tlTema" class="sr">Tema</label><select id="tlTema"></select>
       <label for="tlSort" class="sr">Orden</label><select id="tlSort"><option value="y">Ordenar por fecha</option><option value="tema">Ordenar por tema</option></select>
@@ -245,7 +246,7 @@
   <section id="v-repaso" class="hidden" aria-labelledby="h-rp">
     <p class="eyebrow">Pregunta 3 · estudio</p>
     <h2 id="h-rp">Repaso con tarjetas</h2>
-    <p class="lead">Mira la tarjeta, intenta responder y pulsa «Girar». Marca si la sabías: las que falles volverán antes. Teclado: espacio para girar, 1 = no la sabía, 2 = la sabía.</p>
+    <p class="lead">Mira la tarjeta, intenta responder y gírala. Marca si la sabías: las que falles vuelven antes. Con el teclado, espacio para girar; 1 si no la sabías, 2 si sí.</p>
     <div class="filters">
       <label for="rpMode" class="sr">Modo</label><select id="rpMode"><option value="face">Retrato → nombre y época</option><option value="name">Nombre → época y obras</option><option value="term">Término → definición</option><option value="def">Definición → término</option></select>
       <label for="rpTema" class="sr">Tema</label><select id="rpTema"></select>
@@ -271,7 +272,7 @@
   <section id="v-progreso" class="hidden" aria-labelledby="h-pg">
     <p class="eyebrow">Estudio</p>
     <h2 id="h-pg">Mi progreso</h2>
-    <p class="lead">Resumen de lo que llevas, tema a tema. Se guarda solo en este navegador.</p>
+    <p class="lead">Lo que llevas, tema a tema. Se guarda solo en este navegador.</p>
     <div id="pgBox"></div>
   </section>
 
@@ -279,7 +280,7 @@
   <section id="v-comparador" class="hidden" aria-labelledby="h-cmp">
     <p class="eyebrow">Estudio</p>
     <h2 id="h-cmp">Comparador de artistas</h2>
-    <p class="lead">Pon dos artistas frente a frente para ver sus diferencias de época, estilo y obras, y los términos que comparten.</p>
+    <p class="lead">Dos artistas frente a frente: qué los separa, qué comparten.</p>
     <div class="filters">
       <label class="sr" for="cmpA">Primer artista</label><select id="cmpA"></select>
       <button class="btn ghost" id="cmpSwap" type="button" aria-label="Intercambiar artistas">⇄</button>
@@ -293,7 +294,7 @@
   <section id="v-esquema" class="hidden" aria-labelledby="h-esq">
     <p class="eyebrow">Estudio · imprimible</p>
     <h2 id="h-esq">Esquema por tema</h2>
-    <p class="lead">Una chuleta de repaso por tema: artistas, características, obras clave y términos. Imprímela o guárdala en PDF.</p>
+    <p class="lead">Una hoja por tema con artistas, características, obras clave y términos. Imprímela o guárdala en PDF.</p>
     <div class="filters">
       <label class="sr" for="esqTema">Tema</label><select id="esqTema"></select>
       <button class="btn ghost" id="esqPrev" type="button" aria-label="Tema anterior">←</button>
@@ -307,7 +308,7 @@
   <section id="v-mapa" class="hidden" aria-labelledby="h-mp">
     <p class="eyebrow">Estudio</p>
     <h2 id="h-mp">Mapa de artistas</h2>
-    <p class="lead">Dónde vivieron y trabajaron, según la cabecera de cada semblanza. Pulsa un círculo para ver quiénes son.</p>
+    <p class="lead">Dónde vivió y trabajó cada artista, según la cabecera de su semblanza. Pulsa un círculo para ver quiénes son.</p>
     <div class="filters">
       <button type="button" class="chip" id="mpEu" aria-pressed="true">Europa</button>
       <button type="button" class="chip" id="mpMu" aria-pressed="false">Mundo</button>
@@ -321,7 +322,7 @@
   <!-- GLOSARIO -->
   <section id="v-glosario" class="hidden" aria-labelledby="h-glo">
     <h2 id="h-glo">Glosario de términos artísticos</h2>
-    <p class="lead">740 términos de los 18 temas, definidos como en la pregunta 1 de la PAU. Un mismo término puede repetirse en varios temas, con los ejemplos de cada arte.</p>
+    <p class="lead">740 términos de los 18 temas, definidos como en la pregunta 1. Si un término sale en varios temas es a propósito: cada arte lo ejemplifica a su manera.</p>
     <div class="banner hidden" id="glBanner"><span>Mostrando un solo término.</span><button class="btn ghost" id="glAll" type="button">Ver todo el glosario</button></div>
     <div id="glFilters">
       <div class="filters">
@@ -358,7 +359,7 @@
   <!-- TEST CON IMÁGENES -->
   <section id="v-test" class="hidden" aria-labelledby="h-tes">
     <h2 id="h-tes">Test de términos con imágenes</h2>
-    <p class="lead">Elige el tipo de pregunta y los temas. «Imagen → término» es el formato de la pregunta 1.</p>
+    <p class="lead">Elige el tipo de pregunta y los temas. «Imagen → término» es el formato del examen.</p>
     <div class="modes" id="tModes" role="group" aria-label="Tipo de pregunta"></div>
     <div class="row" style="margin-bottom:14px"><label for="tTema">Temas:</label><select id="tTema"></select><span class="stats" id="tStats" role="status"></span></div>
     <div id="tArea"></div>
