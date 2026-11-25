@@ -45,10 +45,10 @@ h3{font-weight:700;letter-spacing:-.02em}
 .jg-sm{box-shadow:2px 2px 0 var(--ink)}
 
 /* ---- portada ---- */
-.hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:end;margin:34px 0 10px}
-.hero h2{font-size:clamp(2.8rem,8.4vw,6.2rem);line-height:.9;letter-spacing:-.045em;font-stretch:76%;text-wrap:balance;margin:0 0 20px}
+.hero{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:28px;align-items:center;margin:30px 0 10px}
+.hero h2{font-size:clamp(3rem,10.6vw,8.6rem);line-height:.9;letter-spacing:-.045em;font-stretch:76%;text-wrap:balance;margin:0 0 20px}
 .hero .lead{font-size:1.12rem;margin-bottom:24px}
-.hero-art{transform:rotate(1.4deg);margin-right:-28px}
+.hero-art{transform:rotate(1.4deg);margin-right:-14px}
 .hero-art .frame::before,.hero-art .frame::after{display:none}
 .hero-art .frame{border:3px solid var(--ink);border-radius:6px;box-shadow:10px 10px 0 var(--hl);background:#17121f}
 .hero-art figcaption{font:500 .8rem/1.4 var(--ui);color:var(--muted);margin-top:22px;max-width:46ch}
@@ -215,3 +215,4 @@ body:has(#v-cronologia:not(.hidden)) .foot,body:has(#v-cronologia:not(.hidden)) 
 #pulsoH{display:flex;margin-top:14px}#pulsoH[hidden]{display:none}
 .pu-big>div,.pu-c{border-radius:var(--r);box-shadow:var(--hard)}
 .pu-big b{font-weight:800}.pu-tick{box-shadow:var(--hard)}
+@media (max-width:860px){.hero{margin-top:12px}}

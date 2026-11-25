@@ -144,7 +144,7 @@ function renderHoy() {
   var f = P.face;
   el.innerHTML = '<div class="hsec-h"><h3>Para hoy</h3><span class="hsec-n">10 minutos</span></div>' +
     '<div class="jg-card jg-hoy"><div class="jg-hoyh"><svg viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="' + n + ' de 4 tareas hechas"><circle cx="32" cy="32" r="27" class="rb"/><circle cx="32" cy="32" r="27" class="rf" style="stroke-dasharray:' + R.toFixed(1) + ";stroke-dashoffset:" + off.toFixed(1) + '"/><text x="32" y="38" text-anchor="middle">' + n + '/4</text></svg>' +
-    "<div><h4>" + (n === 4 ? "Hecho por hoy" : "Tu sesión de hoy") + "</h4><p>" + (n === 4 ? "Mañana hay otra, y la racha sigue." : "Cuatro cosas, cambian cada día y se fijan en lo que fallas. Al terminar: +" + HOY_XP + " XP y un sobre.") + "</p></div>" +
+    "<div><h4>" + (n === 4 ? "Hecho por hoy" : "Tu sesión de hoy") + "</h4><p>" + (n === 4 ? "Vuelve mañana." : "Cuatro cosas, cambian cada día y se fijan en lo que fallas. Al terminar: +" + HOY_XP + " XP y un sobre.") + "</p></div>" +
     '<div class="jg-me"><b>' + esc(r.name) + "</b><span>" + nf(G.xp) + " XP · racha " + s + (s === 1 ? " día" : " días") + "</span></div></div>" +
     '<ol class="jg-hol">' +
     row(0, "1", "El artista del día", f ? esc(f.nombre) + " · " + esc(f.yl) + " · " + esc(A.temaLabel(f.tema).split(". ")[0]) : "", "Abrir", f ? "#a-" + f.id : "#semblanzas") +
@@ -342,14 +342,14 @@ function renderClasif() {
   var rk = { xpT: me && me.rank, wk: me && me.rankW, streak: me && me.rankS, cards: me && me.rankC }[tab];
   var val = function (x) { return { xpT: x.xp, wk: x.wxp, streak: x.streak, cards: x.cards }[tab]; };
   var mx = Math.max.apply(null, [1].concat(list.map(val)));
-  V.innerHTML = '<h2 id="h-cl">Clasificación</h2><p class="lead">Compites con la clase, pero nadie sabe quién eres: solo se publican cifras.</p><div id="pulso"></div>' +
+  V.innerHTML = '<h2 id="h-cl">Clasificación</h2><div id="pulso"></div>' +
     (on ? '<div class="jg-card cl-me"><div><small>Participas de forma anónima</small><h3>' + (me ? "Puesto " + me.rank : "…") + "</h3><p>" + (me ? "De " + d.n + " participantes · " + nf(me.xp) + " XP · +" + nf(me.wxp) + " esta semana" : (LBS.busy ? "Sincronizando…" : "Aún sin sincronizar")) + '</p></div><div class="row"><button class="btn" id="lbup" type="button">Actualizar mis puntos</button><button class="btn ghost" id="lbout" type="button">Salir de la clasificación</button></div></div>'
       : '<div class="jg-card cl-join"><h3>Entra en la clasificación</h3><p>Sin alias, sin nombre, sin grupo. Se publican solo tus puntos (XP), tu racha y tus cromos, sin ningún dato que te identifique. Puedes salir cuando quieras y tu fila se borra. No hay cookies ni seguimiento.</p><div class="row"><button class="btn" id="lbjoin" type="button">Entrar</button><span class="jg-note" id="lbmsg" role="alert"></span></div></div>') +
     (LBS.err && !d ? '<p class="jg-warn">' + esc(LBS.err) + ' <button class="btn ghost jg-sm" id="lbretry" type="button">Reintentar</button></p>' : "") +
     (d ? '<div class="jg-s4" style="margin-top:16px"><div><b>' + d.n + "</b><span>participantes</span></div><div><b>" + nf(d.xp) + "</b><span>XP entre todos</span></div><div><b>" + Math.round(d.mins / 60) + " h</b><span>de estudio sumadas</span></div><div><b>" + weekLabel(d.week) + "</b><span>inicio de la semana</span></div></div>" : "") +
     '<div class="cl-f"><div class="jg-seg" role="tablist" aria-label="Clasificación">' + tabs.map(function (t) { return '<button type="button" role="tab" data-lt="' + t[0] + '" aria-current="' + (tab === t[0]) + '">' + t[1] + "</button>"; }).join("") + '</div><button class="btn ghost jg-sm" id="lbrf" type="button">' + (LBS.busy ? "Cargando…" : "↻ Refrescar") + "</button></div>" +
     (me && rk ? '<p class="jg-note">Tu puesto en esta lista: <b>' + rk + "</b>.</p>" : "") +
-    (list.length ? '<ol class="lbk">' + list.map(function (r, i) { return lbRow(r, i, tab, me, mx); }).join("") + "</ol>" : '<p class="jg-note" style="margin-top:18px">' + (LBS.busy ? "Cargando…" : (d ? "Todavía no hay nadie en esta lista. ¡Sé el primero!" : "")) + "</p>") +
+    (list.length ? '<ol class="lbk">' + list.map(function (r, i) { return lbRow(r, i, tab, me, mx); }).join("") + "</ol>" : '<p class="jg-note" style="margin-top:18px">' + (LBS.busy ? "Cargando…" : (d ? "Todavía no hay nadie en esta lista." : "")) + "</p>") +
     '<p class="jg-note">Los puntos se calculan en tu dispositivo; el servidor limita las subidas anormales y el profesor puede retirar filas con cifras imposibles. Se actualiza cuando estudias y cuando pulsas «Actualizar».</p>' +
     '<details class="cl-mod"><summary>Moderación (profesor)</summary><div class="row" style="align-items:flex-end"><label>Clave<input id="mdt" type="password" autocomplete="off"></label><button class="btn ghost jg-sm" id="mdgo" type="button">Cargar filas</button><button class="btn ghost jg-sm" id="mdall" type="button">Vaciar clasificación</button></div><div id="mdl"></div></details>';
   if (window.PULSO) PULSO.render($("pulso"));
