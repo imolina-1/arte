@@ -61,6 +61,7 @@ function record(kind, key, ok) {
   var t = temaOfKey(key), d = dayRec();
   d.n++; if (ok) d.ok++; if (kind === "rep") d.rep++; if (kind === "fichas") d.fic++;
   if (t) { d.tm[t] = (d.tm[t] || 0) + 1; var b = G.bt[t] || (G.bt[t] = [0, 0]); b[1]++; if (ok) b[0]++; }
+  if (window.PULSO) { PULSO.add("q"); if (ok) PULSO.add("qo"); if (t) { PULSO.add("t" + t + "a"); if (ok) PULSO.add("t" + t + "o"); } }
   act(); addXP(ok ? (kind === "rep" ? 4 : 6) : 1);
   after();
 }
@@ -91,7 +92,7 @@ var lastIn = Date.now();
 ["pointerdown", "keydown", "scroll", "touchstart"].forEach(function (ev) { window.addEventListener(ev, function () { lastIn = Date.now(); }, { passive: true }); });
 setInterval(function () {
   if (document.hidden || Date.now() - lastIn > 90000) return;
-  var k = todayKey(); G.sec[k] = (G.sec[k] || 0) + 15; if (G.sec[k] % 60 === 0) { act(); A.store("arte_g", G); }
+  var k = todayKey(); G.sec[k] = (G.sec[k] || 0) + 15; if (G.sec[k] % 60 === 0) { act(); A.store("arte_g", G); if (window.PULSO) PULSO.add("mn"); }
 }, 15000);
 window.addEventListener("pagehide", function () { save(); });
 
@@ -130,7 +131,7 @@ function hoyState() {
 function hoyCheck() {
   var S = hoyState(), k = todayKey();
   if (S.done.every(Boolean) && G.hoy.paid !== k) {
-    G.hoy.paid = k; G.hoy.n = (G.hoy.n || 0) + 1; addXP(HOY_XP); G.album.bonus++;
+    G.hoy.paid = k; G.hoy.n = (G.hoy.n || 0) + 1; if (window.PULSO) PULSO.add("hy"); addXP(HOY_XP); G.album.bonus++;
     toast("Sesión de hoy completa: +" + HOY_XP + " XP y un sobre de regalo");
   }
 }
@@ -150,7 +151,8 @@ function renderHoy() {
     row(1, "2", "Cinco fichas de obras", Math.min(S.fic, HOY_FIC) + " de " + HOY_FIC + " hechas · ves la obra y eliges autor", "Empezar", "#fichas") +
     row(2, "3", "Repasa " + HOY_N + " tarjetas", Math.min(S.rep, HOY_N) + " de " + HOY_N + " hechas · las falladas vuelven antes", "Empezar", "#repaso") +
     row(3, "4", "Refuerza el tema " + P.w, esc(A.temaName[P.w] || "") + " · " + esc(P.why) + " (" + Math.min(S.tm, HOY_TEMA) + " de " + HOY_TEMA + ")", "Practicar", "#repaso?t=" + P.w + "&m=term") +
-    "</ol></div>";
+    "</ol></div>" + '<a id="pulsoH" hidden></a>';
+  if (window.PULSO) PULSO.ticker($("pulsoH"));
 }
 var _inicio = A.hooks.inicio;
 A.hooks.inicio = function (p) { if (_inicio) _inicio(p); renderHoy(); };
@@ -224,7 +226,9 @@ function alOpen() {
     out.push({ e: from[Math.floor(Math.random() * from.length)] });
   }
   out.forEach(function (o) { if (a.own[o.e.id]) { o.isNew = false; addXP(2); } else { o.isNew = true; a.own[o.e.id] = Date.now(); } });
-  a.opened++; act(); save(); return out;
+  a.opened++; act(); save();
+  if (window.PULSO) { PULSO.add("pk"); var nw = out.filter(function (o) { return o.isNew; }), lg = nw.filter(function (o) { return rar(o.e) === 3; }).length; if (nw.length) PULSO.add("nw", nw.length); if (lg) PULSO.add("lg", lg); }
+  return out;
 }
 var PK = null;
 function pkEnsure() {
@@ -338,7 +342,7 @@ function renderClasif() {
   var rk = { xpT: me && me.rank, wk: me && me.rankW, streak: me && me.rankS, cards: me && me.rankC }[tab];
   var val = function (x) { return { xpT: x.xp, wk: x.wxp, streak: x.streak, cards: x.cards }[tab]; };
   var mx = Math.max.apply(null, [1].concat(list.map(val)));
-  V.innerHTML = '<h2 id="h-cl">Clasificación</h2><p class="lead">Compites con la clase, pero nadie sabe quién eres: solo se publican cifras.</p>' +
+  V.innerHTML = '<h2 id="h-cl">Clasificación</h2><p class="lead">Compites con la clase, pero nadie sabe quién eres: solo se publican cifras.</p><div id="pulso"></div>' +
     (on ? '<div class="jg-card cl-me"><div><small>Participas de forma anónima</small><h3>' + (me ? "Puesto " + me.rank : "…") + "</h3><p>" + (me ? "De " + d.n + " participantes · " + nf(me.xp) + " XP · +" + nf(me.wxp) + " esta semana" : (LBS.busy ? "Sincronizando…" : "Aún sin sincronizar")) + '</p></div><div class="row"><button class="btn" id="lbup" type="button">Actualizar mis puntos</button><button class="btn ghost" id="lbout" type="button">Salir de la clasificación</button></div></div>'
       : '<div class="jg-card cl-join"><h3>Entra en la clasificación</h3><p>Sin alias, sin nombre, sin grupo. Se publican solo tus puntos (XP), tu racha y tus cromos, sin ningún dato que te identifique. Puedes salir cuando quieras y tu fila se borra. No hay cookies ni seguimiento.</p><div class="row"><button class="btn" id="lbjoin" type="button">Entrar</button><span class="jg-note" id="lbmsg" role="alert"></span></div></div>') +
     (LBS.err && !d ? '<p class="jg-warn">' + esc(LBS.err) + ' <button class="btn ghost jg-sm" id="lbretry" type="button">Reintentar</button></p>' : "") +
@@ -348,6 +352,7 @@ function renderClasif() {
     (list.length ? '<ol class="lbk">' + list.map(function (r, i) { return lbRow(r, i, tab, me, mx); }).join("") + "</ol>" : '<p class="jg-note" style="margin-top:18px">' + (LBS.busy ? "Cargando…" : (d ? "Todavía no hay nadie en esta lista. ¡Sé el primero!" : "")) + "</p>") +
     '<p class="jg-note">Los puntos se calculan en tu dispositivo; el servidor limita las subidas anormales y el profesor puede retirar filas con cifras imposibles. Se actualiza cuando estudias y cuando pulsas «Actualizar».</p>' +
     '<details class="cl-mod"><summary>Moderación (profesor)</summary><div class="row" style="align-items:flex-end"><label>Clave<input id="mdt" type="password" autocomplete="off"></label><button class="btn ghost jg-sm" id="mdgo" type="button">Cargar filas</button><button class="btn ghost jg-sm" id="mdall" type="button">Vaciar clasificación</button></div><div id="mdl"></div></details>';
+  if (window.PULSO) PULSO.render($("pulso"));
   [].slice.call(V.querySelectorAll("[data-lt]")).forEach(function (b) { b.onclick = function () { LBS.tab = b.dataset.lt; renderClasif(); }; });
   $("lbrf").onclick = function () { lbLoad(); };
   var rt = $("lbretry"); if (rt) rt.onclick = function () { lbLoad(); };

@@ -189,3 +189,29 @@ body:has(#v-cronologia:not(.hidden)) .foot,body:has(#v-cronologia:not(.hidden)) 
 #tlpn li button:hover,#tlpn li button:focus-visible{background:rgba(244,239,251,.1)}
 #tlpn li b{flex:none;width:4.2em;font:700 .76rem var(--ui);letter-spacing:.03em;color:var(--hl);padding-top:.2em}
 @media (prefers-reduced-motion:reduce){#tlpn{transition-duration:.01s}.tli .evs button{transition:none}}
+
+/* conjuntos de la cronología: una entrada con varias imágenes */
+.tli .evs li.set .th.stk{position:relative;overflow:visible;background:none}
+.tli .evs li.set .th.stk::before,.tli .evs li.set .th.stk::after{content:"";position:absolute;inset:0;border-radius:6px;border:1.5px solid rgba(244,239,251,.3);background:#2a2036;z-index:0}
+.tli .evs li.set .th.stk::before{transform:translate(6px,-5px) rotate(5deg)}.tli .evs li.set .th.stk::after{transform:translate(3px,-2px) rotate(2deg)}
+.tli .evs li.set .th.stk img{position:relative;z-index:1;border-radius:6px;border:1.5px solid rgba(244,239,251,.5)}
+.tli .evs li.set .tx i{color:var(--hl)}
+#tlpn .strip{margin:0 0 16px}
+#tlpn .strip .sh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;font:700 .64rem var(--ui);letter-spacing:.16em;text-transform:uppercase;color:#b9aecb}
+#tlpn .strip .sh b{color:var(--hl);font-weight:800}
+#tlpn .strip .sb{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x proximity;scrollbar-width:thin}
+#tlpn .strip .sb button{all:unset;flex:none;width:64px;height:48px;border-radius:7px;overflow:hidden;cursor:pointer;border:2px solid rgba(244,239,251,.18);opacity:.62;scroll-snap-align:center;transition:opacity .15s,border-color .15s,transform .15s;box-sizing:border-box}
+#tlpn .strip .sb button img{display:block;width:100%;height:100%;object-fit:cover}
+#tlpn .strip .sb button:hover,#tlpn .strip .sb button:focus-visible{opacity:1;border-color:#f4effb}
+#tlpn .strip .sb button[aria-current]{opacity:1;border-color:var(--hl);transform:translateY(-1px)}
+
+/* ampliación de imágenes: la miniatura aparece al instante y se desenfoca hasta que llega la grande */
+.lb img{transition:filter .2s,opacity .2s}.lb img.ld{filter:blur(5px);opacity:.85}
+@media (prefers-reduced-motion:reduce){.lb img{transition:none}}
+
+/* La clase en cifras */
+:root{--pu-bar:var(--green);--pu-hi:var(--hl);--pu-hi-ink:var(--hl-ink);--pu-hi2:var(--gold)}
+:root[data-theme="dark"]{--pu-hi2:var(--hl)}
+#pulsoH{display:flex;margin-top:14px}#pulsoH[hidden]{display:none}
+.pu-big>div,.pu-c{border-radius:var(--r);box-shadow:var(--hard)}
+.pu-big b{font-weight:800}.pu-tick{box-shadow:var(--hard)}

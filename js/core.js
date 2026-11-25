@@ -206,14 +206,25 @@ A.ring = function (score, max, label) {
 A.CR = {"o-opera-sidney":["W. Bulach","CC BY-SA 4.0"],"o-guggenheim-bilbao":["Naotake Murayama","CC BY 2.0"],"o-heydar-aliyev":["Robot8A","CC BY-SA 4.0"],"o-hsbc":["WiNG","CC BY 3.0"],"o-seagram":["Max Hermus at Dutch Wikipedia","Public domain"],"o-guggenheim-nueva-york":["Jean-Christophe BENOIST","CC BY 3.0"],"o-casa-kaufmann":["Carol M. Highsmith","Public domain"],"o-pompidou":["Guilhem Vellut from Annecy, France","CC BY 2.0"],"giotto-di-bondone":["José Luiz","CC BY-SA 4.0"]};
 A.CRR = {"gil-de-siloe":"Retrato ilustrativo generado con IA: no se conserva ninguno de época","maestro-mateo-complementaria":"Retrato ilustrativo generado con IA: no se conserva ninguno de época"};
 A.crOf = function (e) { var c = A.CR[e.id]; return c ? "Foto: " + c[0] + " · " + c[1] + " · Wikimedia Commons" : ""; };
-A.zoom = function (src, cap, cr) {
+var PRE = {}, zTok = 0;
+A.pre = function (src) { if (!src) return null; if (!PRE[src]) { var i = new Image(); i.decoding = "async"; i.src = src; PRE[src] = i; } return PRE[src]; };
+A.zoom = function (src, cap, cr, ph) {
   var d = A.$("lb"); if (!d) return;
-  A.$("lbImg").src = src; A.$("lbImg").alt = cap || ""; A.$("lbCap").innerHTML = A.esc(cap || "") + "<small>" + A.esc(cr || "Imagen de las presentaciones de clase · uso docente") + "</small>";
+  var img = A.$("lbImg"), full = A.pre(src), tok = ++zTok;
+  if (full.complete && full.naturalWidth) { img.classList.remove("ld"); img.src = src; }
+  else {                                              // se muestra al instante la miniatura (ya en caché) y se cambia por la grande cuando está decodificada
+    img.classList.add("ld"); if (ph && ph !== src) img.src = ph; else img.removeAttribute("src");
+    (full.decode ? full.decode() : new Promise(function (r) { full.onload = r; })).then(function () { if (tok === zTok) { img.src = src; img.classList.remove("ld"); } }, function () { if (tok === zTok) { img.src = src; img.classList.remove("ld"); } });
+  }
+  img.alt = cap || ""; A.$("lbCap").innerHTML = A.esc(cap || "") + "<small>" + A.esc(cr || "Imagen de las presentaciones de clase · uso docente") + "</small>";
   if (d.showModal) { if (!d.open) d.showModal(); } else d.setAttribute("open", "");
 };
+["pointerover", "touchstart"].forEach(function (n) {   // al acercar el ratón o tocar, se empieza a bajar la imagen grande
+  document.addEventListener(n, function (ev) { var t = ev.target.closest && ev.target.closest("img[data-full],button[data-full]"); if (t && t.dataset.full) A.pre(t.dataset.full); }, { passive: true });
+});
 document.addEventListener("click", function (ev) {
   var im = ev.target.closest && ev.target.closest("img[data-zoom]");
-  if (im) { ev.preventDefault(); A.zoom(im.dataset.full || im.src, im.dataset.cap || im.alt, im.dataset.cr); return; }
+  if (im) { ev.preventDefault(); A.zoom(im.dataset.full || im.src, im.dataset.cap || im.alt, im.dataset.cr, im.currentSrc || im.src); return; }
   var d = A.$("lb"); if (d && d.open && ev.target.closest("#lb") && ev.target.id !== "lbImg") { if (d.close) d.close(); else d.removeAttribute("open"); }
 });
 document.addEventListener("keydown", function (ev) {
