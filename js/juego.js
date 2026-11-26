@@ -210,11 +210,36 @@ function alCount() { return Object.keys(G.album.own).filter(function (id) { retu
 function alPacks() { return Math.max(0, Math.floor(G.xp / AL_XP) + G.album.bonus - G.album.opened); }
 function pad(n) { return String(n).padStart(3, "0"); }
 var RN = ["", "común", "rara", "legendaria"];
+/* Datos reales del dossier para la carta: posición, siglo, nº de obras, años de vida, disciplinas y ciudades. Ninguna cifra inventada;
+   la nota (OVR) es solo de juego: rareza + obras citadas + extensión de la semblanza. */
+var ROMAN = { 1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI", 7: "VII", 8: "VIII", 9: "IX", 10: "X", 11: "XI", 12: "XII", 13: "XIII", 14: "XIV", 15: "XV", 16: "XVI", 17: "XVII", 18: "XVIII", 19: "XIX", 20: "XX", 21: "XXI" };
+var POSK = [["arquitectura", "ARQ"], ["escultura", "ESC"], ["pintura", "PIN"], ["miniatura", "MIN"], ["jardiner", "JAR"], ["ready", "ART"], ["ingenier", "ING"]];
+var _cd = {};
+function cdata(e) {
+  if (_cd[e.id]) return _cd[e.id];
+  var p = (e.cab || "").split(" · "), disc = (p[2] || ""), dl = disc.toLowerCase(), pos = "ART", best = 1e9;
+  POSK.forEach(function (k) { var ix = dl.indexOf(k[0]); if (ix >= 0 && ix < best) { best = ix; pos = k[1]; } });
+  var obr = Math.min(99, (e.obras || "").split(/,\s| y /).filter(function (x) { return x.trim(); }).length);
+  var sg = (e.cab || "").match(/siglo ([IVXL]+)( a\. C\.)?/), sig = sg ? sg[1] + (sg[2] ? " aC" : "") : "";
+  if (!sig && e.y0 != null) { var c = e.y0 > 0 ? Math.ceil(e.y0 / 100) : -Math.ceil(-e.y0 / 100); sig = c > 0 ? (ROMAN[c] || "") : (ROMAN[-c] || "") + " aC"; }
+  var vid = (e.y0 != null && e.y1 != null && e.y1 > e.y0 && e.y1 - e.y0 < 110 && e.y0 > 0) ? e.y1 - e.y0 : "";
+  var dis = disc.split(/,| y | e |\(|\)/).filter(function (x) { return x.trim(); }).length;
+  var ciu = (p[1] || "").split(/,| y |\(/).filter(function (x) { return x.trim() && !/\)$/.test(x.trim()); }).length;
+  var r = rar(e), ovr = [0, 60, 76, 88][r] + Math.min([0, 14, 12, 11][r], Math.max(0, (obr - 1) * 2 + Math.floor(((e.texto || "").length - 600) / 70)));
+  return (_cd[e.id] = { pos: pos, obr: obr, sig: sig, vid: vid, dis: dis || 1, ciu: ciu || 1, ovr: ovr, mov: (p[3] || "").replace(/\s*\(.*$/, "").split(",")[0] });
+}
 function cromo(e, o) {
   o = o || {}; var r = rar(e), n = pad(ALN[e.id]), T = o.tag || "button", at = T === "button" ? ' type="button" data-id="' + e.id + '"' : "";
-  if (!o.owned) return "<" + T + ' class="cro lock r' + r + '"' + at + ' aria-label="Cromo ' + n + ' por descubrir"><span class="cn">Nº ' + n + '</span><span class="cq" aria-hidden="true">?</span><span class="ct"><b>Por descubrir</b><small>' + esc(A.temaLabel(e.tema).split(". ")[0]) + "</small></span></" + T + ">";
-  var im = e.rth || e.th || e.img;
-  return "<" + T + ' class="cro r' + r + '"' + at + '><span class="cn">Nº ' + n + '</span><span class="cr" aria-label="' + RN[r] + '">' + "★".repeat(r) + '</span><span class="cim"><img src="' + esc(im) + '" alt="" loading="lazy" decoding="async"></span><span class="ct"><b>' + esc(e.nombre) + "</b><i>" + esc(e.yl) + "</i><small>" + esc("T" + e.tema + " · " + (A.temaName[e.tema] || "")) + "</small></span></" + T + ">";
+  if (!o.owned) return "<" + T + ' class="cro lock r' + r + '"' + at + ' aria-label="Cromo ' + n + ' por descubrir"><span class="cin"><span class="cn">Nº ' + n + '</span><span class="cq" aria-hidden="true">?</span><span class="ct"><b>Por descubrir</b><small>' + esc(A.temaLabel(e.tema).split(". ")[0]) + "</small></span></span></" + T + ">";
+  var im = e.rth || e.th || e.img, d = cdata(e), nl = e.nombre.length > 26 ? " nl2" : (e.nombre.length > 16 ? " nl1" : "");
+  var st = [["OBR", d.obr || "–"], ["TEM", e.tema], ["SIG", d.sig || "–"], ["VID", d.vid || "–"], ["DIS", d.dis], ["CIU", d.ciu]];
+  return "<" + T + ' class="cro r' + r + '"' + at + ' aria-label="' + esc(e.nombre + ", " + RN[r] + ", nota " + d.ovr) + '"><span class="cin"><span class="bgp"></span>' +
+    '<span class="cim"><img src="' + esc(im) + '" alt="" loading="lazy" decoding="async"></span>' +
+    '<span class="ovr"><b data-v="' + d.ovr + '">' + d.ovr + "</b><i>" + d.pos + '</i><u class="crest">T' + e.tema + '</u><s class="cr">' + "★".repeat(r) + "</s></span>" +
+    '<span class="cn">Nº ' + n + "</span>" +
+    '<span class="nm' + nl + '">' + esc(e.nombre) + '</span><span class="yl">' + esc(e.yl) + "</span>" +
+    '<span class="stg">' + st.map(function (x) { return "<span><b>" + x[1] + "</b>" + x[0] + "</span>"; }).join("") + "</span>" +
+    '<span class="mv">' + esc(d.mov) + '</span><span class="sh"></span></span></' + T + ">";
 }
 function alOpen() {
   var a = G.album, out = [];
@@ -237,15 +262,17 @@ function pkEnsure() {
   d.innerHTML = '<button class="pkx" id="pkx" type="button" aria-label="Cerrar">×</button><div id="pkb"></div><p class="pkfb" id="pkfb" role="status"></p>';
   document.body.appendChild(d);
   d.addEventListener("click", function (e) { if (e.target === d || e.target.id === "pkx") close(d); });
+  d.addEventListener("cancel", function (e) { var z = d.querySelector(".pkzoom"); if (z) { e.preventDefault(); z.remove(); } });
   d.addEventListener("close", function () { PK = null; if (A.route.last === "album") renderAlbum(); else if (A.route.last === "inicio") renderHoy(); });
   return d;
 }
+initTilt();
 function close(d) { if (d.close) d.close(); else d.removeAttribute("open"); }
 function pkShow() { var d = pkEnsure(); if (d.showModal) { if (!d.open) d.showModal(); } else d.setAttribute("open", ""); pkSealed(); }
 function pkSealed() {
-  var n = alPacks(), a = G.album; $("pkfb").textContent = "";
+  var n = alPacks(), a = G.album; $("pkfb").textContent = ""; $("pkb").removeAttribute("data-best");
   $("pkb").innerHTML = n > 0
-    ? '<div class="pkh"><span>Sobre nº ' + (a.opened + 1) + "</span><small>" + n + (n === 1 ? " sobre" : " sobres") + ' por abrir</small></div><button class="sobre" id="pkgo" type="button" aria-label="Abrir el sobre"><span class="flap"></span><span class="sl"><b>A</b><em>Historia del Arte</em><i>3 cromos</i></span></button><p class="pkn">Toca el sobre para abrirlo.</p>'
+    ? '<div class="pkh"><span>Sobre nº ' + (a.opened + 1) + "</span><small>" + n + (n === 1 ? " sobre" : " sobres") + ' por abrir</small></div><button class="sobre" id="pkgo" type="button" aria-label="Abrir el sobre"><span class="sb"><span class="flap"></span><span class="sl"><i class="dots"></i><i class="band"></i><b>ARTE</b><em>Álbum de artistas</em><u>★ ★ ★</u></span></span></button><p class="pkn">Toca el sobre para abrirlo.</p>'
     : '<div class="pkh"><span>No te quedan sobres</span><small>' + alCount() + " de " + CARDS.length + ' cromos</small></div><p class="pkn">Ganas un sobre por cada ' + AL_XP + ' puntos de experiencia: tests, fichas, repaso y simulacros. Y cada día hay uno de regalo.</p><div class="row pkact" style="margin-top:18px;justify-content:center"><button class="btn" id="pkclose" type="button">Volver al álbum</button></div>';
   var g = $("pkgo"); if (g) { g.onclick = pkTear; g.focus({ preventScroll: true }); }
   var c = $("pkclose"); if (c) c.onclick = function () { close($("pk")); };
@@ -256,17 +283,72 @@ function pkTear() {
   var quick = window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches;
   setTimeout(function () { pkDeal(res); }, quick ? 60 : 900);
 }
+/* ---------- efectos: cuenta de la nota, chispas y ampliación ---------- */
+function countUp(pc, ms) {
+  var nodes = [].slice.call(pc.querySelectorAll(".ovr b, .stg b")); if (!nodes.length) return;
+  var t0 = null;
+  nodes.forEach(function (b) { b._v = b.dataset.v ? +b.dataset.v : parseInt(b.textContent, 10); b._f = b.dataset.v ? Math.max(0, b._v - 38) : 0; b._ok = !isNaN(b._v); });
+  if (!ms) { nodes.forEach(function (b) { if (b._ok) b.textContent = b._v; }); return; }
+  nodes.forEach(function (b, i) { if (b._ok) b.textContent = b._f; b._d = i === 0 ? 0 : 160 + (i - 1) * 70; });
+  function step(t) {
+    if (t0 === null) t0 = t; var all = true;
+    nodes.forEach(function (b) { if (!b._ok) return; var k = Math.min(1, Math.max(0, (t - t0 - b._d) / ms)); if (k < 1) all = false; b.textContent = Math.round(b._f + (b._v - b._f) * (1 - Math.pow(1 - k, 3))); });
+    if (!all) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+function burst(pc, rr) {
+  var n = [0, 12, 22, 40][rr], box = document.createElement("span"); box.className = "bst t" + rr; box.setAttribute("aria-hidden", "true");
+  for (var i = 0; i < n; i++) {
+    var a = Math.random() * 6.283, d = (rr === 3 ? 90 : 70) + Math.random() * (rr === 3 ? 130 : 90), q = document.createElement("i");
+    q.style.cssText = "--dx:" + Math.round(Math.cos(a) * d) + "px;--dy:" + Math.round(Math.sin(a) * d - 20) + "px;--r:" + Math.round(Math.random() * 540 - 270) + "deg;--s:" + (0.6 + Math.random() * 0.9).toFixed(2) + ";--h:" + Math.round(Math.random() * 360);
+    box.appendChild(q);
+  }
+  pc.appendChild(box); pc.classList.add("hit");
+  if (rr === 3) { var d0 = $("pk"); if (d0) { d0.classList.add("quake"); setTimeout(function () { d0.classList.remove("quake"); }, 700); } }
+  setTimeout(function () { if (box.parentNode) box.parentNode.removeChild(box); pc.classList.remove("hit"); }, 1500);
+}
+function zoom(e) {
+  var d = $("pk"), z = d.querySelector(".pkzoom"); if (z) z.remove();
+  z = document.createElement("div"); z.className = "pkzoom"; z.setAttribute("role", "dialog"); z.setAttribute("aria-label", e.nombre);
+  z.innerHTML = '<div class="zc g' + rar(e) + '">' + cromo(e, { owned: 1, tag: "div" }) + '</div><p><a class="btn" href="#a-' + esc(e.id) + '">Ver la ficha</a> <button class="btn ghost" type="button">Cerrar</button></p>';
+  d.appendChild(z); countUp(z, 0);
+  z.onclick = function (ev) { if (ev.target.tagName === "A") { close(d); return; } if (ev.target.closest(".zc") && ev.target.tagName !== "BUTTON") return; z.remove(); };
+  var b = z.querySelector("button"); if (b) b.focus({ preventScroll: true });
+}
+function initTilt() {
+  if (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+  var raf = 0, cur = null;
+  function reset() { if (cur) { cur.style.transform = ""; cur = null; } }
+  document.addEventListener("pointermove", function (e) {
+    var t = e.target.closest && (e.target.closest(".pkc .fl") || e.target.closest(".cro:not(.lock)"));
+    if (!t) { if (cur) { cancelAnimationFrame(raf); reset(); } return; }
+    if (e.pointerType === "touch" && !e.buttons) return;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(function () {
+      if (cur && cur !== t) reset(); cur = t; var r = t.getBoundingClientRect(), x = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)), y = Math.max(0, Math.min(1, (e.clientY - r.top) / r.height));
+      t.style.setProperty("--mx", (x * 100).toFixed(0) + "%"); t.style.setProperty("--my", (y * 100).toFixed(0) + "%");
+      t.style.transform = "perspective(700px) rotateX(" + ((0.5 - y) * 18).toFixed(1) + "deg) rotateY(" + ((x - 0.5) * 20).toFixed(1) + "deg) scale(1.04)";
+    });
+  }, { passive: true });
+  document.addEventListener("pointerup", function (e) { if (e.pointerType === "touch") { cancelAnimationFrame(raf); reset(); } });
+  document.addEventListener("pointerleave", function () { cancelAnimationFrame(raf); reset(); }, true);
+}
 function pkDeal(res) {
   PK = { res: res, n: 0 };
+  $("pkb").setAttribute("data-best", Math.max.apply(null, res.map(function (r) { return rar(r.e); })));
   $("pkb").innerHTML = '<div class="pkrow">' + res.map(function (r, i) {
-    return '<div class="pkc g' + rar(r.e) + '" style="--i:' + i + '"><div class="fl" data-i="' + i + '" role="button" tabindex="0" aria-label="Voltear el cromo ' + (i + 1) + '"><div class="in"><div class="face back"><div class="cback"><b>A</b></div></div><div class="face front">' + cromo(r.e, { owned: 1, tag: "div" }) + "</div></div></div>" + (r.isNew ? '<span class="nw">¡Nuevo!</span>' : '<span class="nw rp">Repetido · +2 XP</span>') + "</div>";
+    return '<div class="pkc g' + rar(r.e) + '" style="--i:' + i + '"><div class="fl" data-i="' + i + '" role="button" tabindex="0" aria-label="Voltear el cromo ' + (i + 1) + '"><div class="in"><div class="face back"><div class="cback"><b>A</b><i class="dots"></i><em>ARTE</em></div></div><div class="face front">' + cromo(r.e, { owned: 1, tag: "div" }) + "</div></div></div>" + (r.isNew ? '<span class="nw">¡Nuevo!</span>' : '<span class="nw rp">Repetido · +2 XP</span>') + "</div>";
   }).join("") + '</div><div class="row pkact" style="justify-content:center"><button class="btn ghost" id="pkall" type="button">Voltear todos</button></div>';
   function flip(el) {
-    if (el.classList.contains("on")) return; el.classList.add("on"); el.removeAttribute("tabindex"); el.setAttribute("aria-label", "Cromo volteado"); PK.n++;
-    var r = PK.res[+el.dataset.i], rr = rar(r.e); $("pkfb").textContent = "★".repeat(rr) + " " + RN[rr].charAt(0).toUpperCase() + RN[rr].slice(1) + ": " + r.e.nombre + ".";
-    if (PK.n >= 3) setTimeout(pkDone, 650);
+    if (el.classList.contains("on")) return; el.classList.add("on"); el.setAttribute("aria-label", "Ver grande"); PK.n++;
+    var r = PK.res[+el.dataset.i], rr = rar(r.e), pc = el.parentNode;
+    $("pkfb").textContent = "★".repeat(rr) + " " + RN[rr].charAt(0).toUpperCase() + RN[rr].slice(1) + ": " + r.e.nombre + ".";
+    var quick = window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches;
+    if (quick) { countUp(pc, 0); } else setTimeout(function () { countUp(pc, 750); burst(pc, rr); }, [0, 560, 740, 1150][rr]);
+    if (PK.n >= 3) setTimeout(pkDone, quick ? 650 : 1400 + (rar(PK.res[PK.res.length - 1].e) === 3 ? 600 : 0));
   }
-  [].slice.call($("pkb").querySelectorAll(".fl")).forEach(function (el) { el.onclick = function () { flip(el); }; el.onkeydown = function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flip(el); } }; });
+  [].slice.call($("pkb").querySelectorAll(".fl")).forEach(function (el) { el.onclick = function () { if (el.classList.contains("on")) zoom(PK.res[+el.dataset.i].e); else flip(el); }; el.onkeydown = function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); el.onclick(); } }; });
   $("pkall").onclick = function () { [].slice.call($("pkb").querySelectorAll(".fl")).forEach(function (el, i) { setTimeout(function () { flip(el); }, i * 260); }); };
   var f = $("pkb").querySelector(".fl"); if (f) f.focus({ preventScroll: true });
 }
@@ -295,7 +377,7 @@ function renderAlbum() {
     '<div class="al2"><h4>' + n + (n === 1 ? " sobre" : " sobres") + ' por abrir</h4><p>Uno cada ' + AL_XP + ' XP, más uno de regalo cada día.</p><div class="row"><button class="btn" id="alopen" type="button"' + (n ? "" : " disabled") + '>Abrir un sobre</button>' + (canDaily ? '<button class="btn ghost" id="aldaily" type="button">Sobre del día</button>' : '<span class="jg-note">Hoy ya has cogido el de regalo.</span>') + "</div></div></div>" +
     '<div class="al-f"><label>Mostrar<select id="ale"><option value="">Todos</option><option value="si">Conseguidos</option><option value="no">Por descubrir</option></select></label><label>Rareza<select id="alr"><option value="">Todas</option><option value="1">★ Común</option><option value="2">★★ Rara</option><option value="3">★★★ Legendaria</option></select></label><span class="jg-note">' + L.length + " cromos a la vista</span></div>" +
     (groups || '<p class="lead">Ningún cromo con esos filtros.</p>') +
-    '<p class="jg-note al-leg"><b>Cómo se reparten las rarezas.</b> ★★★ legendaria: los grandes maestros del temario. ★★ rara: figuras decisivas de cada época. ★ común: el resto del dossier. Los cromos siguen el orden cronológico.</p>';
+    '<p class="jg-note al-leg"><b>Cómo se reparten las rarezas.</b> ★★★ legendaria: los grandes maestros del temario. ★★ rara: figuras decisivas de cada época. ★ común: el resto del dossier. Los cromos siguen el orden cronológico.</p><p class="jg-note al-leg"><b>Qué dice cada carta.</b> Los seis datos salen del dossier: OBR (obras citadas), TEM (tema), SIG (siglo), VID (años de vida), DIS (disciplinas) y CIU (ciudades donde trabajó). La nota grande es solo de juego: depende de la rareza, de las obras citadas y de lo extensa que es la semblanza. Toca un cromo volteado para verlo en grande.</p>';
   $("ale").value = ALF.e; $("alr").value = ALF.r;
   ["ale", "alr"].forEach(function (i) { $(i).onchange = function () { ALF.e = $("ale").value; ALF.r = $("alr").value; renderAlbum(); }; });
   $("alopen").onclick = pkShow;
