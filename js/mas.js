@@ -130,7 +130,7 @@ function mapDraw() {
 }
 function mapPanel() {
   var n = MP.sel, list = (MP.by || {})[n];
-  if (!n || !list) { $("mpPanel").innerHTML = '<p class="stats">Pulsa un círculo para ver los artistas de ese lugar.</p>'; return; }
+  if (!n || !list) { $("mpPanel").innerHTML = '<p class="stats">Elige un círculo.</p>'; return; }
   list = list.slice().sort(function (a, b) { return a.y0 - b.y0; });
   $("mpPanel").innerHTML = '<h3>' + esc(n) + " · " + list.length + (list.length === 1 ? " artista" : " artistas") + '</h3><ul class="mp-list">' + list.map(function (e) {
     return '<li><a href="#a-' + e.id + '">' + (e.rth ? '<img src="' + esc(e.rth) + '" alt="" loading="lazy" decoding="async">' : '<span class="tl-ph"></span>') + "<span><strong>" + esc(e.nombre) + "</strong><small>" + esc(e.yl) + " · T" + e.tema + "</small></span></a></li>";
