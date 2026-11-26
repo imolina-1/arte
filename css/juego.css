@@ -200,3 +200,18 @@ dialog.pk.quake{animation:jgquake .6s}
 .pkzoom .zc .cro{cursor:default}
 .pkzoom p{margin:0;display:flex;gap:10px}
 @media(prefers-reduced-motion:reduce){.sobre,.sobre .sb:before,.sobre.tear,.pkc,.cro.r3 .sh,.cro.r3 .cin:after,#pkb[data-best]:before,.pkzoom,.pkzoom .zc{animation:none}.pkc .fl.on .in,.pkc.g2 .fl.on .in,.pkc.g3 .fl.on .in{animation:none;transform:rotateY(180deg)}.pkc .bst{display:none}#pkb[data-best]:before{opacity:.5}}
+
+/* holograma del legendario: superpuesto, sin quemar las imágenes claras */
+.cro.r3 .sh{mix-blend-mode:overlay;opacity:.55}
+/* por descubrir en modo oscuro */
+:root[data-theme="dark"] .cro.lock{--t1:#2b2536;--t2:#241f2e;--t3:#1d1926;--ink:#8f87a3;--rim1:#3b3449;--rim2:#2a2536;filter:none}
+:root[data-theme="dark"] .cro.lock .cin{background:repeating-linear-gradient(135deg,#2a2435 0 8px,#252030 8px 16px)}
+:root[data-theme="dark"] .cro.lock .cq{color:#3d3650}
+:root[data-theme="dark"] .cro.lock .ct b{color:#8f87a3}:root[data-theme="dark"] .cro.lock .ct small{color:#756d89}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .cro.lock{--t1:#2b2536;--t2:#241f2e;--t3:#1d1926;--ink:#8f87a3;--rim1:#3b3449;--rim2:#2a2536;filter:none}
+  :root:not([data-theme="light"]) .cro.lock .cin{background:repeating-linear-gradient(135deg,#2a2435 0 8px,#252030 8px 16px)}
+  :root:not([data-theme="light"]) .cro.lock .cq{color:#3d3650}
+  :root:not([data-theme="light"]) .cro.lock .ct b{color:#8f87a3}
+  :root:not([data-theme="light"]) .cro.lock .ct small{color:#756d89}
+}
