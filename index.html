@@ -193,7 +193,6 @@
   <!-- FICHAS -->
   <section id="v-fichas" class="hidden" aria-labelledby="h-fic">
     <h2 id="h-fic">Fichas de obras</h2>
-    <p class="lead">¿De quién es? Respondas lo que respondas verás la obra, el estilo y los términos que van con ella.</p>
     <div class="row" style="margin-bottom:14px"><label for="ficTema">Temas:</label>
       <select id="ficTema"></select>
       <span class="stats" id="ficStats" role="status">0 aciertos de 0</span></div>
@@ -349,9 +348,8 @@
   <!-- TEST CON IMÁGENES -->
   <section id="v-test" class="hidden" aria-labelledby="h-tes">
     <h2 id="h-tes">Test de términos con imágenes</h2>
-    <p class="lead">Elige el tipo de pregunta y los temas. «Imagen → término» es el formato del examen.</p>
     <div class="modes" id="tModes" role="group" aria-label="Tipo de pregunta"></div>
-    <div class="row" style="margin-bottom:14px"><label for="tTema">Temas:</label><select id="tTema"></select><span class="stats" id="tStats" role="status"></span></div>
+    <div class="row" style="margin-bottom:14px"><label for="tTema">Temas:</label><select id="tTema"></select><span class="tscore" id="tStats" role="status" aria-live="polite"></span></div>
     <div id="tArea"></div>
   </section>
   <!-- CRÉDITOS Y DERECHOS -->

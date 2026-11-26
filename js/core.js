@@ -230,7 +230,7 @@ A.zoom = function (src, cap, cr, ph) {
     img.classList.add("ld"); if (ph && ph !== src) img.src = ph; else img.removeAttribute("src");
     (full.decode ? full.decode() : new Promise(function (r) { full.onload = r; })).then(function () { if (tok === zTok) { img.src = src; img.classList.remove("ld"); } }, function () { if (tok === zTok) { img.src = src; img.classList.remove("ld"); } });
   }
-  img.alt = cap || ""; A.$("lbCap").innerHTML = A.esc(cap || "") + "<small>" + A.esc(cr || "Imagen de las presentaciones de clase · uso docente") + "</small>";
+  img.alt = cap || ""; A.$("lbCap").innerHTML = A.esc(cap || "") + (cr ? "<small>" + A.esc(cr) + "</small>" : "");
   if (d.showModal) { if (!d.open) d.showModal(); } else d.setAttribute("open", "");
 };
 ["pointerover", "touchstart"].forEach(function (n) {   // al acercar el ratón o tocar, se empieza a bajar la imagen grande
@@ -246,7 +246,7 @@ document.addEventListener("keydown", function (ev) {
   var tg = ev.target && ev.target.tagName; if (tg === "INPUT" || tg === "TEXTAREA" || tg === "SELECT") return;
   var area = document.getElementById("qOpts"), view = document.getElementById("v-test");
   if (!view || view.classList.contains("hidden") || !area) return;
-  if (/^[1-4]$/.test(ev.key) && !area.dataset.done) { var o = area.querySelectorAll(".opt")[+ev.key - 1]; if (o) { o.click(); ev.preventDefault(); } }
+  if (/^[1-4]$/.test(ev.key) && !area.dataset.done) { var o = area.querySelectorAll(".opt,.imgopt")[+ev.key - 1]; if (o) { o.click(); ev.preventDefault(); } }
   else if (ev.key === "Enter" && area.dataset.done) { var n = document.getElementById("qNext"); if (n && n.offsetParent) { n.click(); ev.preventDefault(); } }
 });
 document.addEventListener("keydown", function (ev) { if (ev.key === "Escape") { var d = A.$("lb"); if (d && d.open && !d.close) d.removeAttribute("open"); } });
@@ -293,3 +293,12 @@ A.inits = A.inits || [];
   window.addEventListener("scroll", function () { b.classList.toggle("on", window.scrollY > 700); }, { passive: true });
   b.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
 })();
+
+/* Si una imagen de tarjeta no carga, se reintenta una vez sin caché; si sigue fallando, queda el recuadro con iniciales. */
+document.addEventListener("error", function (ev) {
+  var im = ev.target; if (!im || im.tagName !== "IMG" || !im.closest || !im.closest(".entry")) return;
+  if (!im.dataset.retry) { im.dataset.retry = "1"; var u = im.getAttribute("src"); im.src = u + (u.indexOf("?") < 0 ? "?r=" : "&r=") + Date.now(); return; }
+  var d = document.createElement("div"); d.className = "noimg"; d.setAttribute("aria-hidden", "true");
+  var h3 = im.closest(".entry").querySelector("h3"); d.textContent = (h3 ? h3.textContent : "").split(/\s+/).filter(function (w) { return /^[A-ZÁÉÍÓÚÑ]/.test(w); }).slice(0, 2).map(function (w) { return w[0]; }).join("");
+  im.replaceWith(d);
+}, true);

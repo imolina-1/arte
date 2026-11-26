@@ -219,7 +219,9 @@ function buildModes() {
   });
 }
 function tStat() {
-  var s = A.getStat(tst.mode); $("tStats").textContent = s.ok + " aciertos de " + s.n + " (en este navegador). Lo que fallas vuelve a salir antes. Atajos: teclas 1-4 para responder e Intro para continuar.";
+  var s = A.getStat(tst.mode), el = $("tStats");
+  el.innerHTML = s.n ? '<span class="ts-n"><b>' + s.ok + "</b>/" + s.n + '</span><i class="ts-bar"><u style="width:' + Math.round(100 * s.ok / s.n) + '%"></u></i>' : "";
+  el.setAttribute("aria-label", s.ok + " aciertos de " + s.n);
 }
 function blank(def, name) {
   var out = def;
@@ -241,7 +243,7 @@ function nextQ() {
     var avoid = ok.map(function (i) { return GLOS[i].t; });
     var dis = nearTerms(e.tema, function (t) { return t.img.length >= 1 && t.img.length <= 4 && ok.indexOf(t.id) < 0; }, 3, avoid);
     var opts = shuffle(dis.concat([corr]));
-    box.innerHTML = '<div class="card"><div class="frame"><img id="qImg" src="' + e.img + '" data-zoom data-full="' + e.img + '" data-cap="" alt="Obra: elige el término que se aplica"></div><div><p class="lead" style="margin-bottom:8px">¿Qué término de la lista se aplica a esta obra?</p><div class="opts" id="qOpts"></div><div id="qFb"></div></div></div>';
+    box.innerHTML = '<div class="card"><div class="frame"><img id="qImg" src="' + e.img + '" data-zoom data-full="' + e.img + '" data-cap="" alt="Obra: elige el término que se aplica"></div><div><p class="q-ask">¿Qué término se aplica a esta obra?</p><div class="opts" id="qOpts"></div><div id="qFb"></div></div></div>';
     var oc = $("qOpts");
     opts.forEach(function (t) {
       var b = document.createElement("button"); b.type = "button"; b.className = "opt"; b.textContent = t.t;
@@ -250,8 +252,8 @@ function nextQ() {
         oc.querySelectorAll(".opt").forEach(function (x) { if (x.textContent === corr.t) x.classList.add("right"); else if (x === b) x.classList.add("wrong"); });
         var others = ok.filter(function (i) { return i !== corr.id; });
         $("qFb").innerHTML = '<div class="fb' + (good ? "" : " bad") + '"><p><strong>' + esc(corr.t) + "</strong> (" + esc(A.temaLabel(corr.tema)) + "). " + esc(corr.def) + '</p><p class="small">' + caption(e) + (e.obra ? " · " + esc(e.cab) : ' · <a href="#semblanzas?id=' + e.id + '">ver semblanza</a>') + "</p>" +
-          (others.length ? '<p class="rel"><strong>Otros términos de esta obra:</strong> ' + A.termChips(others, 12) + "</p>" : "") + '</div><button class="btn" type="button" id="qNext">Siguiente</button>';
-        $("qNext").onclick = nextQ; $("qNext").focus();
+          (others.length ? '<p class="rel"><strong>También en esta obra:</strong> ' + A.termChips(others, 12) + "</p>" : "") + '</div><button class="btn" type="button" id="qNext">Siguiente <kbd>↵</kbd></button>';
+        $("qNext").onclick = nextQ; $("qNext").focus({ preventScroll: true });
       };
       oc.appendChild(b);
     });
@@ -266,7 +268,7 @@ function nextQ() {
     bad.forEach(function (e) { var k = e.nombre || e.id; if (dis.length < 3 && !seenAuthor[k]) { seenAuthor[k] = 1; dis.push(e); } });
     if (dis.length < 3) shuffle(A.imgs.filter(function (e) { return t.img.indexOf(e.id) < 0 && dis.indexOf(e) < 0; })).forEach(function (e) { var k = e.nombre || e.id; if (dis.length < 3 && !seenAuthor[k]) { seenAuthor[k] = 1; dis.push(e); } });
     var opts = shuffle(dis.concat([good]));
-    box.innerHTML = '<p class="lead" style="margin-bottom:0">¿En cuál de estas obras se aplica este término?</p><div class="q-term">' + esc(t.t) + ' <span class="small">' + esc(A.temaLabel(t.tema)) + '</span></div><details open><summary style="padding:4px 0">Definición</summary><p class="q-def">' + esc(t.def) + '</p></details><div class="imgopts" id="qOpts"></div><div id="qFb"></div>';
+    box.innerHTML = '<p class="q-ask">¿En qué obra se aplica este término?</p><div class="q-term">' + esc(t.t) + ' <span class="small">' + esc(A.temaLabel(t.tema)) + '</span></div><p class="q-def">' + esc(t.def) + '</p><div class="imgopts" id="qOpts"></div><div id="qFb"></div>';
     var oc = $("qOpts");
     opts.forEach(function (e) {
       var b = document.createElement("button"); b.type = "button"; b.className = "imgopt"; b.dataset.id = e.id;
@@ -277,8 +279,8 @@ function nextQ() {
           var ee = sById[x.dataset.id]; x.querySelector(".cap").innerHTML = caption(ee); x.querySelector("img").alt = ee.pie;
           if (t.img.indexOf(ee.id) >= 0) x.classList.add("right"); else if (x === b) x.classList.add("wrong");
         });
-        $("qFb").innerHTML = '<div class="fb' + (ok ? "" : " bad") + '"><p><strong>' + esc(t.t) + "</strong> se aplica a: " + t.img.map(function (i) { return esc(sById[i].pie); }).join("; ") + ".</p>" + (t.obras.length ? "<div>" + cartelas(t.obras) + "</div>" : "") + '</div><button class="btn" type="button" id="qNext">Siguiente</button>';
-        $("qNext").onclick = nextQ; $("qNext").focus();
+        $("qFb").innerHTML = '<div class="fb' + (ok ? "" : " bad") + '"><p><strong>' + esc(t.t) + "</strong> se aplica a: " + t.img.map(function (i) { return esc(sById[i].pie); }).join("; ") + ".</p>" + (t.obras.length ? "<div>" + cartelas(t.obras) + "</div>" : "") + '</div><button class="btn" type="button" id="qNext">Siguiente <kbd>↵</kbd></button>';
+        $("qNext").onclick = nextQ; $("qNext").focus({ preventScroll: true });
       };
       oc.appendChild(b);
     });
@@ -288,7 +290,7 @@ function nextQ() {
     var c = A.weightedPick(all, function (x) { return "m3:" + x.id; }, tst.last); tst.last = c;
     var dis = nearTerms(c.tema, function (t) { return t.tema === c.tema && t.id !== c.id; }, 3, [c.t]);
     var opts = shuffle(dis.concat([c]));
-    box.innerHTML = '<p class="lead" style="margin-bottom:0">¿A qué término corresponde esta definición? <span class="small">' + esc(A.temaLabel(c.tema)) + '</span></p><p class="q-def">' + esc(blank(c.def, c.t)) + '</p><div class="opts" id="qOpts"></div><div id="qFb"></div>';
+    box.innerHTML = '<p class="q-ask">¿A qué término corresponde? <span class="small">' + esc(A.temaLabel(c.tema)) + '</span></p><p class="q-def">' + esc(blank(c.def, c.t)) + '</p><div class="opts" id="qOpts"></div><div id="qFb"></div>';
     var oc = $("qOpts");
     opts.forEach(function (t) {
       var b = document.createElement("button"); b.type = "button"; b.className = "opt"; b.textContent = t.t;
@@ -296,8 +298,8 @@ function nextQ() {
         if (oc.dataset.done) return; oc.dataset.done = "1"; var ok = t.id === c.id; tdone("m3:" + c.id, c.id, ok);
         oc.querySelectorAll(".opt").forEach(function (x) { if (x.textContent === c.t) x.classList.add("right"); else if (x === b) x.classList.add("wrong"); });
         $("qFb").innerHTML = '<div class="fb' + (ok ? "" : " bad") + '"><p><strong>' + esc(c.t) + ".</strong> " + esc(c.def) + "</p>" + (c.obras.length ? "<div>" + cartelas(c.obras) + "</div>" : "") +
-          (c.img.length ? '<p class="small">Mira cómo se ve: ' + c.img.map(function (i) { var o = sById[i]; return o.obra ? esc(o.pie) : semOf(i); }).filter(Boolean).slice(0, 6).join(", ") + ".</p>" : "") + '</div><button class="btn" type="button" id="qNext">Siguiente</button>';
-        $("qNext").onclick = nextQ; $("qNext").focus();
+          (c.img.length ? '<p class="small">Se ve en: ' + c.img.map(function (i) { var o = sById[i]; return o.obra ? esc(o.pie) : semOf(i); }).filter(Boolean).slice(0, 6).join(", ") + ".</p>" : "") + '</div><button class="btn" type="button" id="qNext">Siguiente <kbd>↵</kbd></button>';
+        $("qNext").onclick = nextQ; $("qNext").focus({ preventScroll: true });
       };
       oc.appendChild(b);
     });
