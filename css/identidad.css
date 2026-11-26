@@ -232,3 +232,15 @@ body:has(#v-cronologia:not(.hidden)) .foot,body:has(#v-cronologia:not(.hidden)) 
   select,input:not([type=checkbox]):not([type=radio]):not([type=range]){min-height:44px;font-size:max(16px,1em)}
   .btn{min-height:44px}
 }
+
+/* Transición nativa entre pantallas (View Transitions API); sin soporte o con movimiento reducido, cambio directo */
+@keyframes vtout{to{opacity:0;transform:translateY(-6px)}}
+@keyframes vtin{from{opacity:0;transform:translateY(10px)}}
+html.vt::view-transition-old(root){animation:vtout .14s ease-in both}
+html.vt::view-transition-new(root){animation:vtin .26s cubic-bezier(.2,.7,.2,1) both}
+html.vt header.site{view-transition-name:topbar}
+html.vt::view-transition-group(topbar){animation-duration:0s}
+@media(prefers-reduced-motion:reduce){html.vt::view-transition-old(root),html.vt::view-transition-new(root){animation:none}}
+
+/* Rendimiento: las columnas lejanas de la cronología no se maquetan ni se pintan hasta que se acercan (las activa layout() en js/tiempo.js) */
+.tli{content-visibility:hidden}

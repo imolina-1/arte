@@ -183,6 +183,14 @@ function parse() {
 /* Año de la PAU: de septiembre a diciembre, el del año siguiente; de enero a agosto, el del año en curso. */
 A.pauYear = function () { var d = new Date(); return d.getFullYear() + (d.getMonth() >= 8 ? 1 : 0); };
 A.route = function () {
+  var r = parse(), prev = A.route.last;
+  var vt = document.startViewTransition && prev !== undefined && prev !== r.view && !document.hidden && !(window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches);
+  if (!vt) return A.routeNow();
+  var root = document.documentElement; root.classList.add("vt");
+  try { document.startViewTransition(function () { A.routeNow(); }).finished.then(function () { root.classList.remove("vt"); }, function () { root.classList.remove("vt"); }); }
+  catch (e) { root.classList.remove("vt"); A.routeNow(); }
+};
+A.routeNow = function () {
   var r = parse(); A.params = r.p;
   if (A.route.last !== r.view) { A.route.last = r.view; A.track("vista/" + r.view, "Vista: " + r.view); }
   VIEWS.forEach(function (v) { A.$("v-" + v).classList.toggle("hidden", v !== r.view); });

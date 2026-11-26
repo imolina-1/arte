@@ -71,8 +71,8 @@ function layout() {
   var gap = GAP();
   for (var i = 0; i < els.length; i++) {
     var el = els[i], d = i - pos, a = Math.abs(d);
-    if (a > 3.2) { if (el._v !== 0) { el.style.visibility = "hidden"; el.style.opacity = 0; el._v = 0; } continue; }
-    el._v = 1; el.style.visibility = "visible";
+    if (a > 3.2) { if (el._v !== 0) { el.style.visibility = "hidden"; el.style.opacity = 0; el.style.contentVisibility = ""; el._v = 0; } continue; }
+    if (el._v !== 1) { el.style.contentVisibility = "visible"; el._v = 1; } el.style.visibility = "visible";
     var s = 1 - Math.min(a, 1) * .5 - Math.max(a - 1, 0) * .08;
     var x = (d < 0 ? -1 : 1) * (a < 1 ? a * gap : gap + (a - 1) * gap * .55);
     var o = a < 1 ? 1 - a * .72 : Math.max(0, .28 - (a - 1) * .14), y = a < 1 ? a * 10 : 10;
