@@ -274,3 +274,9 @@ html.vt::view-transition-group(topbar){animation-duration:0s}
 #tArea .card .frame{position:sticky;top:84px}
 #tArea .card .frame img{max-height:60vh}
 @media (max-width:860px){#tArea .card .frame{position:static}#tArea .card .frame img{max-height:42vh}}
+
+/* v34b: hover de la portada legible en oscuro */
+:root[data-theme="dark"] .ix .hcard:hover{background:var(--paper2);color:var(--ink)}
+:root[data-theme="dark"] .ix .hcard:hover p{color:var(--muted)}
+:root[data-theme="dark"] .ix .hcard:hover .k{color:var(--gold-ink)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ix .hcard:hover{background:var(--paper2);color:var(--ink)}:root:not([data-theme="light"]) .ix .hcard:hover p{color:var(--muted)}:root:not([data-theme="light"]) .ix .hcard:hover .k{color:var(--gold-ink)}}

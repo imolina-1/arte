@@ -1,6 +1,6 @@
 // Funciona sin conexión: guarda la página, los datos y las imágenes.
 // Cambia VERSION cada vez que se actualicen los datos (data/*.js) o la web.
-const VERSION = "historia-arte-v34";
+const VERSION = "historia-arte-v35";
 const CORE = ["./", "index.html", "css/style.css", "css/juego.css", "css/identidad.css", "js/tiempo.js", "js/buscar.js", "js/pulso.js", "data/tiempo.js", "fonts/bricolage-latin-wdth-normal.woff2", "js/core.js", "js/semblanzas.js", "js/glosario.js", "js/extra.js", "js/mas.js", "js/juego.js", "data/mapa.js", "js/start.js", "data/semblanzas.js", "data/glosario.js", "data/obras.js", "fonts/fraunces-latin-wght-normal.woff2", "fonts/fraunces-latin-wght-italic.woff2", "fonts/inter-latin-standard-normal.woff2", "fonts/spectral-latin-400-normal.woff2", "fonts/spectral-latin-600-normal.woff2", "fonts/spectral-latin-400-italic.woff2", "manifest.webmanifest", "icon-192.png", "icon-512.png"];
 
 self.addEventListener("install", (e) => {
